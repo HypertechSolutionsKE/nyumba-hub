@@ -2,6 +2,26 @@
 
 class Login_model extends CI_model {
 
+	function user_exists($email_address){
+		$this->db->where('email_address',$email_address);
+		$this->db->where('is_deleted',0);
+		$query = $this->db->get('system_users');
+		if ($query->num_rows() > 0){
+			return true;
+		}else{
+			return false;
+		}		
+	}
+	function register_user($data){
+		$insert = $this->db->insert('system_users', $data);
+		if ($insert){
+			$arr_return = array('res' => true,'dt' => 'Registration successful.');
+		}else{
+			$arr_return = array('res' => false,'dt' => 'Registration not successful. Please try again.');
+		}
+		return $arr_return;		
+	}
+
 	//check if the username and password match 
 	function validate(){		
 		$user_password = md5($this->input->post('user_password'));
@@ -12,7 +32,7 @@ class Login_model extends CI_model {
 		
 		if($query->num_rows() == 1){
 			$data = array (				
-				'lastupdate' => date("m/d/Y", mktime())
+				'last_update' => date("m/d/Y", time())
 			);
 			
 			$this->db->where('email_address', $this->input->post('email_address'));

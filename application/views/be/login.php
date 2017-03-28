@@ -77,7 +77,21 @@
 				</div>
 			</div>
 			<div class="well">
-            
+
+				<?php if (isset($success)): ?>
+ 					<div class="alert alert-success block-inner">
+                 		<button type="button" class="close" data-dismiss="alert">×</button>
+                     	<?php echo $success; ?>
+        			</div>               
+                <?php endif; ?>
+
+				<?php if ($this->session->flashdata('success')): ?>
+ 					<div class="alert alert-success block-inner">
+                 		<button type="button" class="close" data-dismiss="alert">×</button>
+                     	<?php echo $this->session->flashdata('success'); ?>
+        			</div>               
+                <?php endif; ?>
+         
 				<?php if (isset($incorrect)): ?>
  					<div class="alert alert-danger block-inner">
                  		<button type="button" class="close" data-dismiss="alert">×</button>
