@@ -50,11 +50,11 @@
 	<!-- Navbar -->
 	<div class="navbar navbar-inverse" role="navigation">
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-right">
+			<!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-right">
 				<span class="sr-only">Toggle navbar</span>
 				<i class="icon-grid3"></i>
-			</button>
-			<a class="navbar-brand" href="#"><img src="<?php echo base_url();?>assets/be/images/logo-white.png" alt="Euro Golden Bet"></a>
+			</button>-->
+			<a class="navbar-brand" href="#"><img src="<?php echo base_url();?>assets/be/images/logo-white.png" alt="NyumbaHub"></a>
 		</div>
 	</div>
 	<!-- /navbar -->
@@ -122,7 +122,7 @@
 					</div>
 
 					<div class="col-xs-6">
-						<button type="submit" class="btn btn-info pull-right"><i class="icon-lock3"></i> Sign in</button>
+						<button type="submit" class="btn btn-success pull-right"><i class="icon-lock3"></i> Sign in</button>
 					</div>
 				</div>
 			</div>

@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
-		<title><?php echo $page_title;?>Euro Golden Bet</title>
+		<title><?php echo $page_title;?>NyumbaHub</title>
 		<link rel="icon" href="<?php echo base_url();?>assets/fe/images/favicon.png">
 
 		<link href="<?php echo base_url();?>assets/be/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -65,7 +65,7 @@
 	<!-- Navbar -->
 	<div class="navbar navbar-inverse" role="navigation">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#"><img src="<?php echo base_url();?>assets/be/images/logo-light.png" alt="Euro Golden Bet"></a>
+			<a class="navbar-brand" href="#"><img src="<?php echo base_url();?>assets/be/images/logo-white.png" alt="NyumbaHub"></a>
 			<a class="sidebar-toggle"><i class="icon-paragraph-justify2"></i></a>
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-icons">
 				<span class="sr-only">Toggle navbar</span>
@@ -81,7 +81,7 @@
 			<li class="user dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">
 					<img src="<?php echo base_url();?>assets/be/images/demo/users/avi-1.png" alt="">
-					<span>Administrator</span>
+					<span><?php echo $this->session->userdata('user_name'); ?></span>
 					<i class="caret"></i>
 				</a>
 				<ul class="dropdown-menu dropdown-menu-right icons-right">
@@ -108,7 +108,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<img src="<?php echo base_url();?>assets/be/images/demo/users/avi-1.png" alt="">
 						<div class="user-info">
-							Ngigi Nyoro <span>Administrator</span>
+							<?php echo $this->session->userdata('user_name'); ?> <span>Administrator</span>
 						</div>
 					</a>
 					<div class="popup dropdown-menu dropdown-menu-right">
@@ -124,7 +124,7 @@
 						    </div>
 					    
 					    	<div class="caption text-center">
-					    		<h6>Ngigi Nyoro <small>Administrator</small></h6>
+					    		<h6><?php echo $this->session->userdata('user_name'); ?> <small>Administrator</small></h6>
 					    	</div>
 				    	</div>
 					</div>
@@ -135,38 +135,72 @@
 				<!-- Main navigation -->
 				<ul class="navigation">
 					<li class="active"><a href="<?php echo base_url();?>be"><span>Dashboard</span> <i class=" icon-home"></i></a></li>
-					<li class="active">
-						<a href="#"><span>Daily Tips</span> <i class=" icon-bubble2"></i></a>
+					<li class="">
+						<a href="<?php echo base_url();?>be/listing_types"><span>Listing Types</span> <i class=" icon-list2"></i></a>
+						<!--<ul>
+							<li><a href="<?php echo base_url();?>be/listing_types/add"><i class="icon-list2"></i> Listing Types</a></li>
+							<li><a href="<?php echo base_url();?>be/listing_types">Listing Types</a></li>
+						</ul>-->
+					</li>
+					<li class="">
+						<a href="#"><span>Property Type</span> <i class=" icon-library"></i></a>
 						<ul>
-							<li><a href="<?php echo base_url();?>be/daily-tips/entry">Tips Entry</a></li>
-							<li><a href="<?php echo base_url();?>be/daily-tips">Tips List</a></li>
-							<li><a href="<?php echo base_url();?>be/tips-categories">Tips Categories</a></li>
-							<li><a href="<?php echo base_url();?>be/multibets">Multibets</a></li>
+							<li><a href="<?php echo base_url();?>be/property_types">Add Property Type</a></li>
+							<li><a href="<?php echo base_url();?>be/property_types">Property Types</a></li>
 						</ul>
 					</li>
-					<li class="active">
-						<a href="#"><span>Jackpots</span> <i class=" icon-coin"></i></a>
+					<li class="">
+						<a href="#"><span>Property Subcategories</span> <i class="icon-grid2"></i></a>
 						<ul>
-							<li><a href="<?php echo base_url();?>be/bookies">Bookies</a></li>
-							<li><a href="<?php echo base_url();?>be/jackpots">Jackpots</a></li>
+							<li><a href="<?php echo base_url();?>be/property_subcategories/add">Add Property Subcategory</a></li>
+							<li><a href="<?php echo base_url();?>be/property_subcategories">Property Subcategories</a></li>
 						</ul>
 					</li>
-					<li class="active">
-						<a href="#"><span>Customers</span> <i class="icon-user3"></i></a>
+					<li class="">
+						<a href="#"><span>Regions</span> <i class="icon-globe2"></i></a>
 						<ul>
-							<li><a href="<?php echo base_url();?>be/customers/add">New Customer</a></li>
-							<li><a href="<?php echo base_url();?>be/customers">Customers List</a></li>
+							<li><a href="<?php echo base_url();?>be/regions/add">Add Region</a></li>
+							<li><a href="<?php echo base_url();?>be/regions">Regions</a></li>
 						</ul>
 					</li>
-					<li class="active">
-						<a href="#"><span>Transactions</span> <i class="icon-barcode2"></i></a>
+					<li class="">
+						<a href="#"><span>Cities/Towns</span> <i class="icon-map2"></i></a>
 						<ul>
-							<li><a href="<?php echo base_url();?>be/payment-transactions">Payment Transactions</a></li>
-							<li><a href="<?php echo base_url();?>be/outgoing-sms">Outgoing SMS</a></li>
+							<li><a href="<?php echo base_url();?>be/cities/add">Add City/Town</a></li>
+							<li><a href="<?php echo base_url();?>be/cities">Cities/Towns</a></li>
 						</ul>
 					</li>
-					<li class="active">
-						<a href="#"><span>Administration</span> <i class=" icon-user"></i></a>
+					<li class="">
+						<a href="#"><span>Areas/Localities</span> <i class="icon-bookmarks"></i></a>
+						<ul>
+							<li><a href="<?php echo base_url();?>be/areas/add">Add Area/Locality</a></li>
+							<li><a href="<?php echo base_url();?>be/areas">Areas/Localities</a></li>
+						</ul>
+					</li>
+					<li class="">
+						<a href="#"><span>Property Feature Types</span> <i class="icon-menu3"></i></a>
+						<ul>
+							<li><a href="<?php echo base_url();?>be/property_feature_types/add">Add Property Feature Type</a></li>
+							<li><a href="<?php echo base_url();?>be/property_feature_types">Prperty Feature Types</a></li>
+						</ul>
+					</li>
+					<li class="">
+						<a href="#"><span>Property Features</span> <i class="icon-equalizer"></i></a>
+						<ul>
+							<li><a href="<?php echo base_url();?>be/property_features/add">Add Property Feature</a></li>
+							<li><a href="<?php echo base_url();?>be/property_features">Property Features</a></li>
+						</ul>
+					</li>
+					<li class="">
+						<a href="#"><span>Currencies</span> <i class="icon-coin"></i></a>
+						<ul>
+							<li><a href="<?php echo base_url();?>be/currencies/add">Add Currency</a></li>
+							<li><a href="<?php echo base_url();?>be/currencies">Currencies</a></li>
+						</ul>
+					</li>
+
+					<li class="">
+						<a hreactivef="#"><span>Administration</span> <i class=" icon-user"></i></a>
 						<ul>
 							<li><a href="<?php echo base_url();?>be/company">Company Information</a></li>
 							<li><a href="<?php echo base_url();?>be/access-levels">Access Levels</a></li>

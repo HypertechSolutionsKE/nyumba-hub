@@ -40,13 +40,15 @@ class Login_model extends CI_model {
 			
 			foreach ($query->result() as $row){
 				$user_id = $row->user_id;
+				$user_email = $row->email_address;
+				$user_name = $row->first_name . ' ' . $row->last_name;
 			}			
-			$arr_return = array('user_id' => $user_id, 'res' => true);			
+			$arr_return = array('user_id' => $user_id, 'user_email' => $user_email, 'user_name' => $user_name, 'res' => true);			
 			return $arr_return;			
 			
 			return true;
 		}else{
-			$arr_return = array('user_id' => '','res' => false);			
+			$arr_return = array('user_id' => '', 'user_email' => '', 'user_name' => '','res' => false);			
 			return $arr_return;
 		}
 	}
