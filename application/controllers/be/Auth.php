@@ -20,12 +20,30 @@ class Auth extends CI_Controller {
 		}
 	}
 	function register(){
-		/*if($this->session->userdata('nhub_loginstate')){
-            redirect('be');
-        } 
-		else{
-			$this->load->view('be/register');
-		}*/
+		if($this->login_model->user_exists($this->input->post('email_address')) == false){
+			$user_password = md5($this->input->post('user_password'));
+			$data = array(
+				'first_name' => $this->input->post('first_name'),
+				'last_name' => $this->input->post('last_name'),
+				'email_address' => $this->input->post('email_address'),
+				'user_password' => $user_password,
+				'is_super_admin' => 1
+			);	
+			$q = $this->login_model->register_user($data);
+			if($q['res'] == true){
+				$this->session->set_flashdata('success', 'Registration successful. Please login to continue');
+				redirect("be/auth");
+				//$data['success'] = 'Registration successful. Please login to continue';
+				//$this->load->view('be/login',$data);
+			}else{
+				$data['error'] = $q['dt'];
+				$this->load->view('be/register',$data);
+			}
+		}else{
+			$data['error'] = 'The Email Address you entered already exists. Please enter a different Email Address.';
+			$this->load->view('be/register',$data);
+		}
+
 	}
 	function login(){		
 		$query = $this->login_model->validate();

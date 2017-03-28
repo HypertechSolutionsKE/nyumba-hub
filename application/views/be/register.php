@@ -78,10 +78,10 @@
                         </div>
                     </div>
                 </div>
-				<?php if (isset($incorrect)): ?>
+				<?php if (isset($error)): ?>
  					<div class="alert alert-danger block-inner">
                  		<button type="button" class="close" data-dismiss="alert">×</button>
-                     	<?php echo $incorrect; ?>
+                     	<?php echo $error; ?>
         			</div>               
                 <?php endif; ?>
          		<div class="form-group">
