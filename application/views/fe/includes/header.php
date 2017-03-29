@@ -7,14 +7,14 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, shrink-to-fit=no">
 	    <meta name="format-detection" content="">
 	    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700%7cSource+Sans+Pro:200,400,600,700,900,400italic,700italic&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
-	    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/vendor.min.css?v=201603120801">
-	    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/font-awesome.min.css?v=201603120801">
-	    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/theme-default.min.css?v=201603120801">
-	    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/custom.css">
-	    <link rel="icon" href="<?php echo base_url();?>assets/img/favicon.ico" type="image/x-icon">
-  </head>
-  <body class="index menu-default hover-default scroll-animation">
-    <div class="box js-box">
+	    <link rel="stylesheet" href="<?php echo base_url();?>assets/fe/css/vendor.min.css">
+	    <link rel="stylesheet" href="<?php echo base_url();?>assets/fe/css/font-awesome.min.css">
+	    <link rel="stylesheet" href="<?php echo base_url();?>assets/fe/css/theme-default.min.css">
+	    <link rel="stylesheet" href="<?php echo base_url();?>assets/fe/css/custom.css">
+	    <link rel="icon" href="<?php echo base_url();?>assets/fe/img/favicon.ico" type="image/x-icon">
+  	</head>
+  	<body class="index menu-default hover-default scroll-animation">
+    	<div class="box js-box">
           <!-- BEGIN HEADER-->
         <header class="header header--overlay header--dark">
             <div class="container">
@@ -98,4 +98,4 @@
               </div>
             </div>
         </nav>
-          <!-- END NAVBAR-->
+        <!-- END NAVBAR-->
