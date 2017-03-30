@@ -53,8 +53,6 @@ class Auth extends CI_Controller {
 			$this->session->set_userdata('user_id', $query['user_id']);
 			$this->session->set_userdata('user_email', $query['user_email']);
 			$this->session->set_userdata('user_name', $query['user_name']);			
-						
->>>>>>> loginbranch
 			redirect('be');
 		}
 		else{
