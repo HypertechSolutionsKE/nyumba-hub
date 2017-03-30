@@ -16,7 +16,7 @@
   	<body class="index menu-default hover-default scroll-animation">
     	<div class="box js-box">
           <!-- BEGIN HEADER-->
-        <header class="header header--overlay header--dark">
+        <header class="header header--brand">
             <div class="container">
               	<div class="header__row"><a href="index.html" class="header__logo">
                   	<svg>
@@ -47,7 +47,7 @@
           <!-- END HEADER-->
           <!-- BEGIN NAVBAR-->
         <div id="header-nav-offset"></div>
-        <nav id="header-nav" class="navbar navbar--header navbar--overlay">
+        <nav id="header-nav" class="navbar navbar--header">
             <div class="container">
               	<div class="navbar__row js-navbar-row"><a href="index.html" class="navbar__brand">
                   	<svg class="navbar__brand-logo">
@@ -95,7 +95,6 @@
                   	</ul>
                   <!-- end of block  navbar__nav-->
                 </div>
-              </div>
-            </div>
+              </div></div>
         </nav>
         <!-- END NAVBAR-->
