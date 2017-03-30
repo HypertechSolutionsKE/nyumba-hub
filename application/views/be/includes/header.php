@@ -55,9 +55,15 @@
 		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/application.js"></script>
 		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/form_validation.js"></script>
-        
+		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/scripts.js"></script        
 		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/charts/widgets/filled_green.js"></script>
-        <script type="text/javascript" src="<?php echo base_url();?>assets/be/js/charts/widgets/filled_red.js"></script>        
+        <script type="text/javascript" src="<?php echo base_url();?>assets/be/js/charts/widgets/filled_red.js"></script>  
+
+	    <script type="text/javascript">
+	    	var baseDir = '<?php echo base_url(); ?>';
+	   	</script>
+
+
 	</head>
 
 	<body>
@@ -137,66 +143,30 @@
 					<li class="active"><a href="<?php echo base_url();?>be"><span>Dashboard</span> <i class=" icon-home"></i></a></li>
 					<li class="">
 						<a href="<?php echo base_url();?>be/listing_types"><span>Listing Types</span> <i class=" icon-list2"></i></a>
-						<!--<ul>
-							<li><a href="<?php echo base_url();?>be/listing_types/add"><i class="icon-list2"></i> Listing Types</a></li>
-							<li><a href="<?php echo base_url();?>be/listing_types">Listing Types</a></li>
-						</ul>-->
 					</li>
 					<li class="">
-						<a href="#"><span>Property Type</span> <i class=" icon-library"></i></a>
-						<ul>
-							<li><a href="<?php echo base_url();?>be/property_types">Add Property Type</a></li>
-							<li><a href="<?php echo base_url();?>be/property_types">Property Types</a></li>
-						</ul>
+						<a href="<?php echo base_url();?>be/property_types"><span>Property Types</span> <i class=" icon-library"></i></a>
 					</li>
 					<li class="">
-						<a href="#"><span>Property Subcategories</span> <i class="icon-grid2"></i></a>
-						<ul>
-							<li><a href="<?php echo base_url();?>be/property_subcategories/add">Add Property Subcategory</a></li>
-							<li><a href="<?php echo base_url();?>be/property_subcategories">Property Subcategories</a></li>
-						</ul>
+						<a href="<?php echo base_url();?>be/property_subcategories"><span>Property Subcategories</span> <i class="icon-grid2"></i></a>
 					</li>
 					<li class="">
-						<a href="#"><span>Regions</span> <i class="icon-globe2"></i></a>
-						<ul>
-							<li><a href="<?php echo base_url();?>be/regions/add">Add Region</a></li>
-							<li><a href="<?php echo base_url();?>be/regions">Regions</a></li>
-						</ul>
+						<a href="<?php echo base_url();?>be/regions"><span>Regions</span> <i class="icon-globe2"></i></a>
 					</li>
 					<li class="">
-						<a href="#"><span>Cities/Towns</span> <i class="icon-map2"></i></a>
-						<ul>
-							<li><a href="<?php echo base_url();?>be/cities/add">Add City/Town</a></li>
-							<li><a href="<?php echo base_url();?>be/cities">Cities/Towns</a></li>
-						</ul>
+						<a href="<?php echo base_url();?>be/cities"><span>Cities/Towns</span> <i class="icon-map2"></i></a>
 					</li>
 					<li class="">
-						<a href="#"><span>Areas/Localities</span> <i class="icon-bookmarks"></i></a>
-						<ul>
-							<li><a href="<?php echo base_url();?>be/areas/add">Add Area/Locality</a></li>
-							<li><a href="<?php echo base_url();?>be/areas">Areas/Localities</a></li>
-						</ul>
+						<a href="<?php echo base_url();?>be/areas"><span>Areas/Localities</span> <i class="icon-bookmarks"></i></a>
 					</li>
 					<li class="">
-						<a href="#"><span>Property Feature Types</span> <i class="icon-menu3"></i></a>
-						<ul>
-							<li><a href="<?php echo base_url();?>be/property_feature_types/add">Add Property Feature Type</a></li>
-							<li><a href="<?php echo base_url();?>be/property_feature_types">Prperty Feature Types</a></li>
-						</ul>
+						<a href="<?php echo base_url();?>be/property_feature_types"><span>Property Feature Types</span> <i class="icon-menu3"></i></a>
 					</li>
 					<li class="">
-						<a href="#"><span>Property Features</span> <i class="icon-equalizer"></i></a>
-						<ul>
-							<li><a href="<?php echo base_url();?>be/property_features/add">Add Property Feature</a></li>
-							<li><a href="<?php echo base_url();?>be/property_features">Property Features</a></li>
-						</ul>
+						<a href="<?php echo base_url();?>be/property_features"><span>Property Features</span> <i class="icon-equalizer"></i></a>
 					</li>
 					<li class="">
-						<a href="#"><span>Currencies</span> <i class="icon-coin"></i></a>
-						<ul>
-							<li><a href="<?php echo base_url();?>be/currencies/add">Add Currency</a></li>
-							<li><a href="<?php echo base_url();?>be/currencies">Currencies</a></li>
-						</ul>
+						<a href="<?php echo base_url();?>be/currencies"><span>Currencies</span> <i class="icon-coin"></i></a>
 					</li>
 
 					<li class="">
