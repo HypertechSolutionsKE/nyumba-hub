@@ -5,7 +5,7 @@
             <!-- Page header -->
             <div class="page-header">
                 <div class="page-title">
-                    <h3>Listing Types <small></small></h3>
+                    <h3>Property Subcategories <small></small></h3>
                 </div>
             </div>
             <!-- /page header -->
@@ -14,7 +14,7 @@
             <!--<div class="breadcrumb-line">
                 <ul class="breadcrumb">
                     <li><a href="<?php echo base_url();?>be">Dashboard</a></li>
-                    <li class="active">Listing Types</li>
+                    <li class="active">Property Subcategories</li>
                 </ul>
             </div>-->
 
@@ -22,28 +22,27 @@
                 <div class="col-md-8">
                     <div class="panel panel-danger">
                         <div class="panel-heading">
-                            <h6 class="panel-title" style="margin-top: 5px"><i class="icon-list2"></i> Listing Types List</h6>
+                            <h6 class="panel-title" style="margin-top: 5px"><i class="icon-grid2"></i> Property Subcategories List</h6>
                             <div class="panel-icons-group">
-                                <a data-toggle="modal" role="button" href="#modal_add_listingtype" class="label btn-success" onclick="return listing_type_add_clear();"><i class="icon-plus-circle"></i> Add Listing Type</a>
+                                <a data-toggle="modal" role="button" href="#modal_add_listingtype" class="label btn-success" onclick="return property_subcategory_add_clear();"><i class="icon-plus-circle"></i> Add Property Subcategory</a>
                             </div>
 
                         </div>
-                                <script type="text/javascript">
-                                    //load_listing_types();
-                                </script>
-
                         <div class="panel-body">
-                            <div id="listing_types_div">
-                                <div class="alert alert-danger block-inner" style="display: none;" id="div_listing_type_error">
+                            <div id="property_subcategories_div">
+                                <div class="alert alert-danger block-inner" style="display: none;" id="div_property_subcategory_error">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                         Error
                                 </div>
                                 
-                                <div class="alert alert-success block-inner" style="display: none;" id="div_listing_type_success">
+                                <div class="alert alert-success block-inner" style="display: none;" id="div_property_subcategory_success">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                         Success
                                 </div>
 
+                                <script type="text/javascript">
+                                    //load_property_subcategories();
+                                </script>
                                 <div class="datatable-tools">
                                     <table class="table table-bordered table-striped">
                                         <thead>
@@ -54,13 +53,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($listing_types as $row): ?>
+                                            <?php foreach ($property_subcategories as $row): ?>
                                                 <tr>
-                                                    <td><?php echo $row->listing_type_name; ?></td>
-                                                    <td><?php echo $row->listing_type_description; ?></td>
+                                                    <td><?php echo $row->property_subcategory_name; ?></td>
+                                                    <td><?php echo $row->property_subcategory_description; ?></td>
                                                     <td>
-                                                        <a data-toggle="modal" role="button" href="#modal_edit_listingtype" onclick="return listing_type_edit_load(<?php echo $row->listing_type_id;?>);" class="label label-success btn-icon"><i class="icon-pencil"></i></a>
-                                                        <a onClick="javascript:return confirm('Do you really wish to delete this Listing Type?');" href="javascript:delete_listing_type(<?php echo $row->listing_type_id; ?>);" class="label label-danger btn-icon"><i class="icon-remove3"></i></a>
+                                                        <a data-toggle="modal" role="button" href="#modal_edit_listingtype" onclick="return property_subcategory_edit_load(<?php echo $row->property_subcategory_id;?>);" class="label label-success btn-icon"><i class="icon-pencil"></i></a>
+                                                        <a onClick="javascript:return confirm('Do you really wish to delete this Property Subcategory?');" href="javascript:delete_property_subcategory(<?php echo $row->property_subcategory_id; ?>);" class="label label-danger btn-icon"><i class="icon-remove3"></i></a>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -81,23 +80,23 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title"><i class="icon-plus-circle"></i> New Listing Type</h4>
+                            <h4 class="modal-title"><i class="icon-plus-circle"></i> New Property Subcategory</h4>
                         </div>
 
                         <!-- Form inside modal -->
-                        <form class="validate" method="post" role="form" id="frm_addlistingtype" name="frm_addlistingtype" onsubmit="return save_listing_type();">
+                        <form class="validate" method="post" role="form" id="frm_addlistingtype" name="frm_addlistingtype" onsubmit="return save_property_subcategory();">
 
                             <div class="modal-body with-padding">
                                 <div class="block-inner text-danger">
                                     <h6 class="heading-hr"> <small class="display-block">Please fill in the required information and click Save</small></h6>
                                 </div>
 
-                                <div class="alert alert-danger block-inner" style="display: none;" id="div_add_listing_type_error">
+                                <div class="alert alert-danger block-inner" style="display: none;" id="div_add_property_subcategory_error">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                         Error
                                 </div>
                                 
-                                <div class="alert alert-success block-inner" style="display: none;" id="div_add_listing_type_success">
+                                <div class="alert alert-success block-inner" style="display: none;" id="div_add_property_subcategory_success">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                         Error
                                 </div>
@@ -105,8 +104,13 @@
                                  <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <label>Listing Type Name*</label>
-                                            <input type="text" id="add_listing_type_name" name="listing_type_name" class="form-control">
+                                            <label>Property Type*</label>
+                                            <select data-placeholder="Choose a Property Type..." class="clear-results" tabindex="2">
+                                                <option value=""></option>
+                                                <?php foreach($property_types as $row): ?>
+                                                    <option value="<?php echo $row->property_type_id; ?>"><?php echo $row->property_type_name; ?></option>
+                                                <?php endforeach; ?>
+                                            </select> 
                                         </div>
                                     </div>
                                 </div>
@@ -114,8 +118,17 @@
                                  <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <label class="control-label">Listing Type Description</label>
-                                            <textarea class="form-control" name="listing_type_description" id="add_listing_type_description"></textarea>
+                                            <label>Property Subcategory Name*</label>
+                                            <input type="text" id="add_property_subcategory_name" name="property_subcategory_name" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label class="control-label">Property Subcategory Description</label>
+                                            <textarea class="form-control" name="property_subcategory_description" id="add_property_subcategory_description"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +136,7 @@
                             </div>
 
                             <div class="modal-footer">
-                                <div class="pull-left" id="add_listing_type_loader" style="display: none;"><i class="icon-spinner3 spin block-inner"></i></div>
+                                <div class="pull-left" id="add_property_subcategory_loader" style="display: none;"><i class="icon-spinner3 spin block-inner"></i></div>
                                 <button type="submit" class="btn btn-success"><i class="icon-disk"></i> Save</button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-close"></i> Close</button>
 
@@ -140,32 +153,32 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title"><i class="icon-pencil"></i> Edit Listing Type</h4>
+                            <h4 class="modal-title"><i class="icon-pencil"></i> Edit Property Subcategory</h4>
                         </div>
 
                         <!-- Form inside modal -->
-                        <form class="validate" method="post" role="form" id="frm_editlistingtype" name="frm_editlistingtype" onsubmit="return update_listing_type();">
+                        <form class="validate" method="post" role="form" id="frm_editlistingtype" name="frm_editlistingtype" onsubmit="return update_property_subcategory();">
 
                             <div class="modal-body with-padding">
                                 <div class="block-inner text-danger">
                                     <h6 class="heading-hr"> <small class="display-block">Please fill in the required information and click Update</small></h6>
                                 </div>
 
-                                <div class="alert alert-danger block-inner" style="display: none;" id="div_edit_listing_type_error">
+                                <div class="alert alert-danger block-inner" style="display: none;" id="div_edit_property_subcategory_error">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                         Error
                                 </div>
                                 
-                                <div class="alert alert-success block-inner" style="display: none;" id="div_edit_listing_type_success">
+                                <div class="alert alert-success block-inner" style="display: none;" id="div_edit_property_subcategory_success">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                         Error
                                 </div>
-                                <input type="hidden" id="edit_listing_type_id" name="listing_type_id" class="form-control">
+                                <input type="hidden" id="edit_property_subcategory_id" name="property_subcategory_id" class="form-control">
                                  <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <label>Listing Type Name*</label>
-                                            <input type="text" id="edit_listing_type_name" name="listing_type_name" class="form-control">
+                                            <label>Property Subcategory Name*</label>
+                                            <input type="text" id="edit_property_subcategory_name" name="property_subcategory_name" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -173,8 +186,8 @@
                                  <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <label class="control-label">Listing Type Description</label>
-                                            <textarea class="form-control" name="listing_type_description" id="edit_listing_type_description"></textarea>
+                                            <label class="control-label">Property Subcategory Description</label>
+                                            <textarea class="form-control" name="property_subcategory_description" id="edit_property_subcategory_description"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -182,7 +195,7 @@
                             </div>
 
                             <div class="modal-footer">
-                                <div class="pull-left" id="edit_listing_type_loader" style="display: none;"><i class="icon-spinner3 spin block-inner"></i></div>
+                                <div class="pull-left" id="edit_property_subcategory_loader" style="display: none;"><i class="icon-spinner3 spin block-inner"></i></div>
                                 <button type="submit" class="btn btn-success"><i class="icon-disk"></i> Update</button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-close"></i> Close</button>
 
