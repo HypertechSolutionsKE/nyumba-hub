@@ -3,7 +3,7 @@
               <div class="container">
                 <div class="footer__wrap">
                   <!-- end of block .footer__col-third-->
-                  <div class="clearfix"></div><span class="footer__copyright">&copy; 2016 RealtySpace. All rights reserved</span>
+                  <span class="footer__copyright">&copy; 2016 RealtySpace. All rights reserved</span>
                   <!-- end of block .footer__copyright-->
                 </div>
               </div>
