@@ -28,7 +28,7 @@ class Auth extends CI_Controller {
 				'email_address' => $this->input->post('email_address'),
 				'user_password' => $user_password,
 				'is_super_admin' => 1
-			);
+			);	
 			$q = $this->login_model->register_user($data);
 			if($q['res'] == true){
 				$this->session->set_flashdata('success', 'Registration successful. Please login to continue');
@@ -51,8 +51,9 @@ class Auth extends CI_Controller {
 		if($query['res'] == true){
 			$this->session->set_userdata('nhub_loginstate', TRUE);
 			$this->session->set_userdata('user_id', $query['user_id']);
-			$this->session->set_userdata('user_email', $this->input->post('email_address'));
-
+			$this->session->set_userdata('user_email', $query['user_email']);
+			$this->session->set_userdata('user_name', $query['user_name']);
+      
 			redirect('be');
 		}
 		else{
