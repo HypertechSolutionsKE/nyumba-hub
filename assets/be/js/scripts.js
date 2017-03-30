@@ -63,8 +63,8 @@ function save_listing_type(){
 						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
 						//if ($r == true) {						    
 						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_listing_types();
+						$('#modal_add_listingtype').modal('hide');
+						load_listing_types();
 
 						//}
 					}
