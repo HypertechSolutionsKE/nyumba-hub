@@ -1,5 +1,5 @@
 <div class="site-wrap js-site-wrap">
-    <div class="widget js-widget widget--landing widget--bg">
+  <div class="widget js-widget widget--landing widget--bg">
           <div class="widget__header">
             <h2 class="widget__title"><span class="title-thin">Find your</span> home</h2>
           </div>
@@ -94,8 +94,8 @@
             <!-- end of block-->
             <!-- END SEARCH-->
           </div>
-    </div>
-    <div class="widget js-widget widget--landing widget--gray">
+  </div>
+  <div class="widget js-widget widget--landing widget--gray">
       <div class="widget__header">
         <h2 class="widget__title"><span class="title-thin">Latest</span> Listing</h2>
         <h5 class="widget__headline">Our agents are licensed professionals that specialise in searching, evaluating and negotiating the purchase of property on behalf of the buyer. They will sell you real estate. Insights, tips & how-to guides on selling property and preparing your home or investment property for sale and working to maximise your sale price.</h5>
@@ -275,8 +275,8 @@
         <div class="widget__footer"><a href="properties_listing_list.html" class="widget__more">More listings</a></div>
         <!-- END PROPERTIES INDEX-->
       </div>
-    </div>
-    <div class="widget js-widget widget--landing">
+  </div>
+  <div class="widget js-widget widget--landing">
       <div class="widget__header">
         <h2 class="widget__title"><span class="title-thin">Featured</span> Projects</h2>
         <h5 class="widget__headline">Our agents are licensed professionals that specialise in searching, evaluating and negotiating the purchase of property on behalf of the buyer. They will sell you real estate. Insights, tips & how-to guides on selling property and preparing your home or investment property for sale and working to maximise your sale price.</h5>
@@ -444,32 +444,45 @@
         <div class="widget__footer"><a href="properties_listing_list.html" class="widget__more">More listings</a></div>
         <!-- END PROPERTIES INDEX-->
       </div>
-    </div>
-     <!-- BEGIN AFTER CENTER SECTION-->
-    <div class="widget js-widget widget--landing widget--gray">
-        <div class="widget__header">
-            <h2 class="widget__title"><span class="title-thin">Our</span> Partners</h2>
-            <h5 class="widget__headline">At RS, our partners make great digital experiences possible by offering our products, consulting expertise and the products of our technology partners</h5>
-        </div>
-        <div class="widget__content">
-            <!-- BEGIN PARTNERS-->
-            <div id="partners-slider" class="partners">
-                <div class="partners__slider js-slick-slider"><a class="partners__item">
-          <img src="<?php echo base_url();?>assets/fe/media-demo/partners/logo-company-1.png" alt=""><span class="partners__name">Elite Construction Group, LLC</span></a><a class="partners__item">
-          <img src="<?php echo base_url();?>assets/fe/media-demo/partners/logo-company-2.png" alt=""><span class="partners__name">Pro Era Limited</span></a><a class="partners__item">
-          <img src="<?php echo base_url();?>assets/fe/media-demo/partners/logo-company-3.png" alt=""><span class="partners__name">Otdelka Real Estate LTD</span></a><a class="partners__item">
-          <img src="<?php echo base_url();?>assets/fe/media-demo/partners/logo-company-4.png" alt=""><span class="partners__name">Fermer Realty Group</span></a><a class="partners__item">
-          <img src="<?php echo base_url();?>assets/fe/media-demo/partners/logo-company-5.png" alt=""><span class="partners__name">Pro Era Limited</span></a><a class="partners__item">
-          <img src="<?php echo base_url();?>assets/fe/media-demo/partners/logo-company-3.png" alt=""><span class="partners__name">Fermer Realty Group</span></a><a class="partners__item">
-          <img src="<?php echo base_url();?>assets/fe/media-demo/partners/logo-company-2.png" alt=""><span class="partners__name">Otdelka Real Estate LTD</span></a>
-                </div>
-                <div class="partners__controls">
-                    <button class="partners__arrow partners__arrow--prev js-partners-prev"></button>
-                    <button class="partners__arrow partners__arrow--next js-partners-next"></button>
-                </div>
-                <!-- end of block .partners__controls-->
+  </div>
+  <div class="widget js-widget widget--landing widget--achievement">
+    <div class="widget__content">
+      <!-- BEGIN SECTION ACHIEVEMENT-->
+      <div class="achievement">
+        <div class="container">
+          <div class="row">
+            <div class="achievement__item">
+              <div>
+                <i class="fa fa-4x fa-shopping-basket" aria-hidden="true"></i>
+              </div>
+              <div class="achievement__counter">755 300</div>
+              <div class="achievement__name">Transactions</div>
             </div>
-            <!-- end of block .partners-->
+            <div class="achievement__item">
+              <div>
+                <i class="fa fa-4x fa-group" aria-hidden="true"></i>
+              </div>
+              <div class="achievement__counter">17 620</div>
+              <div class="achievement__name">Satisfied Customers</div>
+            </div>
+            <div class="achievement__item">
+              <div>
+                <i class="fa fa-4x fa-hospital-o" aria-hidden="true"></i>
+              </div>
+              <div class="achievement__counter">790</div>
+              <div class="achievement__name">Agencies</div>
+            </div>
+            <div class="achievement__item">
+              <div>
+                <i class="fa fa-4x fa-money" aria-hidden="true"></i>
+              </div>
+              <div class="achievement__counter">1 528 715</div>
+              <div class="achievement__name">Sales &amp; Rents</div>
+            </div>
+          </div>
         </div>
+      </div>
+      <!-- END SECTION ACHIEVEMENT-->
     </div>
-    <!-- END PARTNERS-->
+  </div>
+

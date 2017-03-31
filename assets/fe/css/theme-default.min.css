@@ -19468,9 +19468,11 @@ div.wpcf7 img.ajax-loader {
 }
 .achievement__item {
     padding-left: 15px;
+    padding-top: 20px;
     padding-right: 15px;
     float: left;
     width: 100%;
+    color: #fff;
     text-align: center
 }
 @media (min-width:768px) {
@@ -19488,7 +19490,6 @@ div.wpcf7 img.ajax-loader {
         -webkit-transform: translateY(0);
         -ms-transform: translateY(0);
         transform: translateY(0);
-        opacity: 1
     }
 }
 .achievement__icon {
@@ -19507,7 +19508,6 @@ div.wpcf7 img.ajax-loader {
         -webkit-transform: translateY(-30px);
         -ms-transform: translateY(-30px);
         transform: translateY(-30px);
-        opacity: 0;
         -webkit-transition: 1s;
         transition: 1s
     }
@@ -19526,22 +19526,15 @@ div.wpcf7 img.ajax-loader {
         -webkit-transform: translateY(30px);
         -ms-transform: translateY(30px);
         transform: translateY(30px);
-        opacity: 0;
         -webkit-transition: .5s;
-        transition: .5s
     }
 }
 .achievement__counter {
-    margin-top: 50px;
+    margin-top: 10px;
     color: #f3bc65;
     font-size: 64px;
     font-weight: 200;
     height: 102px
-}
-@media (min-width:1200px) {
-    .achievement__counter {
-        display: none
-    }
 }
 @media (max-width:1199px) {
     .achievement__counter {
