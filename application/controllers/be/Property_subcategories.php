@@ -24,6 +24,7 @@ class Property_subcategories extends CI_Controller {
 	}
 	function save(){
 		$data = array(
+			'property_type_id' => $this->input->post('property_type_id'),
 			'property_subcategory_name' => $this->input->post('property_subcategory_name'),
 			'property_subcategory_description' => $this->input->post('property_subcategory_description')
 		);	
