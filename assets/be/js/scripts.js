@@ -664,12 +664,14 @@ function update_property_subcategory(){
 		$div_edit_property_subcategory_error = $("#div_edit_property_subcategory_error");
 		$div_edit_property_subcategory_success = $("#div_edit_property_subcategory_success");
 				
+		$edit_property_type_id = $("#edit_property_type_id").val();
 		$edit_property_subcategory_name = $("#edit_property_subcategory_name").val();
 		$edit_property_subcategory_description = $("#edit_property_subcategory_description").val();
 	
 		$valmsg = "";
 		$valmsg2 = "";
 		
+		if ($edit_property_type_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Type<br/>";}
 		if ($edit_property_subcategory_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
 		
 		if ($valmsg != $valmsg2){
@@ -682,7 +684,7 @@ function update_property_subcategory(){
 				
 			$("#edit_property_subcategory_loader").show();
 					
-			var form = document.getElementById('frm_editlistingtype');
+			var form = document.getElementById('frm_editpropertysubcategory');
 			var formData = new FormData(form);
 
 			$.ajax({
