@@ -55,43 +55,15 @@
                   	</svg></a>
                 <div id="navbar-collapse-1" class="navbar__wrap">
                   	<ul class="navbar__nav">
-                    	<li class="navbar__item js-dropdown active"><a class="navbar__link">Home
-                        	<svg class="navbar__arrow">
-                          		<use xlink:href="#icon-arrow-right"></use>
-                        	</svg></a>
-	                      	<div role="menu" class="js-dropdown-menu navbar__dropdown navbar__dropdown--colls-1">
-	                        	<button class="navbar__back js-navbar-submenu-back">
-	                          		<svg class="navbar__arrow">
-	                            		<use xlink:href="#icon-arrow-left"></use>
-	                          		</svg>Back
-	                        	</button>
-	                      	</div>
-                    	</li>
-	                    <li class="navbar__item js-dropdown"><a class="navbar__link">How it Works
-	                        <svg class="navbar__arrow">
-	                          <use xlink:href="#icon-arrow-right"></use>
-	                        </svg></a>
-	                      	<div role="menu" class="js-dropdown-menu navbar__dropdown navbar__dropdown--colls-2">
-	                        	<button class="navbar__back js-navbar-submenu-back">
-	                          		<svg class="navbar__arrow">
-	                            		<use xlink:href="#icon-arrow-left"></use>
-	                          		</svg>Back
-	                        	</button>
-	                      	</div>
-	                    </li>
-	                    <li class="navbar__item js-dropdown"><a class="navbar__link">About Us
-	                        <svg class="navbar__arrow">
-	                        	<use xlink:href="#icon-arrow-right"></use>
-	                        </svg></a>
-	                      	<div role="menu" class="js-dropdown-menu navbar__dropdown">
-	                        	<button class="navbar__back js-navbar-submenu-back">
-	                          		<svg class="navbar__arrow">
-	                            		<use xlink:href="#icon-arrow-left"></use>
-	                          		</svg>Back
-	                        	</button>
-	                      	</div>
-	                    </li>
-                    	<li class="navbar__item"><a href="contacts.html" class="navbar__link">Contact Us</a></li>
+                    	<li class="navbar__item <?php if ($cur == 'Home'){echo 'active'; } ?>">
+                            <a <a href="<?php echo base_url();?>home" class="navbar__link">Home</a></li>
+                        <li class="navbar__item <?php if ($cur == 'About'){echo 'active'; } ?>">
+                            <a href="<?php echo base_url();?>about" class="navbar__link">About Us</a></li>
+	                    <li class="navbar__item <?php if ($cur == 'How'){echo 'active'; } ?>">
+                            <a href="<?php echo base_url();?>how-it-works" class="navbar__link">How it Works</a></li>
+                    	<li class="navbar__item <?php if ($cur == 'Contact'){echo 'active'; } ?>">
+                            <a href="<?php echo base_url();?>contact" class="navbar__link">Contact Us</a>
+                        </li>
                   	</ul>
                   <!-- end of block  navbar__nav-->
                 </div>

@@ -54,10 +54,9 @@ $route['translate_uri_dashes'] = FALSE;
 $route['default_controller'] = 'home';
 
 // Front End
-
-
-
-
+$route['about'] = 'home/about_us';
+$route['how-it-works'] = 'home/how_it_works';
+$route['contact'] = 'home/contact';
 
 //BACK END
 $route['be'] = 'be/main';
