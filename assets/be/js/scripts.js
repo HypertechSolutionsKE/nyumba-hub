@@ -63,8 +63,8 @@ function save_listing_type(){
 						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
 						//if ($r == true) {						    
 						//} else {
-						$('#modal_add_listingtype').modal('hide');
-						load_listing_types();
+						//$('#modal_add_listingtype').modal('hide');
+						//load_listing_types();
 
 						//}
 					}
@@ -776,5 +776,270 @@ function delete_property_subcategory(property_subcategory_id){
 		}
     });
 }
+
+
+
+
+
+
+
+
+//LISTING TYPES
+function region_add_clear(){
+	//alert('Test');
+	$( '#frm_addregion' ).each(function(){
+		this.reset();
+	});	
+	$div_add_region_success.fadeOut("fast");
+	$div_add_region_error.fadeOut("fast");
+}
+
+function save_region(){
+		$div_add_region_error = $("#div_add_region_error");
+		$div_add_region_success = $("#div_add_region_success");
+				
+		$add_region_name = $("#add_region_name").val();
+		$add_region_description = $("#add_region_description").val();
+	
+		$valmsg = "";
+		$valmsg2 = "";
+		
+		if ($add_region_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_add_region_error.html($valmsg);
+			$div_add_region_success.fadeOut("fast");
+			$div_add_region_error.fadeIn("fast");
+		}else{
+			$div_add_region_error.fadeOut("fast");
+			$div_add_region_success.fadeOut("fast");
+				
+			$("#add_region_loader").show();
+					
+			var form = document.getElementById('frm_addregion');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/regions/save',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#add_region_loader").hide();
+					if(res.status == 'ERR'){
+						$div_add_region_error.html(res.message);
+						$div_add_region_success.fadeOut("fast");
+						$div_add_region_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_add_region_success.html(res.message);
+						$div_add_region_error.fadeOut("fast");
+						$div_add_region_success.fadeIn("fast");
+						
+						$( '#frm_addregion' ).each(function(){
+							this.reset();
+						});	
+						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+						//if ($r == true) {						    
+						//} else {
+						//$('#modal_add_region').modal('hide');
+						//load_regions();
+
+						//}
+					}
+            	},
+				error: function(){
+					$("#add_region_loader").hide();
+					$div_add_region_error.html("Something went wrong. Please check your network and try again.");
+					$div_add_region_success.fadeOut("fast");
+					$div_add_region_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+//LOAD LISTING TYPES
+function load_regions(){
+	//$("#tableLoading").show();
+				
+	$.ajax({
+     	url: baseDir+'be/regions/loadjs',
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (result) {
+			$("#regions_div").html(result);
+			//$("#tableLoading").hide();
+   		},
+		error: function(){
+			//$("#tableLoading").hide();
+		}
+    });
+}
+function region_edit_load(region_id){
+	$.ajax({
+     	url: baseDir+'be/regions/get_region/'+region_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+     			obj1 = obj1.replace('[','');
+     			obj1 = obj1.replace(']','');
+	     		var obj = $.parseJSON(obj1);
+	     		$("#edit_region_id").val(obj['region_id']);
+	     		$("#edit_region_name").val(obj['region_name']);
+	     		$("#edit_region_description").val(obj['region_description']);
+
+     		}catch(err){
+     			alert(err);
+     		}
+   		},
+		error: function(){
+		}
+    });
+   	$div_edit_region_error.fadeOut("fast");
+	$div_edit_region_success.fadeOut("fast");
+
+}
+function update_region(){
+		$div_edit_region_error = $("#div_edit_region_error");
+		$div_edit_region_success = $("#div_edit_region_success");
+				
+		$edit_region_name = $("#edit_region_name").val();
+		$edit_region_description = $("#edit_region_description").val();
+	
+		$valmsg = "";
+		$valmsg2 = "";
+		
+		if ($edit_region_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_edit_region_error.html($valmsg);
+			$div_edit_region_success.fadeOut("fast");
+			$div_edit_region_error.fadeIn("fast");
+		}else{
+			$div_edit_region_error.fadeOut("fast");
+			$div_edit_region_success.fadeOut("fast");
+				
+			$("#edit_region_loader").show();
+					
+			var form = document.getElementById('frm_editregion');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/regions/update',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#edit_region_loader").hide();
+					if(res.status == 'ERR'){
+						$div_edit_region_error.html(res.message);
+						$div_edit_region_success.fadeOut("fast");
+						$div_edit_region_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_edit_region_success.html(res.message);
+						$div_edit_region_error.fadeOut("fast");
+						$div_edit_region_success.fadeIn("fast");
+						
+						/*$( '#frm_editregion' ).each(function(){
+							this.reset();
+						});	*/
+						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+						//if ($r == true) {						    
+						//} else {
+						//$('#modal_add_region').modal('hide');
+						//load_regions();
+
+						//}
+					}
+            	},
+				error: function(){
+					$("#edit_region_loader").hide();
+					$div_edit_region_error.html("Something went wrong. Please check your network and try again.");
+					$div_edit_region_success.fadeOut("fast");
+					$div_edit_region_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+function delete_region(region_id){
+	$div_region_error = $("#div_region_error");
+	$div_region_success = $("#div_region_success");
+
+	$div_region_error.fadeOut("fast");
+	$div_region_success.fadeOut("fast");
+
+	$.ajax({
+     	url: baseDir+'be/regions/delete/'+region_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+	     		var obj = $.parseJSON(obj1);
+
+				if(obj['status'] == 'ERR'){
+					$div_region_error.html(obj['message']);
+					$div_region_success.fadeOut("fast");
+					$div_region_error.fadeIn("fast");
+				}else if (obj['status'] == 'SUCCESS'){
+					$div_region_success.html(obj['message']);
+					$div_region_error.fadeOut("fast");
+					$div_region_success.fadeIn("fast");
+				}
+     		}catch(err){
+     			alert(err);
+     		}    		
+   		},
+		error: function(){
+			$div_region_error.html("Something went wrong. Please check your network and try again.");
+			$div_region_success.fadeOut("fast");
+			$div_region_error.fadeIn("fast");
+		}
+    });
+}
+
+
+
+
+
 
 
