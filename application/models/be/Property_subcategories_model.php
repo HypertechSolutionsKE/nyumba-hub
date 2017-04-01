@@ -2,8 +2,19 @@
 class Property_subcategories_model extends CI_Model {
 	
 	function get_property_subcategories_list(){
+		/*$this->db->select('*');
+		$this->db->from('multibets');
+		$this->db->distinct();
+		$this->db->group_by('multibets.multibet_id');
+		$this->db->join('daily_tips', 'daily_tips.multibet_id=multibets.multibet_id');
+		$this->db->where( array('daily_tips.daily_tip_date'=>$tip_date,'daily_tips.is_free'=>0,'daily_tips.is_deleted'=>0));
+		$this->db->order_by("multibets.multibet_id", "asc"); 
+		return $this->db->get()->result();*/
+
+
 		$this->db->from('property_subcategories');
-		$this->db->where( array('is_deleted'=>0));
+		$this->db->join('property_types', 'property_types.property_type_id=property_subcategories.property_type_id');
+		$this->db->where( array('property_subcategories.is_deleted'=>0));
 		return $this->db->get()->result();
 	}
 	function save($data){

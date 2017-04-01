@@ -24,7 +24,7 @@
                         <div class="panel-heading">
                             <h6 class="panel-title" style="margin-top: 5px"><i class="icon-grid2"></i> Property Subcategories List</h6>
                             <div class="panel-icons-group">
-                                <a data-toggle="modal" role="button" href="#modal_add_listingtype" class="label btn-success" onclick="return property_subcategory_add_clear();"><i class="icon-plus-circle"></i> Add Property Subcategory</a>
+                                <a data-toggle="modal" role="button" href="#modal_add_propertysubcategory" class="label btn-success" onclick="return property_subcategory_add_clear();"><i class="icon-plus-circle"></i> Add Property Subcategory</a>
                             </div>
 
                         </div>
@@ -49,6 +49,7 @@
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Description</th>
+                                                <th>Property Type</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -57,8 +58,9 @@
                                                 <tr>
                                                     <td><?php echo $row->property_subcategory_name; ?></td>
                                                     <td><?php echo $row->property_subcategory_description; ?></td>
+                                                    <td><?php echo $row->property_type_name; ?></td>
                                                     <td>
-                                                        <a data-toggle="modal" role="button" href="#modal_edit_listingtype" onclick="return property_subcategory_edit_load(<?php echo $row->property_subcategory_id;?>);" class="label label-success btn-icon"><i class="icon-pencil"></i></a>
+                                                        <a data-toggle="modal" role="button" href="#modal_edit_propertysubcategory" onclick="return property_subcategory_edit_load(<?php echo $row->property_subcategory_id;?>);" class="label label-success btn-icon"><i class="icon-pencil"></i></a>
                                                         <a onClick="javascript:return confirm('Do you really wish to delete this Property Subcategory?');" href="javascript:delete_property_subcategory(<?php echo $row->property_subcategory_id; ?>);" class="label label-danger btn-icon"><i class="icon-remove3"></i></a>
                                                     </td>
                                                 </tr>
@@ -75,7 +77,7 @@
             </div>
 
             <!-- Form modal -->
-            <div id="modal_add_listingtype" class="modal fade" tabindex="-1" role="dialog">
+            <div id="modal_add_propertysubcategory" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -84,7 +86,7 @@
                         </div>
 
                         <!-- Form inside modal -->
-                        <form class="validate" method="post" role="form" id="frm_addlistingtype" name="frm_addlistingtype" onsubmit="return save_property_subcategory();">
+                        <form class="validate" method="post" role="form" id="frm_addpropertysubcategory" name="frm_addpropertysubcategory" onsubmit="return save_property_subcategory();">
 
                             <div class="modal-body with-padding">
                                 <div class="block-inner text-danger">
@@ -105,7 +107,7 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <label>Property Type*</label>
-                                            <select data-placeholder="Choose a Property Type..." class="clear-results" tabindex="2">
+                                            <select data-placeholder="Choose a Property Type..." class="clear-results" tabindex="2" id="add_property_type_id" name="property_type_id">
                                                 <option value=""></option>
                                                 <?php foreach($property_types as $row): ?>
                                                     <option value="<?php echo $row->property_type_id; ?>"><?php echo $row->property_type_name; ?></option>
@@ -148,7 +150,7 @@
             </div>
             <!-- /form modal -->
             <!-- Form modal -->
-            <div id="modal_edit_listingtype" class="modal fade" tabindex="-1" role="dialog">
+            <div id="modal_edit_propertysubcategory" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -157,7 +159,7 @@
                         </div>
 
                         <!-- Form inside modal -->
-                        <form class="validate" method="post" role="form" id="frm_editlistingtype" name="frm_editlistingtype" onsubmit="return update_property_subcategory();">
+                        <form class="validate" method="post" role="form" id="frm_editpropertysubcategory" name="frm_editpropertysubcategory" onsubmit="return update_property_subcategory();">
 
                             <div class="modal-body with-padding">
                                 <div class="block-inner text-danger">
@@ -174,6 +176,21 @@
                                         Error
                                 </div>
                                 <input type="hidden" id="edit_property_subcategory_id" name="property_subcategory_id" class="form-control">
+                                 <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label>Property Type*</label>
+                                            <select data-placeholder="Choose a Property Type..." class="clear-results" tabindex="2" id="edit_property_type_id" name="property_type_id">
+                                                <option value=""></option>
+                                                <?php foreach($property_types as $row): ?>
+                                                    <option value="<?php echo $row->property_type_id; ?>"><?php echo $row->property_type_name; ?></option>
+                                                <?php endforeach; ?>
+                                            </select> 
+                                        </div>
+                                    </div>
+                                </div>
+                                 
+
                                  <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-12">

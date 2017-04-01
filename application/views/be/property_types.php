@@ -24,7 +24,7 @@
                         <div class="panel-heading">
                             <h6 class="panel-title" style="margin-top: 5px"><i class="icon-library"></i> Property Types List</h6>
                             <div class="panel-icons-group">
-                                <a data-toggle="modal" role="button" href="#modal_add_listingtype" class="label btn-success" onclick="return property_type_add_clear();"><i class="icon-plus-circle"></i> Add Property Type</a>
+                                <a data-toggle="modal" role="button" href="#modal_add_propertytype" class="label btn-success" onclick="return property_type_add_clear();"><i class="icon-plus-circle"></i> Add Property Type</a>
                             </div>
 
                         </div>
@@ -58,7 +58,7 @@
                                                     <td><?php echo $row->property_type_name; ?></td>
                                                     <td><?php echo $row->property_type_description; ?></td>
                                                     <td>
-                                                        <a data-toggle="modal" role="button" href="#modal_edit_listingtype" onclick="return property_type_edit_load(<?php echo $row->property_type_id;?>);" class="label label-success btn-icon"><i class="icon-pencil"></i></a>
+                                                        <a data-toggle="modal" role="button" href="#modal_edit_propertytype" onclick="return property_type_edit_load(<?php echo $row->property_type_id;?>);" class="label label-success btn-icon"><i class="icon-pencil"></i></a>
                                                         <a onClick="javascript:return confirm('Do you really wish to delete this Property Type?');" href="javascript:delete_property_type(<?php echo $row->property_type_id; ?>);" class="label label-danger btn-icon"><i class="icon-remove3"></i></a>
                                                     </td>
                                                 </tr>
@@ -75,7 +75,7 @@
             </div>
 
             <!-- Form modal -->
-            <div id="modal_add_listingtype" class="modal fade" tabindex="-1" role="dialog">
+            <div id="modal_add_propertytype" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -84,7 +84,7 @@
                         </div>
 
                         <!-- Form inside modal -->
-                        <form class="validate" method="post" role="form" id="frm_addlistingtype" name="frm_addlistingtype" onsubmit="return save_property_type();">
+                        <form class="validate" method="post" role="form" id="frm_addpropertytype" name="frm_addpropertytype" onsubmit="return save_property_type();">
 
                             <div class="modal-body with-padding">
                                 <div class="block-inner text-danger">
@@ -134,7 +134,7 @@
             </div>
             <!-- /form modal -->
             <!-- Form modal -->
-            <div id="modal_edit_listingtype" class="modal fade" tabindex="-1" role="dialog">
+            <div id="modal_edit_propertytype" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -143,7 +143,7 @@
                         </div>
 
                         <!-- Form inside modal -->
-                        <form class="validate" method="post" role="form" id="frm_editlistingtype" name="frm_editlistingtype" onsubmit="return update_property_type();">
+                        <form class="validate" method="post" role="form" id="frm_editpropertytype" name="frm_editpropertytype" onsubmit="return update_property_type();">
 
                             <div class="modal-body with-padding">
                                 <div class="block-inner text-danger">
