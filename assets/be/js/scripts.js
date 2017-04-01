@@ -1043,3 +1043,267 @@ function delete_region(region_id){
 
 
 
+
+//CITY
+function city_add_clear(){
+	//alert('Test');
+	$( '#frm_addcity' ).each(function(){
+		this.reset();
+	});	
+	$div_add_city_success.fadeOut("fast");
+	$div_add_city_error.fadeOut("fast");
+}
+
+function save_city(){
+	$div_add_city_error = $("#div_add_city_error");
+	$div_add_city_success = $("#div_add_city_success");
+				
+	$add_region_id = $("#add_region_id").val();
+	$add_city_name = $("#add_city_name").val();
+	$add_city_description = $("#add_city_description").val();
+	
+	$valmsg = "";
+	$valmsg2 = "";
+		
+	if ($add_region_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Type<br/>";}
+	if ($add_city_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
+				
+	if ($valmsg != $valmsg2){
+		$div_add_city_error.html($valmsg);
+		$div_add_city_success.fadeOut("fast");
+		$div_add_city_error.fadeIn("fast");
+	}else{
+		$div_add_city_error.fadeOut("fast");
+		$div_add_city_success.fadeOut("fast");
+				
+		$("#add_city_loader").show();
+				
+		var form = document.getElementById('frm_addcity');
+		var formData = new FormData(form);
+
+		$.ajax({
+           	url: baseDir+'be/cities/save',
+           	type: 'POST',
+           	data: formData,
+			dataType: 'json',
+           	xhr: function() {
+           		var myXhr = $.ajaxSettings.xhr();
+           		return myXhr;
+           	},
+           	cache: false,
+           	contentType: false,
+           	processData: false,
+           	success: function (res) {
+				$("#add_city_loader").hide();
+				if(res.status == 'ERR'){
+					$div_add_city_error.html(res.message);
+					$div_add_city_success.fadeOut("fast");
+					$div_add_city_error.fadeIn("fast");
+				}else if (res.status == 'SUCCESS'){
+					$div_add_city_success.html(res.message);
+					$div_add_city_error.fadeOut("fast");
+					$div_add_city_success.fadeIn("fast");
+				
+					$( '#frm_addpropertysubcategory' ).each(function(){
+						this.reset();
+					});	
+					//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+					//if ($r == true) {						    
+					//} else {
+					//$('#modal_add_listingtype').modal('hide');
+					//load_cities();
+					//}
+				}
+           	},
+			error: function(){
+				$("#add_city_loader").hide();
+				$div_add_city_error.html("Something went wrong. Please check your network and try again.");
+				$div_add_city_success.fadeOut("fast");
+				$div_add_city_error.fadeIn("fast");
+			}
+       	});
+	}
+	return false;
+}
+//LOAD LISTING TYPES
+function load_cities(){
+	//$("#tableLoading").show();
+				
+	$.ajax({
+     	url: baseDir+'be/cities/loadjs',
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (result) {
+			$("#cities_div").html(result);
+			//$("#tableLoading").hide();
+   		},
+		error: function(){
+			//$("#tableLoading").hide();
+		}
+    });
+}
+function city_edit_load(city_id){
+	$.ajax({
+     	url: baseDir+'be/cities/get_city/'+city_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+     			obj1 = obj1.replace('[','');
+     			obj1 = obj1.replace(']','');
+	     		var obj = $.parseJSON(obj1);
+
+	     		$("#edit_region_id").val(obj['region_id']).change(); 
+	     		$("#edit_city_id").val(obj['city_id']);
+	     		$("#edit_city_name").val(obj['city_name']);
+	     		$("#edit_city_description").val(obj['city_description']);
+
+     		}catch(err){
+     			alert(err);
+     		}
+   		},
+		error: function(){
+		}
+    });
+   	$div_edit_city_error.fadeOut("fast");
+	$div_edit_city_success.fadeOut("fast");
+
+}
+function update_city(){
+		$div_edit_city_error = $("#div_edit_city_error");
+		$div_edit_city_success = $("#div_edit_city_success");
+				
+		$edit_region_id = $("#edit_region_id").val();
+		$edit_city_name = $("#edit_city_name").val();
+		$edit_city_description = $("#edit_city_description").val();
+	
+		$valmsg = "";
+		$valmsg2 = "";
+		
+		if ($edit_region_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Type<br/>";}
+		if ($edit_city_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_edit_city_error.html($valmsg);
+			$div_edit_city_success.fadeOut("fast");
+			$div_edit_city_error.fadeIn("fast");
+		}else{
+			$div_edit_city_error.fadeOut("fast");
+			$div_edit_city_success.fadeOut("fast");
+				
+			$("#edit_city_loader").show();
+					
+			var form = document.getElementById('frm_editcity');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/cities/update',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#edit_city_loader").hide();
+					if(res.status == 'ERR'){
+						$div_edit_city_error.html(res.message);
+						$div_edit_city_success.fadeOut("fast");
+						$div_edit_city_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_edit_city_success.html(res.message);
+						$div_edit_city_error.fadeOut("fast");
+						$div_edit_city_success.fadeIn("fast");
+						
+						/*$( '#frm_editlistingtype' ).each(function(){
+							this.reset();
+						});	*/
+						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+						//if ($r == true) {						    
+						//} else {
+						//$('#modal_add_listingtype').modal('hide');
+						//load_property_subcategories();
+
+						//}
+					}
+            	},
+				error: function(){
+					$("#edit_city_loader").hide();
+					$div_edit_city_error.html("Something went wrong. Please check your network and try again.");
+					$div_edit_city_success.fadeOut("fast");
+					$div_edit_city_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+function delete_city(city_id){
+	$div_city_error = $("#div_city_error");
+	$div_city_success = $("#div_city_success");
+
+	$div_city_error.fadeOut("fast");
+	$div_city_success.fadeOut("fast");
+
+	$.ajax({
+     	url: baseDir+'be/cities/delete/'+city_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+	     		var obj = $.parseJSON(obj1);
+
+				if(obj['status'] == 'ERR'){
+					$div_city_error.html(obj['message']);
+					$div_city_success.fadeOut("fast");
+					$div_city_error.fadeIn("fast");
+				}else if (obj['status'] == 'SUCCESS'){
+					$div_city_success.html(obj['message']);
+					$div_city_error.fadeOut("fast");
+					$div_city_success.fadeIn("fast");
+				}
+     		}catch(err){
+     			alert(err);
+     		}    		
+   		},
+		error: function(){
+			$div_city_error.html("Something went wrong. Please check your network and try again.");
+			$div_city_success.fadeOut("fast");
+			$div_city_error.fadeIn("fast");
+		}
+    });
+}
+
+
+
+
+
+
+
