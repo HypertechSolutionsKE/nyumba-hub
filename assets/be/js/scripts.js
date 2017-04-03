@@ -1307,3 +1307,376 @@ function delete_city(city_id){
 
 
 
+
+//AREAS
+$(document).ready(function(){
+	$("#add_area_region_id").on('change', function() {
+    	//alert( this.value );
+    	$("#add_area_city_id")
+    		.find('option')
+    		.remove()
+    		.end()
+    		.append('<option value=""></option>')
+    		.val('')
+		;
+    	if (this.value != ''){
+			$.ajax({
+		     	url: baseDir+'be/cities/get_cities_by_region/'+this.value,
+		       	type: 'POST',
+		       	data: '',
+		       	xhr: function() {
+		       		var myXhr = $.ajaxSettings.xhr();
+		       		return myXhr;
+		       	},
+		       	cache: false,
+		       	contentType: false,
+		       	processData: false,
+		     	success: function (res) {
+		     		try{
+		     			var obj1 = res;
+						// preserve newlines, etc - use valid JSON
+						obj1 = obj1.replace(/\\n/g, "\\n")  
+						               .replace(/\\'/g, "\\'")
+						               .replace(/\\"/g, '\\"')
+						               .replace(/\\&/g, "\\&")
+						               .replace(/\\r/g, "\\r")
+						               .replace(/\\t/g, "\\t")
+						               .replace(/\\b/g, "\\b")
+						               .replace(/\\f/g, "\\f");
+						// remove non-printable and other non-valid JSON chars
+						obj1 = obj1.replace(/[\u0000-\u0019]+/g,""); 
+			     		var obj = JSON.parse(obj1);
+			     		for (i=0; i< obj.length; i++){ 
+         					$("#add_area_city_id").append($("<option>").attr('value',obj[i]['city_id']).text(obj[i]['city_name']));
+  						};	
+
+		     		}catch(err){
+		     			alert(err);
+		     		}
+		   		},
+				error: function(){
+				}
+		    });
+    	}
+    })
+ 	$("#edit_area_region_id").on('change', function() {
+    	//alert( this.value );
+    	$("#edit_area_city_id")
+    		.find('option')
+    		.remove()
+    		.end()
+    		.append('<option value=""></option>')
+    		.val('')
+		;
+    	if (this.value != ''){
+			$.ajax({
+		     	url: baseDir+'be/cities/get_cities_by_region/'+this.value,
+		       	type: 'POST',
+		       	data: '',
+		       	xhr: function() {
+		       		var myXhr = $.ajaxSettings.xhr();
+		       		return myXhr;
+		       	},
+		       	cache: false,
+		       	contentType: false,
+		       	processData: false,
+		     	success: function (res) {
+		     		try{
+		     			var obj1 = res;
+						// preserve newlines, etc - use valid JSON
+						obj1 = obj1.replace(/\\n/g, "\\n")  
+						               .replace(/\\'/g, "\\'")
+						               .replace(/\\"/g, '\\"')
+						               .replace(/\\&/g, "\\&")
+						               .replace(/\\r/g, "\\r")
+						               .replace(/\\t/g, "\\t")
+						               .replace(/\\b/g, "\\b")
+						               .replace(/\\f/g, "\\f");
+						// remove non-printable and other non-valid JSON chars
+						obj1 = obj1.replace(/[\u0000-\u0019]+/g,""); 
+			     		var obj = JSON.parse(obj1);
+			     		for (i=0; i< obj.length; i++){ 
+         					$("#edit_area_city_id").append($("<option>").attr('value',obj[i]['city_id']).text(obj[i]['city_name']));
+  						};	
+
+		     		}catch(err){
+		     			alert(err);
+		     		}
+		   		},
+				error: function(){
+				}
+		    });
+    	}
+    })
+}); 
+
+
+function area_add_clear(){
+	//alert('Test');
+	$( '#frm_addarea' ).each(function(){
+		this.reset();
+	});	
+	$div_add_area_success.fadeOut("fast");
+	$div_add_area_error.fadeOut("fast");
+}
+
+function save_area(){
+	$div_add_area_error = $("#div_add_area_error");
+	$div_add_area_success = $("#div_add_area_success");
+				
+	$add_region_id = $("#add_area_region_id").val();
+	$add_city_id = $("#add_area_city_id").val();
+	$add_area_name = $("#add_area_name").val();
+	$add_area_description = $("#add_area_description").val();
+	
+	$valmsg = "";
+	$valmsg2 = "";
+		
+	if ($add_region_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Region<br/>";}
+	if ($add_city_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select City/Town<br/>";}
+	if ($add_area_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Area Name <br/>";}
+				
+	if ($valmsg != $valmsg2){
+		$div_add_area_error.html($valmsg);
+		$div_add_area_success.fadeOut("fast");
+		$div_add_area_error.fadeIn("fast");
+	}else{
+		$div_add_area_error.fadeOut("fast");
+		$div_add_area_success.fadeOut("fast");
+				
+		$("#add_area_loader").show();
+				
+		var form = document.getElementById('frm_addarea');
+		var formData = new FormData(form);
+
+		$.ajax({
+           	url: baseDir+'be/areas/save',
+           	type: 'POST',
+           	data: formData,
+			dataType: 'json',
+           	xhr: function() {
+           		var myXhr = $.ajaxSettings.xhr();
+           		return myXhr;
+           	},
+           	cache: false,
+           	contentType: false,
+           	processData: false,
+           	success: function (res) {
+				$("#add_area_loader").hide();
+				if(res.status == 'ERR'){
+					$div_add_area_error.html(res.message);
+					$div_add_area_success.fadeOut("fast");
+					$div_add_area_error.fadeIn("fast");
+				}else if (res.status == 'SUCCESS'){
+					$div_add_area_success.html(res.message);
+					$div_add_area_error.fadeOut("fast");
+					$div_add_area_success.fadeIn("fast");
+				
+					$( '#frm_addarea' ).each(function(){
+						this.reset();
+						$("#add_area_region_id").val('').trigger('change');
+						$("#add_area_city_id").val('').trigger('change');
+					});	
+					//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+					//if ($r == true) {						    
+					//} else {
+					//$('#modal_add_listingtype').modal('hide');
+					//load_areas();
+					//}
+				}
+           	},
+			error: function(){
+				$("#add_area_loader").hide();
+				$div_add_area_error.html("Something went wrong. Please check your network and try again.");
+				$div_add_area_success.fadeOut("fast");
+				$div_add_area_error.fadeIn("fast");
+			}
+       	});
+	}
+	return false;
+}
+//LOAD LISTING TYPES
+function load_areas(){
+	//$("#tableLoading").show();
+				
+	$.ajax({
+     	url: baseDir+'be/areas/loadjs',
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (result) {
+			$("#areas_div").html(result);
+			//$("#tableLoading").hide();
+   		},
+		error: function(){
+			//$("#tableLoading").hide();
+		}
+    });
+}
+function area_edit_load(area_id){
+	$.ajax({
+     	url: baseDir+'be/areas/get_area/'+area_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+     			obj1 = obj1.replace('[','');
+     			obj1 = obj1.replace(']','');
+	     		var obj = $.parseJSON(obj1);
+
+	     		$("#edit_area_region_id").val(obj['region_id']).trigger('change'); 
+	     		//alert(obj['city_id']);
+				$("#edit_area_city_id").val(obj['city_id']).trigger('change'); 
+	     		//alert('am here!');
+	     		$("#edit_area_id").val(obj['area_id']);
+	     		$("#edit_area_name").val(obj['area_name']);
+	     		$("#edit_area_description").val(obj['area_description']);
+				
+     		}catch(err){
+     			alert(err);
+     		}
+   		},
+		error: function(){
+		}
+    });
+   	$div_edit_area_error.fadeOut("fast");
+	$div_edit_area_success.fadeOut("fast");
+
+}
+function update_area(){
+		$div_edit_area_error = $("#div_edit_area_error");
+		$div_edit_area_success = $("#div_edit_area_success");
+				
+		$edit_area_region_id = $("#edit_area_region_id").val();
+		$edit_area_city_id = $("#edit_area_city_id").val();
+		$edit_area_name = $("#edit_area_name").val();
+		$edit_area_description = $("#edit_area_description").val();
+	
+		$valmsg = "";
+		$valmsg2 = "";
+		
+		if ($edit_area_region_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Region<br/>";}
+		if ($edit_area_city_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select City/Town<br/>";}
+		if ($edit_area_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Area Name <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_edit_area_error.html($valmsg);
+			$div_edit_area_success.fadeOut("fast");
+			$div_edit_area_error.fadeIn("fast");
+		}else{
+			$div_edit_area_error.fadeOut("fast");
+			$div_edit_area_success.fadeOut("fast");
+				
+			$("#edit_area_loader").show();
+					
+			var form = document.getElementById('frm_editarea');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/areas/update',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#edit_area_loader").hide();
+					if(res.status == 'ERR'){
+						$div_edit_area_error.html(res.message);
+						$div_edit_area_success.fadeOut("fast");
+						$div_edit_area_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_edit_area_success.html(res.message);
+						$div_edit_area_error.fadeOut("fast");
+						$div_edit_area_success.fadeIn("fast");
+						
+						/*$( '#frm_editlistingtype' ).each(function(){
+							this.reset();
+						});	*/
+						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+						//if ($r == true) {						    
+						//} else {
+						//$('#modal_add_listingtype').modal('hide');
+						//load_property_subcategories();
+
+						//}
+					}
+            	},
+				error: function(){
+					$("#edit_area_loader").hide();
+					$div_edit_area_error.html("Something went wrong. Please check your network and try again.");
+					$div_edit_area_success.fadeOut("fast");
+					$div_edit_area_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+function delete_area(area_id){
+	$div_area_error = $("#div_area_error");
+	$div_area_success = $("#div_area_success");
+
+	$div_area_error.fadeOut("fast");
+	$div_area_success.fadeOut("fast");
+
+	$.ajax({
+     	url: baseDir+'be/areas/delete/'+area_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+	     		var obj = $.parseJSON(obj1);
+
+				if(obj['status'] == 'ERR'){
+					$div_area_error.html(obj['message']);
+					$div_area_success.fadeOut("fast");
+					$div_area_error.fadeIn("fast");
+				}else if (obj['status'] == 'SUCCESS'){
+					$div_area_success.html(obj['message']);
+					$div_area_error.fadeOut("fast");
+					$div_area_success.fadeIn("fast");
+				}
+     		}catch(err){
+     			alert(err);
+     		}    		
+   		},
+		error: function(){
+			$div_area_error.html("Something went wrong. Please check your network and try again.");
+			$div_area_success.fadeOut("fast");
+			$div_area_error.fadeIn("fast");
+		}
+    });
+}
+
+
+
+
+
