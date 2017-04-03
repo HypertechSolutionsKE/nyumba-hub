@@ -11,7 +11,7 @@ class Property_feature_types extends CI_Controller {
 	function index(){
 		if($this->session->userdata('nhub_loginstate')) {
 			$data['property_feature_types'] = $this->property_feature_types_model->get_property_feature_types_list();
-			$data['page_title'] = 'Property Types | ';
+			$data['page_title'] = 'Property Feature Types | ';
 			$data['main_content'] = 'be/property_feature_types';
 			$this->load->view('be/includes/template',$data);
         } 
@@ -25,26 +25,26 @@ class Property_feature_types extends CI_Controller {
 			'property_feature_type_description' => $this->input->post('property_feature_type_description')
 		);	
 		$property_feature_type_name = $this->input->post('property_feature_type_name');
-		if($this->Property_feature_types_model->property_feature_type_exists($property_feature_type_name) == false){
-			$q = $this->Property_feature_types_model->save($data);
+		if($this->property_feature_types_model->property_feature_type_exists($property_feature_type_name) == false){
+			$q = $this->property_feature_types_model->save($data);
 			if ($q['res'] == true){
-				$resp = array('status' => 'SUCCESS','message' => 'Property Type added successfully.');
+				$resp = array('status' => 'SUCCESS','message' => 'Property Feature Type added successfully.');
 			}else{
 				$resp = array('status' => 'ERR','message' => $q['dt']);
 			}
 		}else{
-			$resp = array('status' => 'ERR','message' => 'This Property Type already exists in the database');
+			$resp = array('status' => 'ERR','message' => 'This Property Feature Type already exists in the database');
 		}
 			
 		echo json_encode($resp);
 	}
 	function loadjs(){
-		$data['property_feature_types'] = $this->Property_feature_types_model->get_property_feature_types_list();
+		$data['property_feature_types'] = $this->property_feature_types_model->get_property_feature_types_list();
 		$this->load->view('be/jsloads/property_feature_types',$data);
 
 	}
 	function get_property_feature_type($property_feature_type_id){
-		$property_feature_type = $this->Property_feature_types_model->get_property_feature_type($property_feature_type_id);
+		$property_feature_type = $this->property_feature_types_model->get_property_feature_type($property_feature_type_id);
 		echo json_encode($property_feature_type);
 	}
 	function update(){
@@ -54,23 +54,23 @@ class Property_feature_types extends CI_Controller {
 			'property_feature_type_name' => $this->input->post('property_feature_type_name'),
 			'property_feature_type_description' => $this->input->post('property_feature_type_description')
 		);	
-		if($this->Property_feature_types_model->property_feature_type_update_exists($property_feature_type_id,$property_feature_type_name) == false){
-			$q = $this->Property_feature_types_model->update($data,$property_feature_type_id);
+		if($this->property_feature_types_model->property_feature_type_update_exists($property_feature_type_id,$property_feature_type_name) == false){
+			$q = $this->property_feature_types_model->update($data,$property_feature_type_id);
 			if ($q['res'] == true){
-				$resp = array('status' => 'SUCCESS','message' => 'Property Type updated successfully.');
+				$resp = array('status' => 'SUCCESS','message' => 'Property Feature Type updated successfully.');
 			}else{
 				$resp = array('status' => 'ERR','message' => $q['dt']);
 			}
 		}else{
-			$resp = array('status' => 'ERR','message' => 'This Property Type already exists in the database');
+			$resp = array('status' => 'ERR','message' => 'This Property Feature Type already exists in the database');
 		}
 		echo json_encode($resp);
 	}
 	function delete($property_feature_type_id){
 		if($this->session->userdata('nhub_loginstate')){
-			$q = $this->Property_feature_types_model->delete($property_feature_type_id);
+			$q = $this->property_feature_types_model->delete($property_feature_type_id);
 			if($q['res'] == TRUE){
-				$resp = array('status' => 'SUCCESS','message' => 'Property Type deleted successfully');			
+				$resp = array('status' => 'SUCCESS','message' => 'Property Feature Type deleted successfully');			
 			}else{					
 				$resp = array('status' => 'ERR','message' => $q['dt']);			
 			}
