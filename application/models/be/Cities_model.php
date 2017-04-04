@@ -7,6 +7,14 @@ class Cities_model extends CI_Model {
 		$this->db->where( array('cities.is_deleted'=>0));
 		return $this->db->get()->result();
 	}
+	function get_cities_by_region($region_id){
+		$query = $this->db->query("select city_id, city_name from cities where region_id = $region_id and is_deleted = 0"); ;
+		//$this->db->from('cities');
+		//$this->db->join('regions', 'regions.region_id=cities.region_id');
+		//$this->db->where(array('cities.region_id'=>$region_id,'cities.is_deleted'=>0));
+		return $query->result();
+
+	}
 	function save($data){
 		$insert = $this->db->insert('cities', $data);
 		if ($insert){
