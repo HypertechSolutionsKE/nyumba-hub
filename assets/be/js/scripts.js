@@ -1307,3 +1307,276 @@ function delete_city(city_id){
 
 
 
+
+
+//CURRENCIES
+function currency_add_clear(){
+	//alert('Test');
+	$( '#frm_addcurrency' ).each(function(){
+		this.reset();
+	});	
+	$div_add_currency_success.fadeOut("fast");
+	$div_add_currency_error.fadeOut("fast");
+}
+
+function save_currency(){
+		$div_add_currency_error = $("#div_add_currency_error");
+		$div_add_currency_success = $("#div_add_currency_success");
+				
+		$add_country_name = $("#add_country_name").val();
+		$add_country_code = $("#add_country_code").val();		
+		$add_currency_name = $("#add_currency_name").val();
+		$add_currency_symbol = $("#add_currency_symbol").val();
+	
+		$valmsg = "";
+		$valmsg2 = "";
+		
+		if ($add_country_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Country Name <br/>";}
+		if ($add_country_code == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Country Code <br/>";}
+		if ($add_currency_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Currency Name <br/>";}
+		if ($add_currency_symbol == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Currency Symbol <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_add_currency_error.html($valmsg);
+			$div_add_currency_success.fadeOut("fast");
+			$div_add_currency_error.fadeIn("fast");
+		}else{
+			$div_add_currency_error.fadeOut("fast");
+			$div_add_currency_success.fadeOut("fast");
+				
+			$("#add_currency_loader").show();
+					
+			var form = document.getElementById('frm_addcurrency');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/currencies/save',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#add_currency_loader").hide();
+					if(res.status == 'ERR'){
+						$div_add_currency_error.html(res.message);
+						$div_add_currency_success.fadeOut("fast");
+						$div_add_currency_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_add_currency_success.html(res.message);
+						$div_add_currency_error.fadeOut("fast");
+						$div_add_currency_success.fadeIn("fast");
+						
+						$( '#frm_addcurrency' ).each(function(){
+							this.reset();
+						});	
+						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+						//if ($r == true) {						    
+						//} else {
+						//$('#modal_add_listingtype').modal('hide');
+						//load_currencies();
+
+						//}
+					}
+            	},
+				error: function(){
+					$("#add_currency_loader").hide();
+					$div_add_currency_error.html("Something went wrong. Please check your network and try again.");
+					$div_add_currency_success.fadeOut("fast");
+					$div_add_currency_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+//LOAD LISTING TYPES
+function load_currencies(){
+	//$("#tableLoading").show();
+				
+	$.ajax({
+     	url: baseDir+'be/currencies/loadjs',
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (result) {
+			$("#currencies_div").html(result);
+			//$("#tableLoading").hide();
+   		},
+		error: function(){
+			//$("#tableLoading").hide();
+		}
+    });
+}
+function currency_edit_load(currency_id){
+	$.ajax({
+     	url: baseDir+'be/currencies/get_currency/'+currency_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+     			obj1 = obj1.replace('[','');
+     			obj1 = obj1.replace(']','');
+	     		var obj = $.parseJSON(obj1);
+	     		$("#edit_currency_id").val(obj['currency_id']);
+	     		$("#edit_country_name").val(obj['country_name']);
+	     		$("#edit_country_code").val(obj['country_code']);
+	     		$("#edit_currency_name").val(obj['currency_name']);
+	     		$("#edit_currency_symbol").val(obj['currency_symbol']);
+
+     		}catch(err){
+     			alert(err);
+     		}
+   		},
+		error: function(){
+		}
+    });
+   	$div_edit_currency_error.fadeOut("fast");
+	$div_edit_currency_success.fadeOut("fast");
+
+}
+function update_currency(){
+		$div_edit_currency_error = $("#div_edit_currency_error");
+		$div_edit_currency_success = $("#div_edit_currency_success");
+				
+		$edit_country_name = $("#edit_country_name").val();
+		$edit_country_code = $("#edit_country_code").val();		
+		$edit_currency_name = $("#edit_currency_name").val();
+		$edit_currency_symbol = $("#edit_currency_symbol").val();
+	
+		$valmsg = "";
+		$valmsg2 = "";
+		
+		if ($edit_country_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Country Name <br/>";}
+		if ($edit_country_code == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Country Code <br/>";}
+		if ($edit_currency_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Currency Name <br/>";}
+		if ($edit_currency_symbol == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Currency Symbol <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_edit_currency_error.html($valmsg);
+			$div_edit_currency_success.fadeOut("fast");
+			$div_edit_currency_error.fadeIn("fast");
+		}else{
+			$div_edit_currency_error.fadeOut("fast");
+			$div_edit_currency_success.fadeOut("fast");
+				
+			$("#edit_currency_loader").show();
+					
+			var form = document.getElementById('frm_editcurrency');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/currencies/update',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#edit_currency_loader").hide();
+					if(res.status == 'ERR'){
+						$div_edit_currency_error.html(res.message);
+						$div_edit_currency_success.fadeOut("fast");
+						$div_edit_currency_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_edit_currency_success.html(res.message);
+						$div_edit_currency_error.fadeOut("fast");
+						$div_edit_currency_success.fadeIn("fast");
+						
+						/*$( '#frm_editlistingtype' ).each(function(){
+							this.reset();
+						});	*/
+						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+						//if ($r == true) {						    
+						//} else {
+						//$('#modal_add_listingtype').modal('hide');
+						//load_currencies();
+
+						//}
+					}
+            	},
+				error: function(){
+					$("#edit_currency_loader").hide();
+					$div_edit_currency_error.html("Something went wrong. Please check your network and try again.");
+					$div_edit_currency_success.fadeOut("fast");
+					$div_edit_currency_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+function delete_currency(currency_id){
+    //alert('Am clicked!');
+    $div_currency_error = $("#div_currency_error");
+    $div_currency_success = $("#div_currency_success");
+
+    $div_currency_error.fadeOut("fast");
+    $div_currency_success.fadeOut("fast");
+
+    $.ajax({
+        url: baseDir+'be/currencies/delete/'+currency_id,
+        type: 'POST',
+        data: '',
+        xhr: function() {
+            var myXhr = $.ajaxSettings.xhr();
+            return myXhr;
+        },
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (res) {
+            try{
+                var obj1 = res;
+                var obj = $.parseJSON(obj1);
+
+                if(obj['status'] == 'ERR'){
+                    $div_currency_error.html(obj['message']);
+                    $div_currency_success.fadeOut("fast");
+                    $div_currency_error.fadeIn("fast");
+                }else if (obj['status'] == 'SUCCESS'){
+                    $div_currency_success.html(obj['message']);
+                    $div_currency_error.fadeOut("fast");
+                    $div_currency_success.fadeIn("fast");
+                }
+            }catch(err){
+                alert(err);
+            }           
+        },
+        error: function(){
+            $div_currency_error.html("Something went wrong. Please check your network and try again.");
+            $div_currency_success.fadeOut("fast");
+            $div_currency_error.fadeIn("fast");
+        }
+    });
+}
+
+
+
+
+
+
