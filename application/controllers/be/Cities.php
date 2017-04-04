@@ -14,7 +14,7 @@ class Cities extends CI_Controller {
 		if($this->session->userdata('nhub_loginstate')) {
 			$data['cities'] = $this->cities_model->get_cities_list();
 			$data['regions'] = $this->regions_model->get_regions_list();
-			$data['page_title'] = 'Property Subcategories | ';
+			$data['page_title'] = 'Cities | ';
 			$data['main_content'] = 'be/cities';
 			$this->load->view('be/includes/template',$data);
         } 
@@ -50,6 +50,10 @@ class Cities extends CI_Controller {
 	function get_city($city_id){
 		$city = $this->cities_model->get_city($city_id);
 		echo json_encode($city);
+	}
+	function get_cities_by_region($region_id){
+		$cities = $this->cities_model->get_cities_by_region($region_id);
+		echo json_encode($cities);
 	}
 	function update(){
 		$city_id = $this->input->post('city_id');
