@@ -1934,3 +1934,544 @@ function delete_property_feature_type(property_feature_type_id){
 }
 
 
+
+
+
+
+
+
+//PROPERTY FEATURES
+function property_feature_add_clear(){
+	//alert('Test');
+	$( '#frm_addpropertyfeature' ).each(function(){
+		this.reset();
+	});	
+	$div_add_property_feature_success.fadeOut("fast");
+	$div_add_property_feature_error.fadeOut("fast");
+}
+
+function save_property_feature(){
+	$div_add_property_feature_error = $("#div_add_property_feature_error");
+	$div_add_property_feature_success = $("#div_add_property_feature_success");
+				
+	$add_property_feature_type_id = $("#add_property_feature_type_id").val();
+	$add_property_feature_name = $("#add_property_feature_name").val();
+	$add_property_feature_description = $("#add_property_feature_description").val();
+	
+	$valmsg = "";
+	$valmsg2 = "";
+		
+	if ($add_property_feature_type_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Feature Type<br/>";}
+	if ($add_property_feature_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Property Feature Name <br/>";}
+				
+	if ($valmsg != $valmsg2){
+		$div_add_property_feature_error.html($valmsg);
+		$div_add_property_feature_success.fadeOut("fast");
+		$div_add_property_feature_error.fadeIn("fast");
+	}else{
+		$div_add_property_feature_error.fadeOut("fast");
+		$div_add_property_feature_success.fadeOut("fast");
+				
+		$("#add_property_feature_loader").show();
+				
+		var form = document.getElementById('frm_addpropertyfeature');
+		var formData = new FormData(form);
+
+		$.ajax({
+           	url: baseDir+'be/property_features/save',
+           	type: 'POST',
+           	data: formData,
+			dataType: 'json',
+           	xhr: function() {
+           		var myXhr = $.ajaxSettings.xhr();
+           		return myXhr;
+           	},
+           	cache: false,
+           	contentType: false,
+           	processData: false,
+           	success: function (res) {
+				$("#add_property_feature_loader").hide();
+				if(res.status == 'ERR'){
+					$div_add_property_feature_error.html(res.message);
+					$div_add_property_feature_success.fadeOut("fast");
+					$div_add_property_feature_error.fadeIn("fast");
+				}else if (res.status == 'SUCCESS'){
+					$div_add_property_feature_success.html(res.message);
+					$div_add_property_feature_error.fadeOut("fast");
+					$div_add_property_feature_success.fadeIn("fast");
+				
+					$( '#frm_addpropertyfeature' ).each(function(){
+						this.reset();
+						$("#add_property_feature_type_id").val('').trigger('change');
+					});	
+					//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+					//if ($r == true) {						    
+					//} else {
+					//$('#modal_add_listingtype').modal('hide');
+					//load_property_features();
+					//}
+				}
+           	},
+			error: function(){
+				$("#add_property_feature_loader").hide();
+				$div_add_property_feature_error.html("Something went wrong. Please check your network and try again.");
+				$div_add_property_feature_success.fadeOut("fast");
+				$div_add_property_feature_error.fadeIn("fast");
+			}
+       	});
+	}
+	return false;
+}
+
+//LOAD LISTING TYPES
+function load_property_features(){
+	//$("#tableLoading").show();
+				
+	$.ajax({
+     	url: baseDir+'be/property_features/loadjs',
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (result) {
+			$("#property_features_div").html(result);
+			//$("#tableLoading").hide();
+   		},
+		error: function(){
+			//$("#tableLoading").hide();
+		}
+    });
+}
+function property_feature_edit_load(property_feature_id){
+	$.ajax({
+     	url: baseDir+'be/property_features/get_property_feature/'+property_feature_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+     			obj1 = obj1.replace('[','');
+     			obj1 = obj1.replace(']','');
+	     		var obj = $.parseJSON(obj1);
+
+	     		$("#edit_property_feature_type_id").val(obj['property_feature_type_id']).change(); 
+	     		$("#edit_property_feature_id").val(obj['property_feature_id']);
+	     		$("#edit_property_feature_name").val(obj['property_feature_name']);
+	     		$("#edit_property_feature_description").val(obj['property_feature_description']);
+
+     		}catch(err){
+     			alert(err);
+     		}
+   		},
+		error: function(){
+		}
+    });
+   	$div_edit_property_feature_error.fadeOut("fast");
+	$div_edit_property_feature_success.fadeOut("fast");
+
+}
+function update_property_feature(){
+		$div_edit_property_feature_error = $("#div_edit_property_feature_error");
+		$div_edit_property_feature_success = $("#div_edit_property_feature_success");
+				
+		$edit_property_feature_type_id = $("#edit_property_feature_type_id").val();
+		$edit_property_feature_name = $("#edit_property_feature_name").val();
+		$edit_property_feature_description = $("#edit_property_feature_description").val();
+	
+		$valmsg = "";
+		$valmsg2 = "";
+		
+		if ($edit_property_feature_type_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Feature Type<br/>";}
+		if ($edit_property_feature_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Property Feature Name <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_edit_property_feature_error.html($valmsg);
+			$div_edit_property_feature_success.fadeOut("fast");
+			$div_edit_property_feature_error.fadeIn("fast");
+		}else{
+			$div_edit_property_feature_error.fadeOut("fast");
+			$div_edit_property_feature_success.fadeOut("fast");
+				
+			$("#edit_property_feature_loader").show();
+					
+			var form = document.getElementById('frm_editpropertyfeature');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/property_features/update',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#edit_property_feature_loader").hide();
+					if(res.status == 'ERR'){
+						$div_edit_property_feature_error.html(res.message);
+						$div_edit_property_feature_success.fadeOut("fast");
+						$div_edit_property_feature_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_edit_property_feature_success.html(res.message);
+						$div_edit_property_feature_error.fadeOut("fast");
+						$div_edit_property_feature_success.fadeIn("fast");
+						
+						/*$( '#frm_editlistingtype' ).each(function(){
+							this.reset();
+						});	*/
+						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+						//if ($r == true) {						    
+						//} else {
+						//$('#modal_add_listingtype').modal('hide');
+						//load_property_features();
+
+						//}
+					}
+            	},
+				error: function(){
+					$("#edit_property_feature_loader").hide();
+					$div_edit_property_feature_error.html("Something went wrong. Please check your network and try again.");
+					$div_edit_property_feature_success.fadeOut("fast");
+					$div_edit_property_feature_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+function delete_property_feature(property_feature_id){
+	$div_property_feature_error = $("#div_property_feature_error");
+	$div_property_feature_success = $("#div_property_feature_success");
+
+	$div_property_feature_error.fadeOut("fast");
+	$div_property_feature_success.fadeOut("fast");
+
+	$.ajax({
+     	url: baseDir+'be/property_features/delete/'+property_feature_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+	     		var obj = $.parseJSON(obj1);
+
+				if(obj['status'] == 'ERR'){
+					$div_property_feature_error.html(obj['message']);
+					$div_property_feature_success.fadeOut("fast");
+					$div_property_feature_error.fadeIn("fast");
+				}else if (obj['status'] == 'SUCCESS'){
+					$div_property_feature_success.html(obj['message']);
+					$div_property_feature_error.fadeOut("fast");
+					$div_property_feature_success.fadeIn("fast");
+				}
+     		}catch(err){
+     			alert(err);
+     		}    		
+   		},
+		error: function(){
+			$div_property_feature_error.html("Something went wrong. Please check your network and try again.");
+			$div_property_feature_success.fadeOut("fast");
+			$div_property_feature_error.fadeIn("fast");
+		}
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+//PROPERTY TYPES
+function currency_add_clear(){
+	//alert('Test');
+	$( '#frm_addcurrency' ).each(function(){
+		this.reset();
+	});	
+	$div_add_currency_success.fadeOut("fast");
+	$div_add_currency_error.fadeOut("fast");
+}
+
+function save_currency(){
+		$div_add_currency_error = $("#div_add_currency_error");
+		$div_add_currency_success = $("#div_add_currency_success");
+				
+		$add_country_name = $("#add_country_name").val();
+		$add_country_code = $("#add_country_code").val();		
+		$add_currency_name = $("#add_currency_name").val();
+		$add_currency_symbol = $("#add_currency_symbol").val();
+
+  		$valmsg = "";
+		$valmsg2 = "";
+	
+		if ($add_country_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Country Name <br/>";}
+		if ($add_country_code == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Country Code <br/>";}
+		if ($add_currency_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Currency Name <br/>";}
+		if ($add_currency_symbol == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Currency Symbol <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_add_currency_error.html($valmsg);
+			$div_add_currency_success.fadeOut("fast");
+			$div_add_currency_error.fadeIn("fast");
+		}else{
+			$div_add_currency_error.fadeOut("fast");
+			$div_add_currency_success.fadeOut("fast");
+				
+			$("#add_currency_loader").show();
+					
+			var form = document.getElementById('frm_addcurrency');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/currencies/save',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#add_currency_loader").hide();
+					if(res.status == 'ERR'){
+						$div_add_currency_error.html(res.message);
+						$div_add_currency_success.fadeOut("fast");
+						$div_add_currency_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_add_currency_success.html(res.message);
+						$div_add_currency_error.fadeOut("fast");
+						$div_add_currency_success.fadeIn("fast");
+						
+						$( '#frm_addlistingtype' ).each(function(){
+							this.reset();
+						});	
+						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+						//if ($r == true) {						    
+						//} else {
+						//$('#modal_add_listingtype').modal('hide');
+						//load_currencies();
+
+						//}
+					}
+            	},
+				error: function(){
+					$("#add_currency_loader").hide();
+					$div_add_currency_error.html("Something went wrong. Please check your network and try again.");
+					$div_add_currency_success.fadeOut("fast");
+					$div_add_currency_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+//LOAD LISTING TYPES
+function load_currencies(){
+	//$("#tableLoading").show();
+				
+	$.ajax({
+     	url: baseDir+'be/currencies/loadjs',
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (result) {
+			$("#currencies_div").html(result);
+			//$("#tableLoading").hide();
+   		},
+		error: function(){
+			//$("#tableLoading").hide();
+		}
+    });
+}
+function currency_edit_load(currency_id){
+	$.ajax({
+     	url: baseDir+'be/currencies/get_currency/'+currency_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+     			obj1 = obj1.replace('[','');
+     			obj1 = obj1.replace(']','');
+	     		var obj = $.parseJSON(obj1);
+			     $("#edit_currency_id").val(obj['currency_id']);
+			     $("#edit_country_name").val(obj['country_name']);
+			     $("#edit_country_code").val(obj['country_code']);
+			     $("#edit_currency_name").val(obj['currency_name']);
+			     $("#edit_currency_symbol").val(obj['currency_symbol']);
+
+     		}catch(err){
+     			alert(err);
+     		}
+   		},
+		error: function(){
+		}
+    });
+   	$div_edit_currency_error.fadeOut("fast");
+	$div_edit_currency_success.fadeOut("fast");
+
+}
+function update_currency(){
+		$div_edit_currency_error = $("#div_edit_currency_error");
+		$div_edit_currency_success = $("#div_edit_currency_success");
+				
+		$edit_country_name = $("#edit_country_name").val();
+		$edit_country_code = $("#edit_country_code").val();		
+		$edit_currency_name = $("#edit_currency_name").val();
+		$edit_currency_symbol = $("#edit_currency_symbol").val();
+	
+		$valmsg = "";
+		$valmsg2 = "";
+		
+		if ($edit_country_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Country Name <br/>";}
+		if ($edit_country_code == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Country Code <br/>";}
+		if ($edit_currency_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Currency Name <br/>";}
+		if ($edit_currency_symbol == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Currency Symbol <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_edit_currency_error.html($valmsg);
+			$div_edit_currency_success.fadeOut("fast");
+			$div_edit_currency_error.fadeIn("fast");
+		}else{
+			$div_edit_currency_error.fadeOut("fast");
+			$div_edit_currency_success.fadeOut("fast");
+				
+			$("#edit_currency_loader").show();
+					
+			var form = document.getElementById('frm_editcurrency');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/currencies/update',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#edit_currency_loader").hide();
+					if(res.status == 'ERR'){
+						$div_edit_currency_error.html(res.message);
+						$div_edit_currency_success.fadeOut("fast");
+						$div_edit_currency_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_edit_currency_success.html(res.message);
+						$div_edit_currency_error.fadeOut("fast");
+						$div_edit_currency_success.fadeIn("fast");
+						
+						/*$( '#frm_editlistingtype' ).each(function(){
+							this.reset();
+						});	*/
+						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+						//if ($r == true) {						    
+						//} else {
+						//$('#modal_add_listingtype').modal('hide');
+						//load_currencies();
+
+						//}
+					}
+            	},
+				error: function(){
+					$("#edit_currency_loader").hide();
+					$div_edit_currency_error.html("Something went wrong. Please check your network and try again.");
+					$div_edit_currency_success.fadeOut("fast");
+					$div_edit_currency_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+function delete_currency(currency_id){
+    //alert('Am clicked!');
+    $div_currency_error = $("#div_currency_error");
+    $div_currency_success = $("#div_currency_success");
+
+    $div_currency_error.fadeOut("fast");
+    $div_currency_success.fadeOut("fast");
+
+    $.ajax({
+        url: baseDir+'be/currencies/delete/'+currency_id,
+        type: 'POST',
+        data: '',
+        xhr: function() {
+            var myXhr = $.ajaxSettings.xhr();
+            return myXhr;
+        },
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (res) {
+            try{
+                var obj1 = res;
+                var obj = $.parseJSON(obj1);
+
+                if(obj['status'] == 'ERR'){
+                    $div_currency_error.html(obj['message']);
+                    $div_currency_success.fadeOut("fast");
+                    $div_currency_error.fadeIn("fast");
+                }else if (obj['status'] == 'SUCCESS'){
+                    $div_currency_success.html(obj['message']);
+                    $div_currency_error.fadeOut("fast");
+                    $div_currency_success.fadeIn("fast");
+                }
+            }catch(err){
+                alert(err);
+            }           
+        },
+        error: function(){
+            $div_currency_error.html("Something went wrong. Please check your network and try again.");
+            $div_currency_success.fadeOut("fast");
+            $div_currency_error.fadeIn("fast");
+        }
+    });
+}
+
