@@ -1680,7 +1680,6 @@ function delete_area(area_id){
 
 
 
-<<<<<<< HEAD
 
 
 //PROPERTY TYPES
@@ -2203,8 +2202,3 @@ function delete_property_feature(property_feature_id){
     });
 }
 
-
-
-
-=======
->>>>>>> 27bf1c4fd9a97f52140856f6a41481f7c8ae7efe
