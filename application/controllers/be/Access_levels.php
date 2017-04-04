@@ -8,7 +8,6 @@ class Access_levels extends CI_Controller {
 		//$this->load->model('be/main_model');
 		$this->load->model('be/access_levels_model');
 	}
-
 	function index(){
 		if($this->session->userdata('nhub_loginstate')) {
 			$data['access_levels'] = $this->access_levels_model->get_access_levels_list();
@@ -21,91 +20,65 @@ class Access_levels extends CI_Controller {
 		}
 	}
 	function save(){
-		$this->form_validation->set_rules('access_level_name', 'Access Level Name', 'trim|required');
-		$this->form_validation->set_rules('access_level_description', 'Access Level Description', 'trim');
-		if($this->form_validation->run() == FALSE){
-			$this->index();
-		}else{
-			if($this->access_levels_model->access_level_exists() == false){
-				if($this->access_levels_model->save_access_level()){
-					$data['success'] = 'Access Level added successfully';
-					$data['access_levels'] = $this->access_levels_model->get_access_levels_list();
-					$data['page_title'] = 'Access Levels | ';
-					$data['main_content'] = 'be/access_levels';
-					$this->load->view('be/includes/template',$data);
-				}else{					
-					$data['error'] = 'There was an error saving the Access Level';
-					$data['access_levels'] = $this->access_levels_model->get_access_levels_list();
-					$data['page_title'] = 'Access Levels | ';
-					$data['main_content'] = 'be/access_levels';
-					$this->load->view('be/includes/template',$data);
-				}
-			}else{					
-				$data['error'] = 'This Access Level already exists';
-				$data['access_levels'] = $this->access_levels_model->get_access_levels_list();
-				$data['page_title'] = 'Access Levels | ';
-				$data['main_content'] = 'be/access_levels';
-				$this->load->view('be/includes/template',$data);
+		$data = array(
+			'access_level_name' => $this->input->post('access_level_name'),
+			'access_level_description' => $this->input->post('access_level_description')
+		);	
+		$access_level_name = $this->input->post('access_level_name');
+		if($this->access_levels_model->access_level_exists($access_level_name) == false){
+			$q = $this->access_levels_model->save($data);
+			if ($q['res'] == true){
+				$resp = array('status' => 'SUCCESS','message' => 'Access Level added successfully.');
+			}else{
+				$resp = array('status' => 'ERR','message' => $q['dt']);
 			}
+		}else{
+			$resp = array('status' => 'ERR','message' => 'This Access Level already exists in the database');
 		}
-		
+			
+		echo json_encode($resp);
 	}
-	function edit($access_level_id){
-		if($this->session->userdata('nhub_loginstate')){
-			$data['access_level'] = $this->access_levels_model->get_access_level($access_level_id);
-			$data['access_levels'] = $this->access_levels_model->get_access_levels_list();
-			$data['page_title'] = 'Access Levels | ';
-			$data['main_content'] = 'be/access_levels';
-			$this->load->view('be/includes/template',$data);
+	function loadjs(){
+		$data['access_levels'] = $this->access_levels_model->get_access_levels_list();
+		$this->load->view('be/jsloads/access_levels',$data);
+
+	}
+	function get_access_level($access_level_id){
+		$access_level = $this->access_levels_model->get_access_level($access_level_id);
+		echo json_encode($access_level);
+	}
+	function update(){
+		$access_level_id = $this->input->post('access_level_id');
+		$access_level_name = $this->input->post('access_level_name');
+		$data = array(
+			'access_level_name' => $this->input->post('access_level_name'),
+			'access_level_description' => $this->input->post('access_level_description')
+		);	
+		if($this->access_levels_model->access_level_update_exists($access_level_id,$access_level_name) == false){
+			$q = $this->access_levels_model->update($data,$access_level_id);
+			if ($q['res'] == true){
+				$resp = array('status' => 'SUCCESS','message' => 'Access Level updated successfully.');
+			}else{
+				$resp = array('status' => 'ERR','message' => $q['dt']);
+			}
 		}else{
-            redirect('be/auth');
+			$resp = array('status' => 'ERR','message' => 'This Access Level already exists in the database');
 		}
-	}
-	function update($access_level_id){
-		$this->form_validation->set_rules('access_level_name', 'Access Level Name', 'trim|required');
-		$this->form_validation->set_rules('access_level_description', 'Access Level Description', 'trim');
-		if($this->form_validation->run() == FALSE){
-			$this->edit($access_level_id);
-		}else{
-			if($this->access_levels_model->access_level_update_exists($access_level_id) == false){
-				$q = $this->access_levels_model->update_access_level($access_level_id);
-				if($q){
-					$data['success'] = 'Access Level updated successfully';
-					$data['access_level'] = $this->access_levels_model->get_access_level($access_level_id);
-					$data['access_levels'] = $this->access_levels_model->get_access_levels_list();
-					$data['page_title'] = 'Access Levels | ';
-					$data['main_content'] = 'be/access_levels';
-					$this->load->view('be/includes/template',$data);
-				}else{					
-					$data['error'] = 'An error was encountered while tring to update this Access Level.';
-					$data['access_level'] = $this->access_levels_model->get_access_level($access_level_id);
-					$data['access_levels'] = $this->access_levels_model->get_access_levels_list();
-					$data['page_title'] = 'Access Levels | ';
-					$data['main_content'] = 'be/access_levels';
-					$this->load->view('be/includes/template',$data);
-				}
-			}
-			else{					
-				$data['error'] = 'This Access Level already exists';
-				$data['access_level'] = $this->access_levels_model->get_access_level($access_level_id);
-				$data['access_levels'] = $this->access_levels_model->get_access_levels_list();
-				$data['page_title'] = 'Access Levels | ';
-				$data['main_content'] = 'be/access_levels';
-				$this->load->view('be/includes/template',$data);
-			}
-		}			
+		echo json_encode($resp);
 	}
 	function delete($access_level_id){
 		if($this->session->userdata('nhub_loginstate')){
-			$q = $this->access_levels_model->delete_access_level($access_level_id);
+			$q = $this->access_levels_model->delete($access_level_id);
 			if($q['res'] == TRUE){
-				$this->index();
+				$resp = array('status' => 'SUCCESS','message' => 'Access Level deleted successfully');			
 			}else{					
-				$this->index();			
+				$resp = array('status' => 'ERR','message' => $q['dt']);			
 			}
 		}else{
-            redirect('be/auth');
-		}
+			$resp = array('status' => 'ERR','message' => 'Your session seems to have expired. Please login again to continue');			
+    	}
+		echo json_encode($resp);
 	}
-}
 
+
+}

@@ -172,10 +172,10 @@
 					<li class="">
 						<a hreactivef="#"><span>Administration</span> <i class=" icon-user"></i></a>
 						<ul>
-							<li><a href="<?php echo base_url();?>be/company">Company Information</a></li>
-							<li><a href="<?php echo base_url();?>be/access-levels">Access Levels</a></li>
+							<li><a href="<?php echo base_url();?>be/company_information">Company Information</a></li>
+							<li><a href="<?php echo base_url();?>be/access_levels">Access Levels</a></li>
 							<li><a href="<?php echo base_url();?>be/departments">Departments</a></li>
-							<li><a href="<?php echo base_url();?>be/system-users">System Users</a></li>
+							<li><a href="<?php echo base_url();?>be/system_users">System Users</a></li>
 						</ul>
 					</li>
 				</ul>

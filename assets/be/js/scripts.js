@@ -2475,3 +2475,264 @@ function delete_currency(currency_id){
     });
 }
 
+
+
+
+
+
+
+
+
+//ACCESS LEVELS
+function access_level_add_clear(){
+	//alert('Test');
+	$( '#frm_addaccesslevel' ).each(function(){
+		this.reset();
+	});	
+	$div_add_access_level_success.fadeOut("fast");
+	$div_add_access_level_error.fadeOut("fast");
+}
+
+function save_access_level(){
+		$div_add_access_level_error = $("#div_add_access_level_error");
+		$div_add_access_level_success = $("#div_add_access_level_success");
+				
+		$add_access_level_name = $("#add_access_level_name").val();
+		$add_access_level_description = $("#add_access_level_description").val();
+	
+		$valmsg = "";
+		$valmsg2 = "";
+		
+		if ($add_access_level_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Access Level Name <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_add_access_level_error.html($valmsg);
+			$div_add_access_level_success.fadeOut("fast");
+			$div_add_access_level_error.fadeIn("fast");
+		}else{
+			$div_add_access_level_error.fadeOut("fast");
+			$div_add_access_level_success.fadeOut("fast");
+				
+			$("#add_access_level_loader").show();
+					
+			var form = document.getElementById('frm_addaccesslevel');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/access_levels/save',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#add_access_level_loader").hide();
+					if(res.status == 'ERR'){
+						$div_add_access_level_error.html(res.message);
+						$div_add_access_level_success.fadeOut("fast");
+						$div_add_access_level_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_add_access_level_success.html(res.message);
+						$div_add_access_level_error.fadeOut("fast");
+						$div_add_access_level_success.fadeIn("fast");
+						
+						$( '#frm_addaccesslevel' ).each(function(){
+							this.reset();
+						});	
+						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+						//if ($r == true) {						    
+						//} else {
+						//$('#modal_add_listingtype').modal('hide');
+						//load_access_levels();
+
+						//}
+					}
+            	},
+				error: function(){
+					$("#add_access_level_loader").hide();
+					$div_add_access_level_error.html("Something went wrong. Please check your network and try again.");
+					$div_add_access_level_success.fadeOut("fast");
+					$div_add_access_level_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+//LOAD LISTING TYPES
+function load_access_levels(){
+	//$("#tableLoading").show();
+				
+	$.ajax({
+     	url: baseDir+'be/access_levels/loadjs',
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (result) {
+			$("#access_levels_div").html(result);
+			//$("#tableLoading").hide();
+   		},
+		error: function(){
+			//$("#tableLoading").hide();
+		}
+    });
+}
+function access_level_edit_load(access_level_id){
+	$.ajax({
+     	url: baseDir+'be/access_levels/get_access_level/'+access_level_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+     			obj1 = obj1.replace('[','');
+     			obj1 = obj1.replace(']','');
+	     		var obj = $.parseJSON(obj1);
+	     		$("#edit_access_level_id").val(obj['access_level_id']);
+	     		$("#edit_access_level_name").val(obj['access_level_name']);
+	     		$("#edit_access_level_description").val(obj['access_level_description']);
+
+     		}catch(err){
+     			alert(err);
+     		}
+   		},
+		error: function(){
+		}
+    });
+   	$div_edit_access_level_error.fadeOut("fast");
+	$div_edit_access_level_success.fadeOut("fast");
+
+}
+function update_access_level(){
+		$div_edit_access_level_error = $("#div_edit_access_level_error");
+		$div_edit_access_level_success = $("#div_edit_access_level_success");
+				
+		$edit_access_level_name = $("#edit_access_level_name").val();
+		$edit_access_level_description = $("#edit_access_level_description").val();
+	
+		$valmsg = "";
+		$valmsg2 = "";
+		
+		if ($edit_access_level_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Access Level Name <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_edit_access_level_error.html($valmsg);
+			$div_edit_access_level_success.fadeOut("fast");
+			$div_edit_access_level_error.fadeIn("fast");
+		}else{
+			$div_edit_access_level_error.fadeOut("fast");
+			$div_edit_access_level_success.fadeOut("fast");
+				
+			$("#edit_access_level_loader").show();
+					
+			var form = document.getElementById('frm_editaccesslevel');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/access_levels/update',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#edit_access_level_loader").hide();
+					if(res.status == 'ERR'){
+						$div_edit_access_level_error.html(res.message);
+						$div_edit_access_level_success.fadeOut("fast");
+						$div_edit_access_level_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_edit_access_level_success.html(res.message);
+						$div_edit_access_level_error.fadeOut("fast");
+						$div_edit_access_level_success.fadeIn("fast");
+						
+						/*$( '#frm_editlistingtype' ).each(function(){
+							this.reset();
+						});	*/
+						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+						//if ($r == true) {						    
+						//} else {
+						//$('#modal_add_listingtype').modal('hide');
+						//load_access_levels();
+
+						//}
+					}
+            	},
+				error: function(){
+					$("#edit_access_level_loader").hide();
+					$div_edit_access_level_error.html("Something went wrong. Please check your network and try again.");
+					$div_edit_access_level_success.fadeOut("fast");
+					$div_edit_access_level_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+function delete_access_level(access_level_id){
+    //alert('Am clicked!');
+    $div_access_level_error = $("#div_access_level_error");
+    $div_access_level_success = $("#div_access_level_success");
+
+    $div_access_level_error.fadeOut("fast");
+    $div_access_level_success.fadeOut("fast");
+
+    $.ajax({
+        url: baseDir+'be/access_levels/delete/'+access_level_id,
+        type: 'POST',
+        data: '',
+        xhr: function() {
+            var myXhr = $.ajaxSettings.xhr();
+            return myXhr;
+        },
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (res) {
+            try{
+                var obj1 = res;
+                var obj = $.parseJSON(obj1);
+
+                if(obj['status'] == 'ERR'){
+                    $div_access_level_error.html(obj['message']);
+                    $div_access_level_success.fadeOut("fast");
+                    $div_access_level_error.fadeIn("fast");
+                }else if (obj['status'] == 'SUCCESS'){
+                    $div_access_level_success.html(obj['message']);
+                    $div_access_level_error.fadeOut("fast");
+                    $div_access_level_success.fadeIn("fast");
+                }
+            }catch(err){
+                alert(err);
+            }           
+        },
+        error: function(){
+            $div_access_level_error.html("Something went wrong. Please check your network and try again.");
+            $div_access_level_success.fadeOut("fast");
+            $div_access_level_error.fadeIn("fast");
+        }
+    });
+}
