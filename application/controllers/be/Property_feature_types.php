@@ -25,7 +25,10 @@ class Property_feature_types extends CI_Controller {
 			'property_feature_type_description' => $this->input->post('property_feature_type_description')
 		);	
 		$property_feature_type_name = $this->input->post('property_feature_type_name');
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9e5a10f5e2d62a721e355961fa5fb6062e0cefdc
 		if($this->property_feature_types_model->property_feature_type_exists($property_feature_type_name) == false){
 			$q = $this->property_feature_types_model->save($data);
 			if ($q['res'] == true){
@@ -35,7 +38,10 @@ class Property_feature_types extends CI_Controller {
 			}
 		}else{
 			$resp = array('status' => 'ERR','message' => 'This Property Feature Type already exists in the database');
+<<<<<<< HEAD
 			$resp = array('status' => 'ERR','message' => 'This Property Type already exists in the database');
+=======
+>>>>>>> 9e5a10f5e2d62a721e355961fa5fb6062e0cefdc
 		}
 			
 		echo json_encode($resp);
