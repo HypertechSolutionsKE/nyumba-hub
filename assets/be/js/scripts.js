@@ -2202,6 +2202,3 @@ function delete_property_feature(property_feature_id){
     });
 }
 
-
-
-
