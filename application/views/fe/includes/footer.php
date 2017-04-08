@@ -5,7 +5,8 @@
               <div class="container">
                 <div class="footer__wrap">
                   <!-- end of block .footer__col-third-->
-                  <span>&copy; 2016 RealtySpace. All rights reserved</span>
+                  <div class="footer__text pull-right">&copy; 2017 Nyumbahub. All rights reserved | Powered by
+                  <a href="http://hypertechsolutions.co.ke" target="_blank">Hypertech Solutions Limited</div>
                   <!-- end of block .footer__copyright-->
                 </div>
               </div>

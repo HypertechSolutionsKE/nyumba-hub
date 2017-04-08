@@ -3706,7 +3706,7 @@ input[type=checkbox].in-checkbox:indeterminate+label:before {
     font-weight: 600;
     text-transform: uppercase;
     font-family: Montserrat, sans-serif;
-    margin: 40px 0 0;
+    margin: 26px 0 0;
     text-align: left
 }
 .sidebar .site__title {
@@ -6796,12 +6796,12 @@ mark {
 .widget--details .widget__header+.widget__content {
     margin-top: 30px
 }
-.widget--sidebar {
+/* .widget--sidebar {
     margin-top: 50px
 }
 .widget--sidebar:first-of-type:not(.widget--first-no-head) {
     margin-top: 26px
-}
+} */
 @media (max-width:767px) {
     .widget--sidebar {
         margin-top: 0
@@ -6815,10 +6815,10 @@ mark {
     font-weight: 600;
     text-transform: uppercase;
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: 10px;
     font-family: Montserrat, sans-serif;
-    font-size: 34px;
-    text-align: left
+    font-size: 28px;
+    text-align: left;
 }
 @media (max-width:767px) {
     .widget--sidebar .widget__title {
@@ -7174,7 +7174,7 @@ mark {
 .worker__name {
     margin: 7px 0;
     text-transform: uppercase;
-    font-size: 24px;
+    font-size: 17px;
     color: #0ba;
     font-weight: 600
 }
@@ -7195,7 +7195,7 @@ mark {
 }
 .worker__tel {
     margin: 10px 0;
-    font-size: 20px;
+    font-size: 15px;
     color: #0ba;
     font-weight: 600;
     text-decoration: none
@@ -12616,7 +12616,7 @@ div.wpcf7 img.ajax-loader {
 .header__social {
     margin-top: -4px;
     margin-left: 30px;
-    margin-right: auto
+    padding-bottom: 1px;
 }
 @media (max-width:991px) {
     .header__social {
@@ -12624,11 +12624,12 @@ div.wpcf7 img.ajax-loader {
     }
 }
 .header__phone {
+    padding: 10px;
     color: #fff;
     display: block;
     font-weight: 400;
     line-height: 1;
-    padding: 15px 40px 0
+    padding: 10px 40px 0
 }
 .header__phone:hover {
     color: #fff
@@ -13762,7 +13763,7 @@ div.wpcf7 img.ajax-loader {
 .navbar--header {
     position: relative;
     z-index: 230;
-    background: #f6f6f6;
+    background: #fff;
     border: none;
     min-height: inherit;
     margin-bottom: 0
@@ -13875,7 +13876,12 @@ div.wpcf7 img.ajax-loader {
 .footer__wrap {
     margin-left: -15px;
     margin-right: -15px;
-    padding-top: 25px
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.footer__text {
+    color: white;
+    padding: 0px;
 }
 .footer__wrap:after, .footer__wrap:before {
     content: " ";
@@ -13947,7 +13953,7 @@ div.wpcf7 img.ajax-loader {
     }
 }
 .footer a, .footer p, .footer span {
-    color: #bebebe;
+    color: #0ba;
     font-weight: 400;
     margin-bottom: 15px
 }

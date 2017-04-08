@@ -22,10 +22,11 @@
                   	<svg>
                     	<use xlink:href="#icon-logo--mob"></use>
                   	</svg></a>
-	                <div class="header__contacts"><a href="tel:+12025550135" class="header__phone">
-	                    <svg class="header__phone-icon">
-	                      <use xlink:href="#icon-phone"></use>
-	                    </svg><span class="header__span">+1 202 555 0135</span></a>
+	                <div class="header__contacts">
+                    <a href="tel:+12025550135" class="header__phone">
+                      <i class="fa fa-phone-square" aria-hidden="true"></i>
+                          +1 202 555 0135
+                    </a>
 	                </div>
                 <!-- end of block .header__contacts-->
                 	<div class="header__social">

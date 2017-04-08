@@ -5,17 +5,23 @@
               <!-- BEGIN site-->
               <div class="site site--main">
                 <header class="site__header">
-                  <h1 class="site__title">Faq</h1>
-                  <h2 class="site__headline">Find answers to recurring questions and myths about RealtySpace</h2>
+                  <h1 class="site__title">How It Works</h1>
+                  <h2 class="site__headline">Find answers to recurring questions and myths about NyumbaHub</h2>
                 </header>
-                <div class="site__panel"><span class="site__header-text">This is a short list of our most frequently asked questions. For more information about RealtySpace, or if you need support, please call our<a href="faq.html#">support center.</a></span></div>
+                <div class="site__panel"><span class="site__header-text">This is a short list of our most frequently asked questions. For more information about NyumbaHub, or if you need support, please call our<a href="faq.html#">support center.</a></span></div>
                 <div class="site__main">
                   <div class="widget js-widget widget--main">
                     <div class="widget__content">
                       <!-- BEGIN FAQ-->
                       <div role="tablist" aria-multiselectable="true" class="faq">
                         <dl class="faq__item">
-                          <dt id="heading-0" role="tab" class="faq__title"><a data-toggle="collapse" data-parent="#accordion" href="faq.html#collapse-0" aria-expanded="true" aria-controls="collapse-0" class="faq__expander collapsed">How do we determine how much we can afford to pay for a home?</a></dt>
+                          <dt id="heading-0" role="tab" class="faq__title">
+                              <script type="text/javascript">
+                                $("[href='#collapse-0']").click();
+                              </script>
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse-0" aria-expanded="true" aria-controls="collapse-0" class="faq__expander collapsed">How do we determine how much we can afford to pay for a home?
+                              </a>
+                          </dt>
                           <dd id="collapse-0" role="tabpanel" aria-labelledby="heading-0" class="faq__content collapse">
                             <div class="faq__body">
                               <p>In order to determine how much you can afford, we need to understand debt to income ratios. First, we must determine what your gross annual income is and divide that income by 12. (12 months). Second, we must determine your long term debt. For example: home mortgage (principal &amp; interest), taxes &amp; insurance (T &amp; I), school loan, car loan, credit card debt, etc. and calculate the monthly payments. Third, the debt to income ratio is established by dividing the monthly debt by the monthly income. The debt to income ratio should, in most cases not exceed 35%.     Forth, if the debt to income ratio is 35% or less and your credit rating is decent, there is a good chance you will be able to get approved for a mortgage loan.</p>
@@ -132,7 +138,7 @@
                     <div class="listing listing--sidebar">
                       <div class="listing__item">
                         <div class="properties properties--sidebar">
-                          <div class="properties__thumb"><a href="property_details.html" class="item-photo item-photo--static"><img src="assets/media-demo/properties/554x360/02.jpg" alt=""/>
+                          <div class="properties__thumb"><a href="property_details.html" class="item-photo item-photo--static"><img src="<?php echo base_url();?>assets/fe/media-demo/properties/554x360/02.jpg" alt=""/>
                               <figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure></a>
                           </div>
                           <!-- end of block .properties__thumb-->
@@ -147,7 +153,7 @@
                       </div>
                       <div class="listing__item">
                         <div class="properties properties--sidebar">
-                          <div class="properties__thumb"><a href="property_details.html" class="item-photo item-photo--static"><img src="assets/img/no-image--554x360.jpg" alt=""/>
+                          <div class="properties__thumb"><a href="property_details.html" class="item-photo item-photo--static"><img src="<?php echo base_url();?>assets/fe/img/no-image--554x360.jpg" alt=""/>
                               <figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure></a>
                           </div>
                           <!-- end of block .properties__thumb-->
@@ -162,7 +168,7 @@
                       </div>
                       <div class="listing__item">
                         <div class="properties properties--sidebar">
-                          <div class="properties__thumb"><a href="property_details.html" class="item-photo item-photo--static"><img src="assets/media-demo/properties/554x360/04.jpg" alt=""/>
+                          <div class="properties__thumb"><a href="property_details.html" class="item-photo item-photo--static"><img src="<?php echo base_url();?>assets/fe/media-demo/properties/554x360/04.jpg" alt=""/>
                               <figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure></a>
                           </div>
                           <!-- end of block .properties__thumb-->
