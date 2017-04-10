@@ -1382,7 +1382,7 @@ body.boxed {
   left: auto;
   right: 0;
 }
-.sidebar-right .navigation > li > a > i {
+.sidebar-right .navigation > li > a > i, .sidebar-right .navigation > li > ul > li > a > i {
   right: 16px;
 }
 .sidebar-right .page-content {
@@ -1553,7 +1553,7 @@ body.boxed {
   opacity: 1;
   filter: alpha(Opacity=100);
 }
-.navigation > li > a > i {
+.navigation > li > a > i, .navigation > li > ul > li > a > i {
   font-size: 16px;
   position: absolute;
   right: 14px;

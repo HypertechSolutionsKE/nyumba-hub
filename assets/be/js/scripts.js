@@ -2736,3 +2736,272 @@ function delete_access_level(access_level_id){
         }
     });
 }
+
+
+
+
+
+
+
+
+//DEPARTMENTS
+function department_add_clear(){
+	//alert('Test');
+	$( '#frm_adddepartment' ).each(function(){
+		this.reset();
+	});	
+	$div_add_department_success.fadeOut("fast");
+	$div_add_department_error.fadeOut("fast");
+}
+
+function save_department(){
+		$div_add_department_error = $("#div_add_department_error");
+		$div_add_department_success = $("#div_add_department_success");
+				
+		$add_department_name = $("#add_department_name").val();
+		$add_department_description = $("#add_department_description").val();
+	
+		$valmsg = "";
+		$valmsg2 = "";
+		
+		if ($add_department_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Access Level Name <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_add_department_error.html($valmsg);
+			$div_add_department_success.fadeOut("fast");
+			$div_add_department_error.fadeIn("fast");
+		}else{
+			$div_add_department_error.fadeOut("fast");
+			$div_add_department_success.fadeOut("fast");
+				
+			$("#add_department_loader").show();
+					
+			var form = document.getElementById('frm_adddepartment');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/departments/save',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#add_department_loader").hide();
+					if(res.status == 'ERR'){
+						$div_add_department_error.html(res.message);
+						$div_add_department_success.fadeOut("fast");
+						$div_add_department_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_add_department_success.html(res.message);
+						$div_add_department_error.fadeOut("fast");
+						$div_add_department_success.fadeIn("fast");
+						
+						$( '#frm_adddepartment' ).each(function(){
+							this.reset();
+						});	
+						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+						//if ($r == true) {						    
+						//} else {
+						//$('#modal_add_listingtype').modal('hide');
+						//load_departments();
+
+						//}
+					}
+            	},
+				error: function(){
+					$("#add_department_loader").hide();
+					$div_add_department_error.html("Something went wrong. Please check your network and try again.");
+					$div_add_department_success.fadeOut("fast");
+					$div_add_department_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+//LOAD LISTING TYPES
+function load_departments(){
+	//$("#tableLoading").show();
+				
+	$.ajax({
+     	url: baseDir+'be/departments/loadjs',
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (result) {
+			$("#departments_div").html(result);
+			//$("#tableLoading").hide();
+   		},
+		error: function(){
+			//$("#tableLoading").hide();
+		}
+    });
+}
+function department_edit_load(department_id){
+	$.ajax({
+     	url: baseDir+'be/departments/get_department/'+department_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+     			obj1 = obj1.replace('[','');
+     			obj1 = obj1.replace(']','');
+	     		var obj = $.parseJSON(obj1);
+	     		$("#edit_department_id").val(obj['department_id']);
+	     		$("#edit_department_name").val(obj['department_name']);
+	     		$("#edit_department_description").val(obj['department_description']);
+
+     		}catch(err){
+     			alert(err);
+     		}
+   		},
+		error: function(){
+		}
+    });
+   	$div_edit_department_error.fadeOut("fast");
+	$div_edit_department_success.fadeOut("fast");
+
+}
+function update_department(){
+		$div_edit_department_error = $("#div_edit_department_error");
+		$div_edit_department_success = $("#div_edit_department_success");
+				
+		$edit_department_name = $("#edit_department_name").val();
+		$edit_department_description = $("#edit_department_description").val();
+	
+		$valmsg = "";
+		$valmsg2 = "";
+		
+		if ($edit_department_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Access Level Name <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_edit_department_error.html($valmsg);
+			$div_edit_department_success.fadeOut("fast");
+			$div_edit_department_error.fadeIn("fast");
+		}else{
+			$div_edit_department_error.fadeOut("fast");
+			$div_edit_department_success.fadeOut("fast");
+				
+			$("#edit_department_loader").show();
+					
+			var form = document.getElementById('frm_editdepartment');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/departments/update',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#edit_department_loader").hide();
+					if(res.status == 'ERR'){
+						$div_edit_department_error.html(res.message);
+						$div_edit_department_success.fadeOut("fast");
+						$div_edit_department_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_edit_department_success.html(res.message);
+						$div_edit_department_error.fadeOut("fast");
+						$div_edit_department_success.fadeIn("fast");
+						
+						/*$( '#frm_editlistingtype' ).each(function(){
+							this.reset();
+						});	*/
+						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+						//if ($r == true) {						    
+						//} else {
+						//$('#modal_add_listingtype').modal('hide');
+						//load_departments();
+
+						//}
+					}
+            	},
+				error: function(){
+					$("#edit_department_loader").hide();
+					$div_edit_department_error.html("Something went wrong. Please check your network and try again.");
+					$div_edit_department_success.fadeOut("fast");
+					$div_edit_department_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+function delete_department(department_id){
+    //alert('Am clicked!');
+    $div_department_error = $("#div_department_error");
+    $div_department_success = $("#div_department_success");
+
+    $div_department_error.fadeOut("fast");
+    $div_department_success.fadeOut("fast");
+
+    $.ajax({
+        url: baseDir+'be/departments/delete/'+department_id,
+        type: 'POST',
+        data: '',
+        xhr: function() {
+            var myXhr = $.ajaxSettings.xhr();
+            return myXhr;
+        },
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (res) {
+            try{
+                var obj1 = res;
+                var obj = $.parseJSON(obj1);
+
+                if(obj['status'] == 'ERR'){
+                    $div_department_error.html(obj['message']);
+                    $div_department_success.fadeOut("fast");
+                    $div_department_error.fadeIn("fast");
+                }else if (obj['status'] == 'SUCCESS'){
+                    $div_department_success.html(obj['message']);
+                    $div_department_error.fadeOut("fast");
+                    $div_department_success.fadeIn("fast");
+                }
+            }catch(err){
+                alert(err);
+            }           
+        },
+        error: function(){
+            $div_department_error.html("Something went wrong. Please check your network and try again.");
+            $div_department_success.fadeOut("fast");
+            $div_department_error.fadeIn("fast");
+        }
+    });
+}
+
+
+
+
+//COMPANY INFORMATION
+function save_company_information(){
+	alert('Am here!');
+}

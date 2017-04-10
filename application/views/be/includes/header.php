@@ -142,37 +142,24 @@
 				<ul class="navigation">
 					<li class="active"><a href="<?php echo base_url();?>be"><span>Dashboard</span> <i class=" icon-home"></i></a></li>
 					<li class="">
-						<a href="<?php echo base_url();?>be/listing_types"><span>Listing Types</span> <i class=" icon-list2"></i></a>
+						<a hreactivef="#"><span>System Setup</span> <i class=" icon-cogs"></i></a>
+						<ul>
+							<li><a href="<?php echo base_url();?>be/listing_types"><span>Listing Types</span> <i class=" icon-list2"></i></a></li>
+							<li><a href="<?php echo base_url();?>be/property_types"><span>Property Types</span> <i class=" icon-library"></i></a></li>
+							<li><a href="<?php echo base_url();?>be/property_subcategories"><span>Property Subcategories</span> <i class="icon-grid2"></i></a></li>
+							<li><a href="<?php echo base_url();?>be/regions"><span>Regions</span> <i class="icon-globe2"></i></a></li>
+							<li><a href="<?php echo base_url();?>be/cities"><span>Cities/Towns</span> <i class="icon-map2"></i></a></li>
+							<li><a href="<?php echo base_url();?>be/areas"><span>Areas/Localities</span> <i class="icon-bookmarks"></i></a></li>
+							<li><a href="<?php echo base_url();?>be/property_feature_types"><span>Property Feature Types</span> <i class="icon-menu3"></i></a></li>
+							<li><a href="<?php echo base_url();?>be/property_features"><span>Property Features</span> <i class="icon-equalizer"></i></a></li>
+							<li><a href="<?php echo base_url();?>be/currencies"><span>Currencies</span> <i class="icon-coin"></i></a></li>
+						</ul>
 					</li>
-					<li class="">
-						<a href="<?php echo base_url();?>be/property_types"><span>Property Types</span> <i class=" icon-library"></i></a>
-					</li>
-					<li class="">
-						<a href="<?php echo base_url();?>be/property_subcategories"><span>Property Subcategories</span> <i class="icon-grid2"></i></a>
-					</li>
-					<li class="">
-						<a href="<?php echo base_url();?>be/regions"><span>Regions</span> <i class="icon-globe2"></i></a>
-					</li>
-					<li class="">
-						<a href="<?php echo base_url();?>be/cities"><span>Cities/Towns</span> <i class="icon-map2"></i></a>
-					</li>
-					<li class="">
-						<a href="<?php echo base_url();?>be/areas"><span>Areas/Localities</span> <i class="icon-bookmarks"></i></a>
-					</li>
-					<li class="">
-						<a href="<?php echo base_url();?>be/property_feature_types"><span>Property Feature Types</span> <i class="icon-menu3"></i></a>
-					</li>
-					<li class="">
-						<a href="<?php echo base_url();?>be/property_features"><span>Property Features</span> <i class="icon-equalizer"></i></a>
-					</li>
-					<li class="">
-						<a href="<?php echo base_url();?>be/currencies"><span>Currencies</span> <i class="icon-coin"></i></a>
-					</li>
-
+					
 					<li class="">
 						<a hreactivef="#"><span>Administration</span> <i class=" icon-user"></i></a>
 						<ul>
-							<li><a href="<?php echo base_url();?>be/company_information">Company Information</a></li>
+							<li><a href="<?php echo base_url();?>be/company_information">Company Information <i class="icon-coin"></i></a></li>
 							<li><a href="<?php echo base_url();?>be/access_levels">Access Levels</a></li>
 							<li><a href="<?php echo base_url();?>be/departments">Departments</a></li>
 							<li><a href="<?php echo base_url();?>be/system_users">System Users</a></li>

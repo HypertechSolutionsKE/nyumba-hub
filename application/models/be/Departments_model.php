@@ -6,17 +6,17 @@ class Departments_model extends CI_Model {
 		$this->db->where( array('is_deleted'=>0));
 		return $this->db->get()->result();
 	}
-	
-	function save_department(){	
-		$new_insert_data = array(
-			'department_name' => $this->input->post('department_name'),
-			'department_description' => $this->input->post('department_description')
-		);		
-		$insert = $this->db->insert('departments', $new_insert_data);
-		return $insert;
-	}	
-	function department_exists(){
-		$this->db->where('department_name',$this->input->post('department_name'));
+	function save($data){
+		$insert = $this->db->insert('departments', $data);
+		if ($insert){
+			$arr_return = array('res' => true,'dt' => 'Department added successfully.');
+		}else{
+			$arr_return = array('res' => false,'dt' => 'Could not add Department successfully. Please try again.');
+		}
+		return $arr_return;
+	}
+	function department_exists($department_name){
+		$this->db->where('department_name',$department_name);
 		$this->db->where('is_deleted',0);
 		$query = $this->db->get('departments');
 		if ($query->num_rows() > 0){
@@ -24,52 +24,45 @@ class Departments_model extends CI_Model {
 		}else{
 			return false;
 		}
+
 	}
 	function get_department($department_id){
 		$this->db->from('departments');
 		$this->db->where( array('department_id'=>$department_id));
-		$results = $this->db->get();
-		return $results->result();
-	}	
-	function department_update_exists($department_id){
-		$departmentname = $this->input->post('department_name');
-		$q = $this->db->query("SELECT * FROM departments WHERE department_id != ".$department_id." AND department_name = '$departmentname' AND is_deleted = 0");
+		return $this->db->get()->result_array();
+	}
+	function department_update_exists($department_id,$department_name){
+		$q = $this->db->query("SELECT * FROM departments WHERE department_id != ".$department_id." AND department_name = '$department_name' AND is_deleted = 0");
 		if ($q->num_rows() > 0){
 			return TRUE;
 		}else{
 			return FALSE;
 		}
 	}	
-	function update_department($department_id){
-		$data = array(
-			'department_name' => $this->input->post('department_name'),
-			'department_description' => $this->input->post('department_description')
-		);			
-		$this->db->where( array('department_id'=>$department_id));
-		$catup = $this->db->update('departments', $data);
-		
-		
-		if ($catup == TRUE){
-			return true;
+	function update($data,$department_id){
+		$this->db->where(array('department_id'=>$department_id));
+		$update = $this->db->update('departments', $data);
+		if ($update){
+			$arr_return = array('res' => true,'dt' => 'Department updated successfully.');
 		}else{
-			return false;
+			$arr_return = array('res' => false,'dt' => 'Could not update Department successfully. Please try again.');
 		}
+		return $arr_return;
 	}
-	
-	function delete_department($department_id){
+	function delete($department_id){
 		$data = array(
 			'is_deleted'=> 1
 		);			
 		$this->db->where( array('department_id'=>$department_id));
-		$catup = $this->db->update('departments', $data);
+		$delupdate = $this->db->update('departments', $data);
 		
-		if ($catup == TRUE){
-			$arr_return = array('res' => TRUE);
-			return $arr_return;
+		if ($delupdate){
+			$arr_return = array('res' => true,'dt'=>'Department deleted successfully');
 		}else{
-			$arr_return = array('res' => FALSE,'dt' => 'Error deleting department');
-			return $arr_return;
+			$arr_return = array('res' => false,'dt' => 'Error deleting Department');
 		}
+		return $arr_return;
 	}
-	
+
+
 }

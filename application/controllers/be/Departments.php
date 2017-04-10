@@ -8,7 +8,6 @@ class Departments extends CI_Controller {
 		//$this->load->model('be/main_model');
 		$this->load->model('be/departments_model');
 	}
-
 	function index(){
 		if($this->session->userdata('nhub_loginstate')) {
 			$data['departments'] = $this->departments_model->get_departments_list();
@@ -21,91 +20,65 @@ class Departments extends CI_Controller {
 		}
 	}
 	function save(){
-		$this->form_validation->set_rules('department_name', 'Department Name', 'trim|required');
-		$this->form_validation->set_rules('department_description', 'Department Description', 'trim');
-		if($this->form_validation->run() == FALSE){
-			$this->index();
-		}else{
-			if($this->departments_model->Department_exists() == false){
-				if($this->departments_model->save_Department()){
-					$data['success'] = 'Department added successfully';
-					$data['departments'] = $this->departments_model->get_departments_list();
-					$data['page_title'] = 'Departments | ';
-					$data['main_content'] = 'be/departments';
-					$this->load->view('be/includes/template',$data);
-				}else{					
-					$data['error'] = 'There was an error saving the Department';
-					$data['departments'] = $this->departments_model->get_departments_list();
-					$data['page_title'] = 'Departments | ';
-					$data['main_content'] = 'be/departments';
-					$this->load->view('be/includes/template',$data);
-				}
-			}else{					
-				$data['error'] = 'This Department already exists';
-				$data['departments'] = $this->departments_model->get_departments_list();
-				$data['page_title'] = 'Departments | ';
-				$data['main_content'] = 'be/departments';
-				$this->load->view('be/includes/template',$data);
+		$data = array(
+			'department_name' => $this->input->post('department_name'),
+			'department_description' => $this->input->post('department_description')
+		);	
+		$department_name = $this->input->post('department_name');
+		if($this->departments_model->department_exists($department_name) == false){
+			$q = $this->departments_model->save($data);
+			if ($q['res'] == true){
+				$resp = array('status' => 'SUCCESS','message' => 'Department added successfully.');
+			}else{
+				$resp = array('status' => 'ERR','message' => $q['dt']);
 			}
+		}else{
+			$resp = array('status' => 'ERR','message' => 'This Department already exists in the database');
 		}
-		
+			
+		echo json_encode($resp);
 	}
-	function edit($Department_id){
-		if($this->session->userdata('nhub_loginstate')){
-			$data['Department'] = $this->departments_model->get_Department($Department_id);
-			$data['departments'] = $this->departments_model->get_departments_list();
-			$data['page_title'] = 'Departments | ';
-			$data['main_content'] = 'be/departments';
-			$this->load->view('be/includes/template',$data);
-		}else{
-            redirect('be/auth');
-		}
-	}
-	function update($Department_id){
-		$this->form_validation->set_rules('department_name', 'Department Name', 'trim|required');
-		$this->form_validation->set_rules('department_description', 'Department Description', 'trim');
-		if($this->form_validation->run() == FALSE){
-			$this->edit($Department_id);
-		}else{
-			if($this->departments_model->Department_update_exists($Department_id) == false){
-				$q = $this->departments_model->update_Department($Department_id);
-				if($q){
-					$data['success'] = 'Department updated successfully';
-					$data['Department'] = $this->departments_model->get_Department($Department_id);
-					$data['departments'] = $this->departments_model->get_departments_list();
-					$data['page_title'] = 'Departments | ';
-					$data['main_content'] = 'be/departments';
-					$this->load->view('be/includes/template',$data);
-				}else{					
-					$data['error'] = 'An error was encountered while tring to update this Department.';
-					$data['Department'] = $this->departments_model->get_Department($Department_id);
-					$data['departments'] = $this->departments_model->get_departments_list();
-					$data['page_title'] = 'Departments | ';
-					$data['main_content'] = 'be/departments';
-					$this->load->view('be/includes/template',$data);
-				}
-			}
-			else{					
-				$data['error'] = 'This Department already exists';
-				$data['Department'] = $this->departments_model->get_Department($Department_id);
-				$data['departments'] = $this->departments_model->get_departments_list();
-				$data['page_title'] = 'Departments | ';
-				$data['main_content'] = 'be/departments';
-				$this->load->view('be/includes/template',$data);
-			}
-		}			
-	}
-	function delete($Department_id){
-		if($this->session->userdata('nhub_loginstate')){
-			$q = $this->departments_model->delete_Department($Department_id);
-			if($q['res'] == TRUE){
-				$this->index();
-			}else{					
-				$this->index();			
-			}
-		}else{
-            redirect('be/auth');
-		}
-	}
-}
+	function loadjs(){
+		$data['departments'] = $this->departments_model->get_departments_list();
+		$this->load->view('be/jsloads/departments',$data);
 
+	}
+	function get_department($department_id){
+		$department = $this->departments_model->get_department($department_id);
+		echo json_encode($department);
+	}
+	function update(){
+		$department_id = $this->input->post('department_id');
+		$department_name = $this->input->post('department_name');
+		$data = array(
+			'department_name' => $this->input->post('department_name'),
+			'department_description' => $this->input->post('department_description')
+		);	
+		if($this->departments_model->department_update_exists($department_id,$department_name) == false){
+			$q = $this->departments_model->update($data,$department_id);
+			if ($q['res'] == true){
+				$resp = array('status' => 'SUCCESS','message' => 'Department updated successfully.');
+			}else{
+				$resp = array('status' => 'ERR','message' => $q['dt']);
+			}
+		}else{
+			$resp = array('status' => 'ERR','message' => 'This Department already exists in the database');
+		}
+		echo json_encode($resp);
+	}
+	function delete($department_id){
+		if($this->session->userdata('nhub_loginstate')){
+			$q = $this->departments_model->delete($department_id);
+			if($q['res'] == TRUE){
+				$resp = array('status' => 'SUCCESS','message' => 'Department deleted successfully');			
+			}else{					
+				$resp = array('status' => 'ERR','message' => $q['dt']);			
+			}
+		}else{
+			$resp = array('status' => 'ERR','message' => 'Your session seems to have expired. Please login again to continue');			
+    	}
+		echo json_encode($resp);
+	}
+
+
+}
