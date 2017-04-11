@@ -1,7 +1,7 @@
 <?php
 class Areas_model extends CI_Model {
 	
-	function get_Areas_list(){
+	function get_areas_list(){
 		$this->db->from('areas');
 		$this->db->join('cities', 'cities.city_id=areas.city_id');
 		$this->db->join('regions', 'regions.region_id=areas.region_id');	

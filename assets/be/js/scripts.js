@@ -1,3 +1,9 @@
+function validateEmail(email) {
+	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test(email);
+}
+
+
 
 //LISTING TYPES
 function listing_type_add_clear(){
@@ -20,7 +26,7 @@ function save_listing_type(){
 		$valmsg2 = "";
 		
 		if ($add_listing_type_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
-		
+			
 		if ($valmsg != $valmsg2){
 			$div_add_listing_type_error.html($valmsg);
 			$div_add_listing_type_success.fadeOut("fast");
@@ -3001,7 +3007,368 @@ function delete_department(department_id){
 
 
 
+
+
+
+
+
 //COMPANY INFORMATION
 function save_company_information(){
-	alert('Am here!');
+		//alert('Am here');
+		$div_company_information_error = $("#div_company_information_error");
+		$div_company_information_success = $("#div_company_information_success");
+				
+		$company_name = $("#company_name").val();
+		$phone_number = $("#phone_number").val();
+	
+		$valmsg = "";
+		$valmsg2 = "";
+		
+		if ($company_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Company Name <br/>";}
+		if ($phone_number == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Phone Number <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_company_information_error.html($valmsg);
+			$div_company_information_success.fadeOut("fast");
+			$div_company_information_error.fadeIn("fast");
+		}else{
+			$div_company_information_error.fadeOut("fast");
+			$div_company_information_success.fadeOut("fast");
+				
+			$("#company_information_loader").show();
+					
+			var form = document.getElementById('frm_companyinformation');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/company_information/save',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#company_information_loader").hide();
+					if(res.status == 'ERR'){
+						$div_company_information_error.html(res.message);
+						$div_company_information_success.fadeOut("fast");
+						$div_company_information_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_company_information_success.html(res.message);
+						$div_company_information_error.fadeOut("fast");
+						$div_company_information_success.fadeIn("fast");
+					}
+            	},
+				error: function(){
+					$("#company_information_loader").hide();
+					$div_company_information_error.html("Something went wrong. Please check your network and try again.");
+					$div_company_information_success.fadeOut("fast");
+					$div_company_information_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+	
+}
+
+
+
+
+
+
+
+//SYSTEM USERS
+function system_user_add_clear(){
+	//alert('Test');
+	$( '#frm_addsystemuser' ).each(function(){
+		this.reset();
+	});	
+	$div_add_system_user_success.fadeOut("fast");
+	$div_add_system_user_error.fadeOut("fast");
+}
+
+function save_system_user(){
+	$div_add_system_user_error = $("#div_add_system_user_error");
+	$div_add_system_user_success = $("#div_add_system_user_success");
+				
+	$add_first_name = $("#add_first_name").val();
+	$add_last_name = $("#add_last_name").val();
+	$add_user_password = $("#add_user_password").val();
+	$add_confirm_password = $("#add_confirm_password").val();
+	$add_email_address = $("#add_email_address").val();
+	$add_access_level_id = $("#add_access_level_id").val();
+	
+	
+	$valmsg = "";
+	$valmsg2 = "";
+		
+	if ($add_first_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter First Name <br/>";}
+	if ($add_last_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Last Name <br/>";}
+	if ($add_email_address == ""){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation'></i> Please enter Email Address<br/>";
+	}else if(!validateEmail($add_email_address)){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation'></i> Please enter the correct Email format <br/>";
+	}
+	if ($add_user_password == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Password <br/>";}
+	if ($add_confirm_password == ""){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Confirm Password <br/>";
+	}else if ($add_user_password != $add_confirm_password){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please retype the correct Password <br/>";
+	}
+	if ($add_access_level_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Access Level <br/>";}
+
+		
+	if ($valmsg != $valmsg2){
+		$div_add_system_user_error.html($valmsg);
+		$div_add_system_user_success.fadeOut("fast");
+		$div_add_system_user_error.fadeIn("fast");
+	}else{
+		$div_add_system_user_error.fadeOut("fast");
+		$div_add_system_user_success.fadeOut("fast");
+				
+		$("#add_system_user_loader").show();
+					
+		var form = document.getElementById('frm_addsystemuser');
+		var formData = new FormData(form);
+
+		$.ajax({
+           	url: baseDir+'be/system_users/save',
+           	type: 'POST',
+           	data: formData,
+			dataType: 'json',
+           	xhr: function() {
+           		var myXhr = $.ajaxSettings.xhr();
+           		return myXhr;
+           	},
+           	cache: false,
+           	contentType: false,
+           	processData: false,
+           	success: function (res) {
+				$("#add_system_user_loader").hide();
+				if(res.status == 'ERR'){
+					$div_add_system_user_error.html(res.message);
+					$div_add_system_user_success.fadeOut("fast");
+					$div_add_system_user_error.fadeIn("fast");
+				}else if (res.status == 'SUCCESS'){
+					$div_add_system_user_success.html(res.message);
+					$div_add_system_user_error.fadeOut("fast");
+					$div_add_system_user_success.fadeIn("fast");
+					
+					$( '#frm_addsystemuser' ).each(function(){
+						this.reset();
+						$("#add_gender").val('').trigger('change');
+						$("#add_department_id").val('').trigger('change');
+						$("#add_access_level_id").val('').trigger('change');						
+					});	
+					//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+					//if ($r == true) {						    
+					//} else {
+					//$('#modal_add_listingtype').modal('hide');
+					//load_system_users();
+					//}
+				}
+           	},
+			error: function(){
+				$("#add_system_user_loader").hide();
+				$div_add_system_user_error.html("Something went wrong. Please check your network and try again.");
+				$div_add_system_user_success.fadeOut("fast");
+				$div_add_system_user_error.fadeIn("fast");
+			}
+       	});
+	
+	}
+		return false;
+}
+//LOAD LISTING TYPES
+function load_system_users(){
+	//$("#tableLoading").show();
+				
+	$.ajax({
+     	url: baseDir+'be/system_users/loadjs',
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (result) {
+			$("#system_users_div").html(result);
+			//$("#tableLoading").hide();
+   		},
+		error: function(){
+			//$("#tableLoading").hide();
+		}
+    });
+}
+function system_user_edit_load(system_user_id){
+	$.ajax({
+     	url: baseDir+'be/system_users/get_system_user/'+system_user_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+     			obj1 = obj1.replace('[','');
+     			obj1 = obj1.replace(']','');
+	     		var obj = $.parseJSON(obj1);
+
+				$("#edit_user_id").val(obj['user_id']);	     			
+	     		$("#edit_first_name").val(obj['first_name']);
+	     		$("#edit_last_name").val(obj['last_name']);
+	     		$("#edit_phone_number").val(obj['phone_number']);
+	     		$("#edit_email_address").val(obj['email_address']);
+	     		$("#edit_gender").val(obj['gender']).change(); 
+	     		$("#edit_department_id").val(obj['department_id']).change(); 
+	     		$("#edit_access_level_id").val(obj['access_level_id']).change(); 	     		
+     		}catch(err){
+     			alert(err);
+     		}
+   		},
+		error: function(){
+		}
+    });
+   	$div_edit_system_user_error.fadeOut("fast");
+	$div_edit_system_user_success.fadeOut("fast");
+
+}
+function update_system_user(){
+	$div_edit_system_user_error = $("#div_edit_system_user_error");
+	$div_edit_system_user_success = $("#div_edit_system_user_success");
+				
+	$edit_first_name = $("#edit_first_name").val();
+	$edit_last_name = $("#edit_last_name").val();
+	$edit_email_address = $("#edit_email_address").val();
+	$edit_access_level_id = $("#aedit 	_access_level_id").val();
+	
+	
+	$valmsg = "";
+	$valmsg2 = "";
+		
+	if ($edit_first_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter First Name <br/>";}
+	if ($edit_last_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Last Name <br/>";}
+	if ($edit_email_address == ""){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation'></i> Please enter Email Address<br/>";
+	}else if(!validateEmail($edit_email_address)){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation'></i> Please enter the correct Email format <br/>";
+	}
+	if ($edit_access_level_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Access Level <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_edit_system_user_error.html($valmsg);
+			$div_edit_system_user_success.fadeOut("fast");
+			$div_edit_system_user_error.fadeIn("fast");
+		}else{
+			$div_edit_system_user_error.fadeOut("fast");
+			$div_edit_system_user_success.fadeOut("fast");
+				
+			$("#edit_system_user_loader").show();
+					
+			var form = document.getElementById('frm_editsystemuser');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/system_users/update',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#edit_system_user_loader").hide();
+					if(res.status == 'ERR'){
+						$div_edit_system_user_error.html(res.message);
+						$div_edit_system_user_success.fadeOut("fast");
+						$div_edit_system_user_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_edit_system_user_success.html(res.message);
+						$div_edit_system_user_error.fadeOut("fast");
+						$div_edit_system_user_success.fadeIn("fast");
+						
+						/*$( '#frm_editlistingtype' ).each(function(){
+							this.reset();
+						});	*/
+						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+						//if ($r == true) {						    
+						//} else {
+						//$('#modal_add_listingtype').modal('hide');
+						//load_system_users();
+
+						//}
+					}
+            	},
+				error: function(){
+					$("#edit_system_user_loader").hide();
+					$div_edit_system_user_error.html("Something went wrong. Please check your network and try again.");
+					$div_edit_system_user_success.fadeOut("fast");
+					$div_edit_system_user_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+function delete_system_user(system_user_id){
+    //alert('Am clicked!');
+    $div_system_user_error = $("#div_system_user_error");
+    $div_system_user_success = $("#div_system_user_success");
+
+    $div_system_user_error.fadeOut("fast");
+    $div_system_user_success.fadeOut("fast");
+
+    $.ajax({
+        url: baseDir+'be/system_users/delete/'+system_user_id,
+        type: 'POST',
+        data: '',
+        xhr: function() {
+            var myXhr = $.ajaxSettings.xhr();
+            return myXhr;
+        },
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (res) {
+            try{
+                var obj1 = res;
+                var obj = $.parseJSON(obj1);
+
+                if(obj['status'] == 'ERR'){
+                    $div_system_user_error.html(obj['message']);
+                    $div_system_user_success.fadeOut("fast");
+                    $div_system_user_error.fadeIn("fast");
+                }else if (obj['status'] == 'SUCCESS'){
+                    $div_system_user_success.html(obj['message']);
+                    $div_system_user_error.fadeOut("fast");
+                    $div_system_user_success.fadeIn("fast");
+                }
+            }catch(err){
+                alert(err);
+            }           
+        },
+        error: function(){
+            $div_system_user_error.html("Something went wrong. Please check your network and try again.");
+            $div_system_user_success.fadeOut("fast");
+            $div_system_user_error.fadeIn("fast");
+        }
+    });
 }

@@ -86,7 +86,16 @@
 		<ul class="nav navbar-nav navbar-right collapse" id="navbar-icons">
 			<li class="user dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">
-					<img src="<?php echo base_url();?>assets/be/images/demo/users/avi-1.png" alt="">
+						<?php if ($this->session->userdata('profile_picture')): ?>
+							<?php if (file_exists('./uploads/profile_pictures/' . $this->session->userdata('profile_picture'))): ?>
+								<img src="<?php echo base_url(); ?>uploads/profile_pictures/<?php echo $this->session->userdata('profile_picture');?>" alt="">
+							<?php else: ?>
+								<img src="<?php echo base_url();?>assets/be/images/demo/users/avi-1.png" alt="">
+							<?php endif; ?>						
+						<?php else: ?>
+							<img src="<?php echo base_url();?>assets/be/images/demo/users/avi-1.png" alt="">						
+						<?php endif; ?>
+
 					<span><?php echo $this->session->userdata('user_name'); ?></span>
 					<i class="caret"></i>
 				</a>
@@ -112,7 +121,16 @@
 				<!-- User dropdown -->
 				<div class="user-menu dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<img src="<?php echo base_url();?>assets/be/images/demo/users/avi-1.png" alt="">
+						<?php if ($this->session->userdata('profile_picture')): ?>
+							<?php if (file_exists('./uploads/profile_pictures/' . $this->session->userdata('profile_picture'))): ?>
+								<img src="<?php echo base_url(); ?>uploads/profile_pictures/<?php echo $this->session->userdata('profile_picture');?>" alt="">
+							<?php else: ?>
+								<img src="<?php echo base_url();?>assets/be/images/demo/users/avi-1.png" alt="">
+							<?php endif; ?>						
+						<?php else: ?>
+							<img src="<?php echo base_url();?>assets/be/images/demo/users/avi-1.png" alt="">						
+						<?php endif; ?>
+
 						<div class="user-info">
 							<?php echo $this->session->userdata('user_name'); ?> <span>Administrator</span>
 						</div>
@@ -120,7 +138,16 @@
 					<div class="popup dropdown-menu dropdown-menu-right">
 					    <div class="thumbnail">
 					    	<div class="thumb">
-								<img alt="" src="<?php echo base_url();?>assets/be/images/demo/users/avi-1.png">
+								<?php if ($this->session->userdata('profile_picture')): ?>
+									<?php if (file_exists('./uploads/profile_pictures/' . $this->session->userdata('profile_picture'))): ?>
+										<img src="<?php echo base_url(); ?>uploads/profile_pictures/<?php echo $this->session->userdata('profile_picture');?>" alt="">
+									<?php else: ?>
+										<img src="<?php echo base_url();?>assets/be/images/demo/users/avi-1.png" alt="">
+									<?php endif; ?>						
+								<?php else: ?>
+									<img src="<?php echo base_url();?>assets/be/images/demo/users/avi-1.png" alt="">						
+								<?php endif; ?>
+
 								<div class="thumb-options">
 									<span>
 										<a href="#" class="btn btn-icon btn-success"><i class="icon-pencil"></i></a>
@@ -141,7 +168,15 @@
 				<!-- Main navigation -->
 				<ul class="navigation">
 					<li class="active"><a href="<?php echo base_url();?>be"><span>Dashboard</span> <i class=" icon-home"></i></a></li>
-					<li class="">
+					<li class="active">
+						<a hreactivef="#"><span>Property Management</span> <i class=" icon-cogs"></i></a>
+						<ul>
+							<li><a href="<?php echo base_url();?>be/properties/add"><span>New Property</span> <i class=" icon-plus-circle"></i></a></li>
+							<li><a href="<?php echo base_url();?>be/properties"><span>Property Listing</span> <i class=" icon-office"></i></a></li>
+						</ul>
+					</li>
+
+					<li class="active">
 						<a hreactivef="#"><span>System Setup</span> <i class=" icon-cogs"></i></a>
 						<ul>
 							<li><a href="<?php echo base_url();?>be/listing_types"><span>Listing Types</span> <i class=" icon-list2"></i></a></li>
@@ -156,13 +191,13 @@
 						</ul>
 					</li>
 					
-					<li class="">
+					<li class="active">
 						<a hreactivef="#"><span>Administration</span> <i class=" icon-user"></i></a>
 						<ul>
-							<li><a href="<?php echo base_url();?>be/company_information">Company Information <i class="icon-coin"></i></a></li>
-							<li><a href="<?php echo base_url();?>be/access_levels">Access Levels</a></li>
-							<li><a href="<?php echo base_url();?>be/departments">Departments</a></li>
-							<li><a href="<?php echo base_url();?>be/system_users">System Users</a></li>
+							<li><a href="<?php echo base_url();?>be/company_information">Company Information <i class="icon-info"></i></a></li>
+							<li><a href="<?php echo base_url();?>be/access_levels">Access Levels <i class="icon-user-block"></i></a></li>
+							<li><a href="<?php echo base_url();?>be/departments">Departments<i class="icon-archive"></i></a></li>
+							<li><a href="<?php echo base_url();?>be/system_users">System Users <i class="icon-users"></i></a></li>
 						</ul>
 					</li>
 				</ul>

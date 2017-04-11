@@ -1,68 +1,73 @@
 <?php
 class Company_information_model extends CI_Model {
 	
-	/*function get_company_information_list(){
+	function get_company_information(){
 		$this->db->from('company_information');
-		$this->db->where( array('is_deleted'=>0));
 		return $this->db->get()->result();
-	}*/
-	function save($data){
-		$insert = $this->db->insert('company_information', $data);
-		if ($insert){
-			$arr_return = array('res' => true,'dt' => 'Company added successfully.');
-		}else{
-			$arr_return = array('res' => false,'dt' => 'Could not add company successfully. Please try again.');
-		}
-		return $arr_return;
 	}
-	/*function company_exists($company_name){
-		$this->db->where('company_name',$company_name);
-		$this->db->where('is_deleted',0);
+	
+	function save($data){
+		$found = false;
 		$query = $this->db->get('company_information');
 		if ($query->num_rows() > 0){
-			return true;
+			$found = true;
 		}else{
-			return false;
+			$found = false;
 		}
 
-	}
-	function get_company($company_id){
-		$this->db->from('company_information');
-		$this->db->where( array('company_id'=>$company_id));
-		return $this->db->get()->result_array();
-	}
-	function company_update_exists($company_id,$company_name){
-		$q = $this->db->query("SELECT * FROM company_information WHERE company_id != ".$company_id." AND company_name = '$company_name' AND is_deleted = 0");
-		if ($q->num_rows() > 0){
-			return TRUE;
+		if ($found == false){
+			$insert = $this->db->insert('company_information', $data);
+			if ($insert){
+
+				$this->upload_company_logo();
+
+				$arr_return = array('res' => true,'dt' => 'Company information saved successfully.');
+			}else{
+				$arr_return = array('res' => false,'dt' => 'Could not successfully save company information. Please try again.');
+			}
 		}else{
-			return FALSE;
-		}
-	}*/
-	function update($data,$company_id){
-		$this->db->where(array('company_id'=>$company_id));
-		$update = $this->db->update('company_information', $data);
-		if ($update){
-			$arr_return = array('res' => true,'dt' => 'Company updated successfully.');
-		}else{
-			$arr_return = array('res' => false,'dt' => 'Could not update company successfully. Please try again.');
+			$update = $this->db->update('company_information', $data);
+			if ($update){
+				
+				$this->upload_company_logo();
+
+				$arr_return = array('res' => true,'dt' => 'Company information saved successfully.');
+			}else{
+				$arr_return = array('res' => false,'dt' => 'Could not successfully save company information. Please try again.');
+			}
 		}
 		return $arr_return;
 	}
-	/*function delete($company_id){
-		$data = array(
-			'is_deleted'=> 1
-		);			
-		$this->db->where( array('company_id'=>$company_id));
-		$delupdate = $this->db->update('company_information', $data);
+
+	//UPLOAD NATIONAL ID
+	function upload_company_logo(){
+		if(basename($_FILES['company_logo']['name'])!=''){
+			//$imagefilename = url_title(basename($_FILES['national_id']['name']),'-',TRUE);
+			
+			$upload_config['upload_path'] = './uploads/company_logos/';
+			$upload_config['allowed_types'] = 'gif|jpg|jpeg|png|pdf';
+			//$upload_config['file_name'] = $imagefilename;
+			$upload_config['max_size']	= '0';
+			$upload_config['max_width']  = '0';
+			$upload_config['max_height']  = '0';
+			
+			$this->load->library('upload');
+			$this->upload->initialize($upload_config);
+			
+			$q = $this->upload->do_upload('company_logo');
 		
-		if ($delupdate){
-			$arr_return = array('res' => true,'dt'=>'company deleted successfully');
+			if($q){				
+				$det = $this->upload->data();					
+				$this->db->update('company_information', array('company_logo' => $det['file_name']));
+				$arr_return = array('res' => true,'dt' => 'Company Logo uploaded successfully');
+			}else{
+				$arr_return = array('res' => false,'dt' => $this->upload->display_errors());
+			}
 		}else{
-			$arr_return = array('res' => false,'dt' => 'Error deleting company');
+			$arr_return = array('res' => true,'dt' => 'Company Logo uploaded successfully');
 		}
 		return $arr_return;
-	}*/
+	}
 
 
 }
