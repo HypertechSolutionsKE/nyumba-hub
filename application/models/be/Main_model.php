@@ -1,7 +1,69 @@
 <?php
 class Main_model extends CI_Model {
+
+	function get_total_listing_types(){
+		$this->db->select('*');
+		$this->db->from('listing_types');
+		$this->db->where( array('is_deleted'=>0));
+		return $this->db->count_all_results();
+	}
+	function get_total_property_types(){
+		$this->db->select('*');
+		$this->db->from('property_types');
+		$this->db->where( array('is_deleted'=>0));
+		return $this->db->count_all_results();
+	}
+	function get_total_property_subcategories(){
+		$this->db->select('*');
+		$this->db->from('property_subcategories');
+		$this->db->where( array('is_deleted'=>0));
+		return $this->db->count_all_results();
+	}
+	function get_total_regions(){
+		$this->db->select('*');
+		$this->db->from('regions');
+		$this->db->where( array('is_deleted'=>0));
+		return $this->db->count_all_results();
+	}
+	function get_total_cities(){
+		$this->db->select('*');
+		$this->db->from('cities');
+		$this->db->where( array('is_deleted'=>0));
+		return $this->db->count_all_results();
+	}
+	function get_total_areas(){
+		$this->db->select('*');
+		$this->db->from('areas');
+		$this->db->where( array('is_deleted'=>0));
+		return $this->db->count_all_results();
+	}
+	function get_total_property_feature_types(){
+		$this->db->select('*');
+		$this->db->from('property_feature_types');
+		$this->db->where( array('is_deleted'=>0));
+		return $this->db->count_all_results();
+	}
+	function get_total_property_features(){
+		$this->db->select('*');
+		$this->db->from('property_features');
+		$this->db->where( array('is_deleted'=>0));
+		return $this->db->count_all_results();
+	}
+	function get_total_currencies(){
+		$this->db->select('*');
+		$this->db->from('currencies');
+		$this->db->where( array('is_deleted'=>0));
+		return $this->db->count_all_results();
+	}
+	function get_total_system_users(){
+		$this->db->select('*');
+		$this->db->from('system_users');
+		$this->db->where( array('is_deleted'=>0));
+		return $this->db->count_all_results();
+	}
+
 	
-	function get_all_loan_applications(){
+	/*function get_all_loan_applications(){
 		$this->db->select('*');
 		$this->db->from('loan_applications');
 		//$this->db->join('loan_products', 'loan_products.loan_product_id=loan_applications.loan_product_id');
@@ -83,7 +145,7 @@ class Main_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('loan_applications');
 		return $this->db->count_all_results();
-	}
+	}*/
 	
 
 }

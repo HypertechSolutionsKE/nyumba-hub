@@ -33,8 +33,8 @@
 	    		<ul class="statistics">
 	    			<li>
 	    				<div class="statistics-info">
-		    				<a href="#" title="" class="bg-success"><i class="icon-list2"></i></a>
-		    				<strong>0</strong>
+		    				<a href="<?php echo base_url();?>be/listing_types" title="" class="bg-success"><i class="icon-list2"></i></a>
+		    				<strong><?php echo $total_listing_types; ?></strong>
 		    			</div>
 						<div class="progress progress-micro">
 							<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
@@ -45,8 +45,8 @@
 	    			</li>
 	    			<li>
 	    				<div class="statistics-info">
-		    				<a href="#" title="" class="bg-warning"><i class="icon-library"></i></a>
-		    				<strong>0</strong>
+		    				<a href="<?php echo base_url();?>be/property_types" title="" class="bg-warning"><i class="icon-library"></i></a>
+		    				<strong><?php echo $total_property_types; ?></strong>
 		    			</div>
 						<div class="progress progress-micro">
 							<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
@@ -57,8 +57,8 @@
 	    			</li>
 	    			<li>
 	    				<div class="statistics-info">
-		    				<a href="#" title="" class="bg-info"><i class="icon-grid2"></i></a>
-		    				<strong>0</strong>
+		    				<a href="<?php echo base_url();?>be/property_subcategories" title="" class="bg-info"><i class="icon-grid2"></i></a>
+		    				<strong><?php echo $total_property_subcategories; ?></strong>
 		    			</div>
 						<div class="progress progress-micro">
 							<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
@@ -69,8 +69,8 @@
 	    			</li>
 	    			<li>
 	    				<div class="statistics-info">
-		    				<a href="#" title="" class="bg-danger"><i class="icon-globe2"></i></a>
-		    				<strong>0</strong>
+		    				<a href="<?php echo base_url();?>be/regions" title="" class="bg-danger"><i class="icon-globe2"></i></a>
+		    				<strong><?php echo $total_regions; ?></strong>
 		    			</div>
 						<div class="progress progress-micro">
 							<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
@@ -81,8 +81,8 @@
 	    			</li>
 	    			<li>
 	    				<div class="statistics-info">
-		    				<a href="#" title="" class="bg-primary"><i class="icon-map2"></i></a>
-		    				<strong>0</strong>
+		    				<a href="<?php echo base_url();?>be/cities" title="" class="bg-primary"><i class="icon-map2"></i></a>
+		    				<strong><?php echo $total_cities; ?></strong>
 		    			</div>
 						<div class="progress progress-micro">
 							<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
@@ -93,8 +93,8 @@
 	    			</li>
 	    			<li>
 	    				<div class="statistics-info">
-		    				<a href="#" title="" class="bg-info"><i class="icon-bookmarks"></i></a>
-		    				<strong>0</strong>
+		    				<a href="<?php echo base_url();?>be/areas" title="" class="bg-info"><i class="icon-bookmarks"></i></a>
+		    				<strong><?php echo $total_areas; ?></strong>
 		    			</div>
 						<div class="progress progress-micro">
 							<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
@@ -105,8 +105,8 @@
 	    			</li>
 	    			<li>
 	    				<div class="statistics-info">
-		    				<a href="#" title="" class="bg-info"><i class="icon-menu3"></i></a>
-		    				<strong>0</strong>
+		    				<a href="<?php echo base_url();?>be/property_feature_types" title="" class="bg-info"><i class="icon-menu3"></i></a>
+		    				<strong><?php echo $total_property_feature_types; ?></strong>
 		    			</div>
 						<div class="progress progress-micro">
 							<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
@@ -117,8 +117,8 @@
 	    			</li>
 	    			<li>
 	    				<div class="statistics-info">
-		    				<a href="#" title="" class="bg-info"><i class="icon-equalizer"></i></a>
-		    				<strong>0</strong>
+		    				<a href="<?php echo base_url();?>be/property_features" title="" class="bg-info"><i class="icon-equalizer"></i></a>
+		    				<strong><?php echo $total_property_features; ?></strong>
 		    			</div>
 						<div class="progress progress-micro">
 							<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
@@ -129,8 +129,8 @@
 	    			</li>
 	    			<li>
 	    				<div class="statistics-info">
-		    				<a href="#" title="" class="bg-info"><i class="icon-coin"></i></a>
-		    				<strong>0</strong>
+		    				<a href="<?php echo base_url();?>be/currencies" title="" class="bg-info"><i class="icon-coin"></i></a>
+		    				<strong><?php echo $total_currencies; ?></strong>
 		    			</div>
 						<div class="progress progress-micro">
 							<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
@@ -141,8 +141,8 @@
 	    			</li>
 	    			<li>
 	    				<div class="statistics-info">
-		    				<a href="#" title="" class="bg-info"><i class="icon-user"></i></a>
-		    				<strong>0</strong>
+		    				<a href="<?php echo base_url();?>be/system_users" title="" class="bg-info"><i class="icon-users"></i></a>
+		    				<strong><?php echo $total_system_users; ?></strong>
 		    			</div>
 						<div class="progress progress-micro">
 							<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
