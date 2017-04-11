@@ -26,9 +26,10 @@ class Listing_types extends CI_Controller {
 		);	
 		$listing_type_name = $this->input->post('listing_type_name');
 		if($this->listing_types_model->listing_type_exists($listing_type_name) == false){
+			
 			$q = $this->listing_types_model->save($data);
 			if ($q['res'] == true){
-				$resp = array('status' => 'SUCCESS','message' => 'Listing Type added successfully.');
+				$resp = array('status' => 'SUCCESS','message' => $q['dt']);
 			}else{
 				$resp = array('status' => 'ERR','message' => $q['dt']);
 			}

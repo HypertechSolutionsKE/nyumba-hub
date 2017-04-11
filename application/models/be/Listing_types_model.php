@@ -9,9 +9,15 @@ class Listing_types_model extends CI_Model {
 	function save($data){
 		$insert = $this->db->insert('listing_types', $data);
 		if ($insert){
-			$arr_return = array('res' => true,'dt' => 'Listing Type added successfully.');
+			$arr_return = array(
+				'res' => true,
+				'dt' => 'Listing Type added successfully.'
+			);
 		}else{
-			$arr_return = array('res' => false,'dt' => 'Could not add listing type successfully. Please try again.');
+			$arr_return = array(
+				'res' => false,
+				'dt' => 'Could not add listing type successfully. Please try again.'
+			);
 		}
 		return $arr_return;
 	}

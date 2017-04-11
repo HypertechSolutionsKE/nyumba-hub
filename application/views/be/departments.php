@@ -22,7 +22,7 @@
                 <div class="col-md-8">
                     <div class="panel panel-danger">
                         <div class="panel-heading">
-                            <h6 class="panel-title" style="margin-top: 5px"><i class="icon-user-block"></i> Departments List</h6>
+                            <h6 class="panel-title" style="margin-top: 5px"><i class="icon-archive"></i> Departments List</h6>
                             <div class="panel-icons-group">
                                 <a data-toggle="modal" role="button" href="#modal_add_department" class="label btn-success" onclick="return department_add_clear();"><i class="icon-plus-circle"></i> Add Department</a>
                             </div>

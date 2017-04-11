@@ -52,7 +52,8 @@ class Auth extends CI_Controller {
 			$this->session->set_userdata('nhub_loginstate', TRUE);
 			$this->session->set_userdata('user_id', $query['user_id']);
 			$this->session->set_userdata('user_email', $query['user_email']);
-			$this->session->set_userdata('user_name', $query['user_name']);			
+			$this->session->set_userdata('user_name', $query['user_name']);	
+			$this->session->set_userdata('profile_picture', $query['profile_picture']);					
 			redirect('be');
 		}
 		else{
