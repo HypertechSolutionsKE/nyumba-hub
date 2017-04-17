@@ -57,6 +57,9 @@ $route['default_controller'] = 'home';
 $route['about'] = 'home/about_us';
 $route['how-it-works'] = 'home/how_it_works';
 $route['contact'] = 'home/contact';
+$route['property_listing_grid'] = 'home/property_listing_grid';
+$route['property_listing_list'] = 'home/property_listing_list';
+$route['property_details'] = 'home/property_details';
 
 //BACK END
 $route['be'] = 'be/main';
