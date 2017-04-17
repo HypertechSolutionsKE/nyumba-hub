@@ -171,7 +171,7 @@
 					<li class="active">
 						<a hreactivef="#"><span>Property Management</span> <i class=" icon-cogs"></i></a>
 						<ul>
-							<li><a href="<?php echo base_url();?>be/properties/add"><span>New Property</span> <i class=" icon-plus-circle"></i></a></li>
+							<li><a href="<?php echo base_url();?>be/properties/add_start"><span>New Property</span> <i class=" icon-plus-circle"></i></a></li>
 							<li><a href="<?php echo base_url();?>be/properties"><span>Property Listing</span> <i class=" icon-office"></i></a></li>
 						</ul>
 					</li>

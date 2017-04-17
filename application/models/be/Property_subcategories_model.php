@@ -7,6 +7,12 @@ class Property_subcategories_model extends CI_Model {
 		$this->db->where( array('property_subcategories.is_deleted'=>0));
 		return $this->db->get()->result();
 	}
+	function get_property_subcategories_by_property_type($property_type_id){
+		$query = $this->db->query("select property_subcategory_id, property_subcategory_name from property_subcategories where property_type_id = $property_type_id and is_deleted = 0"); ;
+		return $query->result();
+
+	}
+
 	function save($data){
 		$insert = $this->db->insert('property_subcategories', $data);
 		if ($insert){

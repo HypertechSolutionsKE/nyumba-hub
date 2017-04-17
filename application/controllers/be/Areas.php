@@ -54,6 +54,10 @@ class Areas extends CI_Controller {
 		$area = $this->areas_model->get_area($area_id);
 		echo json_encode($area);
 	}
+	function get_areas_by_city($city_id){
+		$areas = $this->areas_model->get_areas_by_city($city_id);
+		echo json_encode($areas);
+	}
 	function update(){
 		$area_id = $this->input->post('area_id');
 		$area_name = $this->input->post('area_name');

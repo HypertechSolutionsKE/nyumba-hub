@@ -51,6 +51,11 @@ class Property_subcategories extends CI_Controller {
 		$property_subcategory = $this->property_subcategories_model->get_property_subcategory($property_subcategory_id);
 		echo json_encode($property_subcategory);
 	}
+	function get_property_subcategories_by_property_type($property_type_id){
+		$property_subcategories = $this->property_subcategories_model->get_property_subcategories_by_property_type($property_type_id);
+		echo json_encode($property_subcategories);
+	}
+
 	function update(){
 		$property_subcategory_id = $this->input->post('property_subcategory_id');
 		$property_subcategory_name = $this->input->post('property_subcategory_name');
