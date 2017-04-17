@@ -58,7 +58,9 @@
                   	<ul class="navbar__nav">
                     	<li class="navbar__item <?php if ($cur == 'Home'){echo 'active'; } ?>">
                             <a <a href="<?php echo base_url();?>home" class="navbar__link">Home</a></li>
-                        <li class="navbar__item <?php if ($cur == 'About'){echo 'active'; } ?>">
+                      <li class="navbar__item <?php if ($cur == 'Grid'){echo 'active'; } ?>">
+                        <a href="<?php echo base_url();?>property_listing_grid" class="navbar__link">Properties</a></li>
+                      <li class="navbar__item <?php if ($cur == 'About'){echo 'active'; } ?>">
                             <a href="<?php echo base_url();?>about" class="navbar__link">About Us</a></li>
 	                    <li class="navbar__item <?php if ($cur == 'How'){echo 'active'; } ?>">
                             <a href="<?php echo base_url();?>how-it-works" class="navbar__link">How it Works</a></li>

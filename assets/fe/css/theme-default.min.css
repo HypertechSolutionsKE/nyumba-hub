@@ -16327,12 +16327,13 @@ div.wpcf7 img.ajax-loader {
         margin-bottom: 13px
     }
 }
-.property__plan-icon svg {
+.property__plan-icon {
     width: 26px;
     height: 31px;
     fill: #0ba;
     margin: 18px auto 0;
     display: block
+    padding-top: 17px;
 }
 .property__plan-icon--window svg {
     width: 17px;

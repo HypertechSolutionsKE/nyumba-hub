@@ -26,5 +26,25 @@ class Home extends CI_Controller {
         $data['cur'] = 'Contact';
         $this->load->view('fe/includes/content',$data);
     }
+
+    // List Functions
+    public function property_listing_grid() {
+        $data['main_content'] = 'fe/property_listing_grid';
+        $data['page_title'] ='Grid View';
+        $data['cur'] = 'Grid';
+        $this->load->view('fe/includes/content',$data);
+    }
+    public function property_listing_list() {
+        $data['main_content'] = 'fe/property_listing_list';
+        $data['page_title'] ='List View';
+        $data['cur'] = 'List';
+        $this->load->view('fe/includes/content',$data);
+    }
+    public function property_details() {
+        $data['main_content'] = 'fe/property_details';
+        $data['page_title'] =' Property Details';
+        $data['cur'] = 'Detail';
+        $this->load->view('fe/includes/content',$data);
+    }
 }
 ?>
