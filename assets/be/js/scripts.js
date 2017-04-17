@@ -2,7 +2,18 @@ function validateEmail(email) {
 	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	return re.test(email);
 }
-
+function validateNumeric(num)
+{
+    //var x=document.forms["myForm"]["age"].value;
+    //var re = /^[0-9]+$/;
+    //return re.test(num);
+    /*if (x.match(regex))
+    {
+        alert("Must input numbers");
+        return false;
+    }*/
+    return isNaN(num);
+}
 
 
 //LISTING TYPES
@@ -2761,75 +2772,74 @@ function department_add_clear(){
 }
 
 function save_department(){
-		$div_add_department_error = $("#div_add_department_error");
-		$div_add_department_success = $("#div_add_department_success");
+	$div_add_department_error = $("#div_add_department_error");
+	$div_add_department_success = $("#div_add_department_success");
 				
-		$add_department_name = $("#add_department_name").val();
-		$add_department_description = $("#add_department_description").val();
+	$add_department_name = $("#add_department_name").val();
+	$add_department_description = $("#add_department_description").val();
 	
-		$valmsg = "";
-		$valmsg2 = "";
+	$valmsg = "";
+	$valmsg2 = "";
 		
-		if ($add_department_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Access Level Name <br/>";}
+	if ($add_department_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Access Level Name <br/>";}
 		
-		if ($valmsg != $valmsg2){
-			$div_add_department_error.html($valmsg);
-			$div_add_department_success.fadeOut("fast");
-			$div_add_department_error.fadeIn("fast");
-		}else{
-			$div_add_department_error.fadeOut("fast");
-			$div_add_department_success.fadeOut("fast");
+	if ($valmsg != $valmsg2){
+		$div_add_department_error.html($valmsg);
+		$div_add_department_success.fadeOut("fast");
+		$div_add_department_error.fadeIn("fast");
+	}else{
+		$div_add_department_error.fadeOut("fast");
+		$div_add_department_success.fadeOut("fast");
 				
-			$("#add_department_loader").show();
+		$("#add_department_loader").show();
 					
-			var form = document.getElementById('frm_adddepartment');
-			var formData = new FormData(form);
+		var form = document.getElementById('frm_adddepartment');
+		var formData = new FormData(form);
 
-			$.ajax({
-            	url: baseDir+'be/departments/save',
-            	type: 'POST',
-            	data: formData,
-				dataType: 'json',
-            	xhr: function() {
-               		var myXhr = $.ajaxSettings.xhr();
-               		return myXhr;
-            	},
-            	cache: false,
-            	contentType: false,
-            	processData: false,
-            	success: function (res) {
-					$("#add_department_loader").hide();
-					if(res.status == 'ERR'){
-						$div_add_department_error.html(res.message);
-						$div_add_department_success.fadeOut("fast");
-						$div_add_department_error.fadeIn("fast");
-					}else if (res.status == 'SUCCESS'){
-						$div_add_department_success.html(res.message);
-						$div_add_department_error.fadeOut("fast");
-						$div_add_department_success.fadeIn("fast");
-						
-						$( '#frm_adddepartment' ).each(function(){
-							this.reset();
-						});	
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_departments();
-
-						//}
-					}
-            	},
-				error: function(){
-					$("#add_department_loader").hide();
-					$div_add_department_error.html("Something went wrong. Please check your network and try again.");
+		$.ajax({
+           	url: baseDir+'be/departments/save',
+           	type: 'POST',
+           	data: formData,
+			dataType: 'json',
+           	xhr: function() {
+           		var myXhr = $.ajaxSettings.xhr();
+           		return myXhr;
+           	},
+           	cache: false,
+           	contentType: false,
+           	processData: false,
+           	success: function (res) {
+				$("#add_department_loader").hide();
+				if(res.status == 'ERR'){
+					$div_add_department_error.html(res.message);
 					$div_add_department_success.fadeOut("fast");
 					$div_add_department_error.fadeIn("fast");
+				}else if (res.status == 'SUCCESS'){
+					$div_add_department_success.html(res.message);
+					$div_add_department_error.fadeOut("fast");
+					$div_add_department_success.fadeIn("fast");
+					
+					$( '#frm_adddepartment' ).each(function(){
+						this.reset();
+					});	
+					//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+					//if ($r == true) {						    
+					//} else {
+					//$('#modal_add_listingtype').modal('hide');
+					//load_departments();
+						//}
 				}
-        	});
-	
-		}
-		return false;
+           	},
+			error: function(){
+				$("#add_department_loader").hide();
+				$div_add_department_error.html("Something went wrong. Please check your network and try again.");
+				$div_add_department_success.fadeOut("fast");
+				$div_add_department_error.fadeIn("fast");
+			}
+       	});
+
+	}
+	return false;
 }
 //LOAD LISTING TYPES
 function load_departments(){
@@ -3372,3 +3382,269 @@ function delete_system_user(system_user_id){
         }
     });
 }
+
+
+
+
+
+
+
+//ADD PROPERTY
+$(document).ready(function(){
+	$("#property_type_id").on('change', function() {
+    	//alert( this.value );
+    	//$("#edit_department_id").val(obj['department_id']).change(); 
+
+    	$("#property_subcategory_id")
+    		.find('option')
+    		.remove()
+    		.end()
+    		.append('<option value=""></option>')
+    		.val('').change()
+		;
+    	if (this.value != ''){
+			$.ajax({
+		     	url: baseDir+'be/property_subcategories/get_property_subcategories_by_property_type/'+this.value,
+		       	type: 'POST',
+		       	data: '',
+		       	xhr: function() {
+		       		var myXhr = $.ajaxSettings.xhr();
+		       		return myXhr;
+		       	},
+		       	cache: false,
+		       	contentType: false,
+		       	processData: false,
+		     	success: function (res) {
+		     		try{
+		     			var obj1 = res;
+						// preserve newlines, etc - use valid JSON
+						obj1 = obj1.replace(/\\n/g, "\\n")  
+						               .replace(/\\'/g, "\\'")
+						               .replace(/\\"/g, '\\"')
+						               .replace(/\\&/g, "\\&")
+						               .replace(/\\r/g, "\\r")
+						               .replace(/\\t/g, "\\t")
+						               .replace(/\\b/g, "\\b")
+						               .replace(/\\f/g, "\\f");
+						// remove non-printable and other non-valid JSON chars
+						obj1 = obj1.replace(/[\u0000-\u0019]+/g,""); 
+			     		var obj = JSON.parse(obj1);
+			     		for (i=0; i< obj.length; i++){ 
+         					$("#property_subcategory_id").append($("<option>").attr('value',obj[i]['property_subcategory_id']).text(obj[i]['property_subcategory_name']));
+  						};	
+
+		     		}catch(err){
+		     			alert(err);
+		     		}
+		   		},
+				error: function(){
+				}
+		    });
+    	}
+    })
+	$("#region_id").on('change', function() {
+    	//alert( this.value );
+    	$("#city_id")
+    		.find('option')
+    		.remove()
+    		.end()
+    		.append('<option value=""></option>')
+    		.val('').change()
+		;
+    	if (this.value != ''){
+			$.ajax({
+		     	url: baseDir+'be/cities/get_cities_by_region/'+this.value,
+		       	type: 'POST',
+		       	data: '',
+		       	xhr: function() {
+		       		var myXhr = $.ajaxSettings.xhr();
+		       		return myXhr;
+		       	},
+		       	cache: false,
+		       	contentType: false,
+		       	processData: false,
+		     	success: function (res) {
+		     		try{
+		     			var obj1 = res;
+						// preserve newlines, etc - use valid JSON
+						obj1 = obj1.replace(/\\n/g, "\\n")  
+						               .replace(/\\'/g, "\\'")
+						               .replace(/\\"/g, '\\"')
+						               .replace(/\\&/g, "\\&")
+						               .replace(/\\r/g, "\\r")
+						               .replace(/\\t/g, "\\t")
+						               .replace(/\\b/g, "\\b")
+						               .replace(/\\f/g, "\\f");
+						// remove non-printable and other non-valid JSON chars
+						obj1 = obj1.replace(/[\u0000-\u0019]+/g,""); 
+			     		var obj = JSON.parse(obj1);
+			     		for (i=0; i< obj.length; i++){ 
+         					$("#city_id").append($("<option>").attr('value',obj[i]['city_id']).text(obj[i]['city_name']));
+  						};	
+
+		     		}catch(err){
+		     			alert(err);
+		     		}
+		   		},
+				error: function(){
+				}
+		    });
+    	}
+    })
+	$("#city_id").on('change', function() {
+    	//alert( this.value );
+    	$("#area_id")
+    		.find('option')
+    		.remove()
+    		.end()
+    		.append('<option value=""></option>')
+    		.val('').change()
+		;
+    	if (this.value != ''){
+			$.ajax({
+		     	url: baseDir+'be/areas/get_areas_by_city/'+this.value,
+		       	type: 'POST',
+		       	data: '',
+		       	xhr: function() {
+		       		var myXhr = $.ajaxSettings.xhr();
+		       		return myXhr;
+		       	},
+		       	cache: false,
+		       	contentType: false,
+		       	processData: false,
+		     	success: function (res) {
+		     		try{
+		     			var obj1 = res;
+						// preserve newlines, etc - use valid JSON
+						obj1 = obj1.replace(/\\n/g, "\\n")  
+						               .replace(/\\'/g, "\\'")
+						               .replace(/\\"/g, '\\"')
+						               .replace(/\\&/g, "\\&")
+						               .replace(/\\r/g, "\\r")
+						               .replace(/\\t/g, "\\t")
+						               .replace(/\\b/g, "\\b")
+						               .replace(/\\f/g, "\\f");
+						// remove non-printable and other non-valid JSON chars
+						obj1 = obj1.replace(/[\u0000-\u0019]+/g,""); 
+			     		var obj = JSON.parse(obj1);
+			     		for (i=0; i< obj.length; i++){ 
+         					$("#area_id").append($("<option>").attr('value',obj[i]['area_id']).text(obj[i]['area_name']));
+  						};	
+
+		     		}catch(err){
+		     			alert(err);
+		     		}
+		   		},
+				error: function(){
+				}
+		    });
+    	}
+    })
+}); 
+
+function save_new_property_start(){
+	$div_new_property_start_error = $("#div_new_property_start_error");
+	$div_new_property_start_success = $("#div_new_property_start_success");
+				
+	$listing_type_id = $("#listing_type_id").val();
+	$property_title = $("#property_title").val();
+	$property_type_id = $("#property_type_id").val();
+	$property_subcategory_id = $("#property_subcategory_id").val();
+	$region_id = $("#region_id").val();
+	$city_id = $("#city_id").val();
+	$area_id = $("#area_id").val();
+	$physical_address = $("#physical_address").val();
+	$longitude = $("#longitude").val();
+	$latitude = $("#latitude").val();
+	$price = $("#price").val();
+	$currency_id = $("#currency_id").val();	
+	
+	$valmsg = "";
+	$valmsg2 = "";
+		
+	if ($listing_type_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Listing Type <br/>";}
+	if ($property_title == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Property Title <br/>";}
+	if ($property_type_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Type <br/>";}
+	if ($property_subcategory_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Subcategory <br/>";}
+	if ($region_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Region <br/>";}
+	if ($city_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select City/Town <br/>";}
+	if ($area_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Area/Locality <br/>";}
+	if ($physical_address == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Address <br/>";}
+	if ($longitude != ""){
+		if (validateNumeric($longitude)){
+			$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Only numeric values are allowed for Longitude <br/>";
+		}
+	}
+	if ($latitude != ""){
+		if (validateNumeric($latitude)){
+			$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Only numeric values are allowed for Latitude <br/>";
+		}
+	}
+	if ($price == ""){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Price <br/>";
+	}else if (validateNumeric($price)){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Only numeric values are allowed for Price <br/>";
+	}
+	if ($currency_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Currency <br/>";}
+
+		
+	if ($valmsg != $valmsg2){
+		$div_new_property_start_error.html($valmsg);
+		$div_new_property_start_success.fadeOut("fast");
+		$div_new_property_start_error.fadeIn("fast");
+		$('html, body').animate({ scrollTop: $('#div_new_property_start_error').offset().top-90 }, 'slow');
+	}else{
+		$div_new_property_start_error.fadeOut("fast");
+		$div_new_property_start_success.fadeOut("fast");
+				
+		$("#new_property_start_loader").show();
+					
+		var form = document.getElementById('frm_newpropertystart');
+		var formData = new FormData(form);
+
+		$.ajax({
+           	url: baseDir+'be/properties/save_start',
+           	type: 'POST',
+           	data: formData,
+			dataType: 'json',
+           	xhr: function() {
+           		var myXhr = $.ajaxSettings.xhr();
+           		return myXhr;
+           	},
+           	cache: false,
+           	contentType: false,
+           	processData: false,
+           	success: function (res) {
+				$("#new_property_start_loader").hide();
+				if(res.status == 'ERR'){
+					$div_new_property_start_error.html(res.message);
+					$div_new_property_start_success.fadeOut("fast");
+					$div_new_property_start_error.fadeIn("fast");
+					$('html, body').animate({ scrollTop: $('#div_new_property_start_error').offset().top-90 }, 'slow');
+				}else if (res.status == 'SUCCESS'){
+					$div_new_property_start_success.html(res.message);
+					$div_new_property_start_error.fadeOut("fast");
+					$div_new_property_start_success.fadeIn("fast");
+					
+					//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
+					//if ($r == true) {						    
+					//} else {
+					//$('#modal_add_listingtype').modal('hide');
+					//load_system_users();
+					//}
+				}
+           	},
+			error: function(){
+				$("#new_property_start_loader").hide();
+				$div_new_property_start_error.html("Something went wrong. Please check your network and try again.");
+				$div_new_property_start_success.fadeOut("fast");
+				$div_new_property_start_error.fadeIn("fast");
+				$('html, body').animate({ scrollTop: $('#div_new_property_start_error').offset().top-90 }, 'slow');
+			}
+       	});
+	
+	}
+	return false;
+
+}
+

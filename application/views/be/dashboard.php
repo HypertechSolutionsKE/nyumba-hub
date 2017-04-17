@@ -93,7 +93,7 @@
 	    			</li>
 	    			<li>
 	    				<div class="statistics-info">
-		    				<a href="<?php echo base_url();?>be/areas" title="" class="bg-info"><i class="icon-bookmarks"></i></a>
+		    				<a href="<?php echo base_url();?>be/areas" title="" class="bg-success"><i class="icon-bookmarks"></i></a>
 		    				<strong><?php echo $total_areas; ?></strong>
 		    			</div>
 						<div class="progress progress-micro">
@@ -105,7 +105,7 @@
 	    			</li>
 	    			<li>
 	    				<div class="statistics-info">
-		    				<a href="<?php echo base_url();?>be/property_feature_types" title="" class="bg-info"><i class="icon-menu3"></i></a>
+		    				<a href="<?php echo base_url();?>be/property_feature_types" title="" class="bg-warning"><i class="icon-menu3"></i></a>
 		    				<strong><?php echo $total_property_feature_types; ?></strong>
 		    			</div>
 						<div class="progress progress-micro">
@@ -129,7 +129,7 @@
 	    			</li>
 	    			<li>
 	    				<div class="statistics-info">
-		    				<a href="<?php echo base_url();?>be/currencies" title="" class="bg-info"><i class="icon-coin"></i></a>
+		    				<a href="<?php echo base_url();?>be/currencies" title="" class="bg-danger"><i class="icon-coin"></i></a>
 		    				<strong><?php echo $total_currencies; ?></strong>
 		    			</div>
 						<div class="progress progress-micro">
@@ -141,7 +141,7 @@
 	    			</li>
 	    			<li>
 	    				<div class="statistics-info">
-		    				<a href="<?php echo base_url();?>be/system_users" title="" class="bg-info"><i class="icon-users"></i></a>
+		    				<a href="<?php echo base_url();?>be/system_users" title="" class="bg-primary"><i class="icon-users"></i></a>
 		    				<strong><?php echo $total_system_users; ?></strong>
 		    			</div>
 						<div class="progress progress-micro">

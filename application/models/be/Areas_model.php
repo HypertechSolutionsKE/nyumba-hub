@@ -8,6 +8,10 @@ class Areas_model extends CI_Model {
 		$this->db->where( array('areas.is_deleted'=>0));
 		return $this->db->get()->result();
 	}
+	function get_areas_by_city($city_id){
+		$query = $this->db->query("select area_id, area_name from areas where city_id = $city_id and is_deleted = 0"); ;
+		return $query->result();
+	}
 	function save($data){
 		$insert = $this->db->insert('areas', $data);
 		if ($insert){
