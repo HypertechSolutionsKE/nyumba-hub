@@ -26,7 +26,7 @@ class Properties extends CI_Controller {
 		}
 	}
 	function add_start(){
-		if(false !== $this->session->userdata('nhub_loginstate')) {
+		if($this->session->userdata('nhub_loginstate')) {
 			$data['listing_types'] = $this->listing_types_model->get_listing_types_list();
 			$data['currencies'] = $this->currencies_model->get_currencies_list();			
 			$data['regions'] = $this->regions_model->get_regions_list();
@@ -59,8 +59,8 @@ class Properties extends CI_Controller {
 		echo json_encode($resp);
 	}
 	function add_features(){
-		if(false !== $this->session->userdata('nhub_loginstate')) {
-			if(false !== $this->session->userdata('property_title') && false !== $this->session->userdata('property_type_id')) {
+		if($this->session->userdata('nhub_loginstate')) {
+			if($this->session->userdata('property_title') && $this->session->userdata('property_type_id')) {
 				$data['property_type'] = $this->property_types_model->get_property_type2($this->session->userdata('property_type_id'));
 				$data['property_feature_types'] = $this->property_feature_types_model->get_property_feature_types_list2();
 				$data['property_features'] = $this->property_features_model->get_property_features_list();
@@ -107,9 +107,9 @@ class Properties extends CI_Controller {
 		echo json_encode($resp);
 	}
 	function add_contacts(){
-		if(false !== $this->session->userdata('nhub_loginstate')) {
-			if(false !== $this->session->userdata('property_title') && false !== $this->session->userdata('property_type_id')) {
-				if(false !== $this->session->userdata('description')) {
+		if($this->session->userdata('nhub_loginstate')) {
+			if($this->session->userdata('property_title') && $this->session->userdata('property_type_id')) {
+				if($this->session->userdata('description')) {
 
 					$data['page_title'] = 'Contacts - New Property | ';
 					$data['main_content'] = 'be/add_contacts';
@@ -137,10 +137,10 @@ class Properties extends CI_Controller {
 		echo json_encode($resp);
 	}
 	function add_attachments(){
-		if(false !== $this->session->userdata('nhub_loginstate')) {
-			if(false !== $this->session->userdata('property_title') && false !== $this->session->userdata('property_type_id')) {
-				if(false !== $this->session->userdata('description')) {
-					if(false !== $this->session->userdata('full_name') && false !== $this->session->userdata('email_address')) {
+		if($this->session->userdata('nhub_loginstate')) {
+			if($this->session->userdata('property_title') && $this->session->userdata('property_type_id')) {
+				if($this->session->userdata('description')) {
+					if($this->session->userdata('full_name') && $this->session->userdata('email_address')) {
 						$data['page_title'] = 'Add Attachments - New Property | ';
 						$data['main_content'] = 'be/add_attachments';
 						$this->load->view('be/includes/template',$data);
@@ -161,9 +161,9 @@ class Properties extends CI_Controller {
 
 	function save_attachments_and_publish(){
 		if($this->session->userdata('nhub_loginstate')) {
-			if(false !== $this->session->userdata('property_title') && false !== $this->session->userdata('property_type_id')) {
-				if(false !== $this->session->userdata('description')) {
-					if(false !== $this->session->userdata('full_name') && false !== $this->session->userdata('email_address')) {
+			if($this->session->userdata('property_title') && $this->session->userdata('property_type_id')) {
+				if($this->session->userdata('description')) {
+					if($this->session->userdata('full_name') && $this->session->userdata('email_address')) {
 						
 						$save_data = array(
 							'application_date' => date('Y-m-d'),
