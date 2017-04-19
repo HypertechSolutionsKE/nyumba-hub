@@ -6,6 +6,44 @@ class Properties_model extends CI_Model {
 		$this->db->where( array('is_deleted'=>0));
 		return $this->db->get()->result();
 	}
+
+	function generate_property_SKU($length = 7) {
+    	$characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    	$randomString = '';
+    	for ($i = 0; $i < $length; $i++) {
+       	$randomString .= $characters[rand(0, strlen($characters) - 1)];
+    	}
+    	return $randomString;
+	}
+	
+	function get_property_SKU(){
+		$property_SKU = $this->generate_property_SKU();
+		$checktrue = $this->check_SKU_exists($property_SKU);
+		while ($checktrue == true){
+			$property_SKU = $this->generate_property_SKU();
+			$checktrue = $this->check_SKU_exists($property_SKU);
+		}
+		return $loan_reference_id;
+	}
+	function check_SKU_exists($SKU){
+		$this->db->from('properties');
+		$this->db->where( array('property_reference_id'=>$reference_id));
+		$numrows = $this->db->get()->num_rows();
+		if ($numrows > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+
+
+
+
+
+
+
+
 	function save($data){
 		$insert = $this->db->insert('properties', $data);
 		if ($insert){

@@ -103,18 +103,72 @@
 
                                  <div class="form-group">
                                     <div class="row">
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-6">
                                             <label>Property Type Name*</label>
                                             <input type="text" id="add_property_type_name" name="property_type_name" class="form-control">
                                         </div>
+                                        <div class="col-sm-6">
+                                            <label class="control-label">Property Type Description</label>
+                                            <textarea class="form-control" name="property_type_description" id="add_property_type_description"></textarea>
+                                        </div>
+
                                     </div>
                                 </div>
 
-                                 <div class="form-group">
+                                <!--<div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <label class="control-label">Property Type Description</label>
-                                            <textarea class="form-control" name="property_type_description" id="add_property_type_description"></textarea>
+                                            <label>Property Type Features</label>
+
+                                            <?php foreach ($property_feature_types as $row): ?>
+                                                <p class="text-danger" style="font-weight: bold;"><?php echo $row->property_feature_type_name; ?></p>
+                                                <div class="block-inner">
+                                                    <?php foreach ($property_features as $row2): ?>
+                                                        <?php if ($row->property_feature_type_id == $row2->property_feature_type_id): ?>
+                                                            <label class="checkbox-inline">
+                                                                <input type="checkbox" class="" name="bedrooms" id=""><?php echo $row2->property_feature_name; ?>
+                                                            </label>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>                    
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            <?php endforeach; ?>                                    
+
+                                        </div>
+                                    </div>
+                                </div>-->
+
+
+                                <div class="form-group" style="margin-bottom: -10px !important;">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label class="control-label">Other Features <small>(Please check at least one)</small>: </label>
+                                            <div class="block-inner">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="bedrooms" id="add_bedrooms">Bedrooms
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="bathrooms" id="add_bathrooms">Bathrooms
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="total_rooms" id="add_total_rooms">Total Rooms
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="living_area" id="add_living_area">Living Area
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="floor" id="add_floor">Floor
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="total_floors" id="add_total_floors">Total Floors
+                                                </label>                                            
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="land_size" id="add_land_size">Land Size
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="building_size" id="add_building_size">Building Size
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -177,6 +231,43 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label class="control-label">Property Type Features <small>(Please check at least one)</small>: </label>
+                                            <div class="block-inner">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="bedrooms" id="edit_bedrooms">Bedrooms
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="bathrooms" id="edit_bathrooms">Bathrooms
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="total_rooms" id="edit_total_rooms">Total Rooms
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="living_area" id="edit_living_area">Living Area
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="floor" id="edit_floor">Floor
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="total_floors" id="edit_total_floors">Total Floors
+                                                </label>                                            
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="land_size" id="edit_land_size">Land Size
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" class="" name="building_size" id="edit_building_size">Building Size
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
 
                             </div>
 

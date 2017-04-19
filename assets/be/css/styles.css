@@ -3547,14 +3547,14 @@ body > .jGrowl {
 .select2-container .select2-choice {
   display: block;
   height: 34px;
-  background-color: #fff;
+  background-color: #FFFFE0;
   padding: 0 0 0 10px;
   overflow: hidden;
   position: relative;
   border: 1px solid #ddd;
   white-space: nowrap;
   line-height: 32px;
-  color: #333;
+  color: #000;
   background-clip: padding-box;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -3570,11 +3570,11 @@ body > .jGrowl {
 }
 .select2-container .select2-choice > .select2-chosen {
   margin-right: 31px;
-  font-size: 11px;
+  font-size: 12px;
   display: block;
   overflow: hidden;
-  font-weight: 600;
-  text-transform: uppercase;
+  /*font-weight: 600;
+  text-transform: uppercase;*/
   text-align: left;
   white-space: nowrap;
   -ms-text-overflow: ellipsis;
