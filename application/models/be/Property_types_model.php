@@ -31,6 +31,11 @@ class Property_types_model extends CI_Model {
 		$this->db->where( array('property_type_id'=>$property_type_id));
 		return $this->db->get()->result_array();
 	}
+	function get_property_type2($property_type_id){
+		$this->db->from('property_types');
+		$this->db->where( array('property_type_id'=>$property_type_id));
+		return $this->db->get()->result();
+	}
 	function property_type_update_exists($property_type_id,$property_type_name){
 		$q = $this->db->query("SELECT * FROM property_types WHERE property_type_id != ".$property_type_id." AND property_type_name = '$property_type_name' AND is_deleted = 0");
 		if ($q->num_rows() > 0){

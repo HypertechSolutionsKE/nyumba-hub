@@ -1309,6 +1309,10 @@ a.list-group-item-info.active:focus {
 .nav-pills > li.active > a .label { 
   background-color: #444; 
 }
+/*.nav-pills > li.bg-success > a .label { 
+  background-color: #008C46; 
+}*/
+
 .nav-pills.nav-justified > li > a .label { 
   float: right; 
   margin: -3px -8px -3px 8px; 
@@ -1334,6 +1338,13 @@ a.list-group-item-info.active:focus {
 .nav-pills > li.active > a:focus {
   background-color: #0852A5;
   border-color: #0852A5;
+}
+.nav-pills > li.bg-succ > a,
+.nav-pills > li.bg-succ > a:hover,
+.nav-pills > li.bg-suc > a:focus {
+  background-color: #008C46;
+  border-color: #008C46;
+  color: #fff !important;
 }
 
 .nav-pills > li > a:after { 
@@ -2641,6 +2652,7 @@ a.list-group-item-info.active:focus {
 .form-control {
   padding: 7px 9px 8px 9px;
   font-size: 12px;
+  /*background-color: #FFFFD0;*/
   border-color: #ddd;
   box-shadow: none;
   border-radius: 0;
@@ -2649,6 +2661,7 @@ a.list-group-item-info.active:focus {
 input[type=text], 
 input[type=password], 
 textarea {
+  background-color: #FFFFE0 !important;
   -webkit-appearance: none;
 }
 
@@ -2918,6 +2931,8 @@ input[type="checkbox"] {
 .radio-inline,
 .checkbox-inline {
   padding-left: 0;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 .radio input[type="radio"], 
@@ -3300,6 +3315,7 @@ select[multiple] {
 /* ===== Tooltip ===== */
 
 .tooltip {
+  font-size: 11px !important;
   font-weight: 600;
 }
 .tooltip-inner {

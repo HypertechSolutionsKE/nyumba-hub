@@ -6,6 +6,15 @@ class Property_feature_types_model extends CI_Model {
 		$this->db->where( array('is_deleted'=>0));
 		return $this->db->get()->result();
 	}
+	function get_property_feature_types_list2(){
+		$this->db->select('pft.property_feature_type_id,pft.property_feature_type_name');
+		$this->db->join('property_features as pf','pft.property_feature_type_id = pf.property_feature_type_id','left');
+		$this->db->where('pft.is_deleted',0);
+		$this->db->where('pf.is_deleted',0);
+		$this->db->group_by('pft.property_feature_type_id');// add group_by
+		
+		return $this->db->get('property_feature_types as pft')->result();
+	}
 	function save($data){
 		$insert = $this->db->insert('property_feature_types', $data);
 		if ($insert){

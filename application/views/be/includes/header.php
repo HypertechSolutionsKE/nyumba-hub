@@ -55,14 +55,13 @@
 		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/application.js"></script>
 		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/form_validation.js"></script>
-		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/scripts.js"></script        
+		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/scripts.js"></script>
 		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/charts/widgets/filled_green.js"></script>
         <script type="text/javascript" src="<?php echo base_url();?>assets/be/js/charts/widgets/filled_red.js"></script>  
 
 	    <script type="text/javascript">
 	    	var baseDir = '<?php echo base_url(); ?>';
 	   	</script>
-
 
 	</head>
 
@@ -108,8 +107,6 @@
 			</li>
 		</ul>
 	</div>
-	<!-- /navbar -->
-
 
 	<!-- Page container -->
  	<div class="page-container">
@@ -205,3 +202,4 @@
 			</div>
 		</div>
 		<!-- /sidebar -->
+
