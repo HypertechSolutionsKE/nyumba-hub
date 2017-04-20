@@ -3855,7 +3855,7 @@ function save_new_property_attachments(){
 					$div_new_property_attachments_error.fadeIn("fast");
 					$('html, body').animate({ scrollTop: $('#div_new_property_attachments_error').offset().top-90 }, 'slow');
 				}else if (res.status == 'SUCCESS'){
-					window.location = "add_attachments";					
+					window.location = "add_start";					
 				}
            	},
 			error: function(){

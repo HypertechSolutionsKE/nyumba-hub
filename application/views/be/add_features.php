@@ -197,7 +197,7 @@
                                                                 <label class="checkbox-inline">
                                                                     <input type="checkbox" name="property_feature_id[]" value="<?php echo $row2->property_feature_id; ?>"
                                                                         <?php 
-                                                                            if(false !== $this->session->userdata('property_feature_id')){
+                                                                            if($this->session->userdata('property_feature_id')){
                                                                                 foreach ($this->session->userdata('property_feature_id') as $r) {
                                                                                     if($r == $row2->property_feature_id){
                                                                                         echo 'checked';
