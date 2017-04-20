@@ -108,11 +108,19 @@
                                                 
                                                 <div class="block-inner">
                                                     <label class="radio-inline">
+<<<<<<< HEAD
                                                         <input type="radio" name="publish_status" id="publish_status1" class="styled">
                                                         Online
                                                     </label>
                                                     <label class="radio-inline">
                                                         <input type="radio" name="publish_status" id="publish_status2" class="styled" checked="checked">
+=======
+                                                        <input type="radio" name="publish_status" id="publish_status1" class="styled" value="Online">
+                                                        Online
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="publish_status" id="publish_status2" class="styled" checked="checked" value="Offline">
+>>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
                                                         Offline
                                                     </label>
                                                 </div>
@@ -126,11 +134,19 @@
                                                 
                                                 <div class="block-inner">
                                                     <label class="radio-inline">
+<<<<<<< HEAD
                                                         <input type="radio" name="featured" id="featured1" class="styled">
                                                             Yes
                                                     </label>
                                                     <label class="radio-inline">
                                                         <input type="radio" name="featured" id="featured2" class="styled" checked="checked">
+=======
+                                                        <input type="radio" name="featured" id="featured1" class="styled" value="Yes">
+                                                            Yes
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="featured" id="featured2" class="styled" checked="checked" value="No">
+>>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
                                                         No
                                                     </label>
                                                 </div>

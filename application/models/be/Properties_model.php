@@ -7,7 +7,11 @@ class Properties_model extends CI_Model {
 		return $this->db->get()->result();
 	}
 
+<<<<<<< HEAD
 	function generate_property_SKU($length = 7) {
+=======
+	function generate_property_sku($length = 7) {
+>>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
     	$characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     	$randomString = '';
     	for ($i = 0; $i < $length; $i++) {
@@ -16,6 +20,7 @@ class Properties_model extends CI_Model {
     	return $randomString;
 	}
 	
+<<<<<<< HEAD
 	function get_property_SKU(){
 		$property_SKU = $this->generate_property_SKU();
 		$checktrue = $this->check_SKU_exists($property_SKU);
@@ -28,6 +33,20 @@ class Properties_model extends CI_Model {
 	function check_SKU_exists($SKU){
 		$this->db->from('properties');
 		$this->db->where( array('property_reference_id'=>$reference_id));
+=======
+	function get_property_sku(){
+		$property_sku = $this->generate_property_sku();
+		$checktrue = $this->check_sku_exists($property_sku);
+		while ($checktrue == true){
+			$property_sku = $this->generate_property_sku();
+			$checktrue = $this->check_sku_exists($property_sku);
+		}
+		return $property_sku;
+	}
+	function check_sku_exists($sku){
+		$this->db->from('properties');
+		$this->db->where( array('property_sku'=>$sku));
+>>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 		$numrows = $this->db->get()->num_rows();
 		if ($numrows > 0){
 			return true;
@@ -36,7 +55,114 @@ class Properties_model extends CI_Model {
 		}
 	}
 
+<<<<<<< HEAD
 
+=======
+	function save_property($save_data){
+		$err = '';
+		$insert = $this->db->insert('properties', $save_data);
+		$insert_id = $this->db->insert_id();
+		if ($insert){
+			if ($this->session->userdata('property_feature_id')){
+				if ($this->session->userdata('property_feature_id') != ''){
+					$this->save_property_features($insert_id);
+				}
+			}
+			
+			/*//Main Image
+			$q = $this->upload_main_image($insert_id);
+			if ($q['res'] == false){ $err = $err . '<br />' . $q['dt']; }
+			//Other Image 1
+			$q = $this->upload_other_images($insert_id);
+			if ($q['res'] == false){ $err = $err . '<br />' . $q['dt']; }*/
+						
+		}else{
+			$err = 'Could not publish the property successfully. Please try again.';
+		}
+
+		if ($err == ''){
+			$arr_return = array('res' => true,'dt' => 'Property published successfully');
+		}else{
+			$arr_return = array('res' => false,'dt' => $err);
+		}
+		return $arr_return;
+
+	}
+	function save_property_features($property_id){
+		$property_feature_id = $this->session->userdata('property_feature_id');		
+		foreach ($property_feature_id as $temp_id){
+			//$parent_cat_id = $this->get_parent_cat_id($temp_cat_id);
+			$new_feature_data = array(
+				'property_id' => $property_id,
+				'property_feature_id' => $temp_id
+			);
+			$insert = $this->db->insert('property_listing_features', $new_feature_data);
+		}				
+	}
+
+	//UPLOAD MAIN IMAGE
+	function upload_main_image($property_id){
+		if(basename($_FILES['main_image']['name'])!=''){
+			
+			$upload_config['upload_path'] = './uploads/property_images/';
+			$upload_config['allowed_types'] = 'gif|jpg|jpeg|png';
+			//$upload_config['file_name'] = $imagefilename;
+			$upload_config['max_size']	= '0';
+			$upload_config['max_width']  = '0';
+			$upload_config['max_height']  = '0';
+			
+			$this->load->library('upload');
+			$this->upload->initialize($upload_config);
+			
+			$q = $this->upload->do_upload('main_image');
+		
+			if($q){				
+				$det = $this->upload->data();					
+				$this->db->where(array('property_id'=>$property_id));
+				$this->db->update('properties', array('main_image' => $det['file_name']));
+				$arr_return = array('res' => true,'dt' => 'Main image uploaded successfully');
+			}else{
+				$arr_return = array('res' => false,'dt' => $this->upload->display_errors());
+			}
+		}else{
+			$arr_return = array('res' => true,'dt' => 'Main image uploaded successfully');
+		}
+		return $arr_return;
+	}
+
+	//UPLOAD MAIN IMAGE
+	function upload_other_images($property_id){
+		for ($i = 1; $i <= 5; $i++) {
+			if(basename($_FILES['other_image_'.$i]['name'])!=''){
+				
+				$upload_config['upload_path'] = './uploads/property_images/';
+				$upload_config['allowed_types'] = 'gif|jpg|jpeg|png';
+				//$upload_config['file_name'] = $imagefilename;
+				$upload_config['max_size']	= '0';
+				$upload_config['max_width']  = '0';
+				$upload_config['max_height']  = '0';
+				
+				$this->load->library('upload');
+				$this->upload->initialize($upload_config);
+				
+				$q = $this->upload->do_upload('other_image_'.$i);
+			
+				if($q){				
+					$det = $this->upload->data();					
+					$this->db->where(array('property_id'=>$property_id));
+					$this->db->update('properties', array('other_image_'.$i => $det['file_name']));
+					$arr_return = array('res' => true,'dt' => 'Image $i uploaded successfully');
+				}else{
+					$arr_return = array('res' => false,'dt' => 'Image $i :' . $this->upload->display_errors());
+				}
+			}else{
+				$arr_return = array('res' => true,'dt' => 'Image $i uploaded successfully');
+			}    		
+		} 
+
+		return $arr_return;
+	}
+>>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 
 
 

@@ -3855,7 +3855,11 @@ function save_new_property_attachments(){
 					$div_new_property_attachments_error.fadeIn("fast");
 					$('html, body').animate({ scrollTop: $('#div_new_property_attachments_error').offset().top-90 }, 'slow');
 				}else if (res.status == 'SUCCESS'){
+<<<<<<< HEAD
 					window.location = "add_attachments";					
+=======
+					window.location = "add_start";					
+>>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 				}
            	},
 			error: function(){

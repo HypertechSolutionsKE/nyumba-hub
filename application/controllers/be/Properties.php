@@ -26,7 +26,11 @@ class Properties extends CI_Controller {
 		}
 	}
 	function add_start(){
+<<<<<<< HEAD
 		if(false !== $this->session->userdata('nhub_loginstate')) {
+=======
+		if($this->session->userdata('nhub_loginstate')) {
+>>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 			$data['listing_types'] = $this->listing_types_model->get_listing_types_list();
 			$data['currencies'] = $this->currencies_model->get_currencies_list();			
 			$data['regions'] = $this->regions_model->get_regions_list();
@@ -59,8 +63,13 @@ class Properties extends CI_Controller {
 		echo json_encode($resp);
 	}
 	function add_features(){
+<<<<<<< HEAD
 		if(false !== $this->session->userdata('nhub_loginstate')) {
 			if(false !== $this->session->userdata('property_title') && false !== $this->session->userdata('property_type_id')) {
+=======
+		if($this->session->userdata('nhub_loginstate')) {
+			if($this->session->userdata('property_title') && $this->session->userdata('property_type_id')) {
+>>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 				$data['property_type'] = $this->property_types_model->get_property_type2($this->session->userdata('property_type_id'));
 				$data['property_feature_types'] = $this->property_feature_types_model->get_property_feature_types_list2();
 				$data['property_features'] = $this->property_features_model->get_property_features_list();
@@ -107,9 +116,15 @@ class Properties extends CI_Controller {
 		echo json_encode($resp);
 	}
 	function add_contacts(){
+<<<<<<< HEAD
 		if(false !== $this->session->userdata('nhub_loginstate')) {
 			if(false !== $this->session->userdata('property_title') && false !== $this->session->userdata('property_type_id')) {
 				if(false !== $this->session->userdata('description')) {
+=======
+		if($this->session->userdata('nhub_loginstate')) {
+			if($this->session->userdata('property_title') && $this->session->userdata('property_type_id')) {
+				if($this->session->userdata('description')) {
+>>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 
 					$data['page_title'] = 'Contacts - New Property | ';
 					$data['main_content'] = 'be/add_contacts';
@@ -137,10 +152,17 @@ class Properties extends CI_Controller {
 		echo json_encode($resp);
 	}
 	function add_attachments(){
+<<<<<<< HEAD
 		if(false !== $this->session->userdata('nhub_loginstate')) {
 			if(false !== $this->session->userdata('property_title') && false !== $this->session->userdata('property_type_id')) {
 				if(false !== $this->session->userdata('description')) {
 					if(false !== $this->session->userdata('full_name') && false !== $this->session->userdata('email_address')) {
+=======
+		if($this->session->userdata('nhub_loginstate')) {
+			if($this->session->userdata('property_title') && $this->session->userdata('property_type_id')) {
+				if($this->session->userdata('description')) {
+					if($this->session->userdata('full_name') && $this->session->userdata('email_address')) {
+>>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 						$data['page_title'] = 'Add Attachments - New Property | ';
 						$data['main_content'] = 'be/add_attachments';
 						$this->load->view('be/includes/template',$data);
@@ -159,6 +181,7 @@ class Properties extends CI_Controller {
 		}			
 	}
 
+<<<<<<< HEAD
 	function save_attachments_and_publish(){
 		if($this->session->userdata('nhub_loginstate')) {
 			if(false !== $this->session->userdata('property_title') && false !== $this->session->userdata('property_type_id')) {
@@ -185,15 +208,124 @@ class Properties extends CI_Controller {
 						);				
 
 
+=======
+	function unset_variables(){
+		$this->session->unset_userdata('listing_type_id');
+		$this->session->unset_userdata('property_title');
+		$this->session->unset_userdata('property_type_id');
+		$this->session->unset_userdata('property_subcategory_id');
+		$this->session->unset_userdata('region_id');
+		$this->session->unset_userdata('city_id');
+		$this->session->unset_userdata('area_id');
+		$this->session->unset_userdata('physical_address');
+		$this->session->unset_userdata('longitude');
+		$this->session->unset_userdata('latitude');
+		$this->session->unset_userdata('price');
+		$this->session->unset_userdata('currency_id');
+		$this->session->unset_userdata('bedrooms');
+		$this->session->unset_userdata('bathrooms');
+		$this->session->unset_userdata('total_rooms');
+		$this->session->unset_userdata('living_area');
+		$this->session->unset_userdata('floor');
+		$this->session->unset_userdata('total_floors');
+		$this->session->unset_userdata('building_size');
+		$this->session->unset_userdata('land_size');
+		$this->session->unset_userdata('description');
+		$this->session->unset_userdata('available_from');
+		$this->session->unset_userdata('build_year');
+		$this->session->unset_userdata('car_spaces');
+		$this->session->unset_userdata('fully_furnished');
+		$this->session->unset_userdata('property_feature_id');		
+		$this->session->unset_userdata('full_name');
+		$this->session->unset_userdata('email_address');
+		$this->session->unset_userdata('mobile_phone');
+		$this->session->unset_userdata('home_phone');
+		$this->session->unset_userdata('office_phone');
+	}
+
+	function save_attachments_and_publish(){
+		if($this->session->userdata('nhub_loginstate')) {
+			if($this->session->userdata('property_title') && $this->session->userdata('property_type_id')) {
+				if($this->session->userdata('description')) {
+					if($this->session->userdata('full_name') && $this->session->userdata('email_address')) {
+
+						$property_sku = $this->properties_model->get_property_sku();
+						$property_reference_id = url_title($this->session->userdata('property_title'),'-',TRUE);
+		
+						$save_data = array(
+							'property_reference_id' => $property_reference_id,
+							'property_sku' => $property_sku,
+							'listing_type_id' => $this->session->userdata('listing_type_id'),
+							'property_title' => $this->session->userdata('property_title'),
+							'property_type_id' => $this->session->userdata('property_type_id'),
+							'property_subcategory_id' => $this->session->userdata('property_subcategory_id'),
+							'region_id' => $this->session->userdata('region_id'),
+							'city_id' => $this->session->userdata('city_id'),
+							'area_id' => $this->session->userdata('area_id'),
+							'physical_address' => $this->session->userdata('physical_address'),
+							'longitude' => $this->session->userdata('longitude'),
+							'latitude' => $this->session->userdata('latitude'),
+							'price' => $this->session->userdata('price'),
+							'currency_id' => $this->session->userdata('currency_id'),
+							'bedrooms' => $this->session->userdata('bedrooms'),
+							'bathrooms' => $this->session->userdata('bathrooms'),
+							'total_rooms' => $this->session->userdata('total_rooms'),
+							'living_area' => $this->session->userdata('living_area'),
+							'floor' => $this->session->userdata('floor'),
+							'total_floors' => $this->session->userdata('total_floors'),
+							'building_size' => $this->session->userdata('building_size'),
+							'land_size' => $this->session->userdata('land_size'),
+							'description' => $this->session->userdata('description'),
+							'available_from' => $this->session->userdata('available_from'),
+							'build_year' => $this->session->userdata('build_year'),
+							'car_spaces' => $this->session->userdata('car_spaces'),
+							'fully_furnished' => $this->session->userdata('fully_furnished'),
+							'full_name' => $this->session->userdata('full_name'),
+							'email_address' => $this->session->userdata('email_address'),
+							'mobile_phone' => $this->session->userdata('mobile_phone'),
+							'home_phone' => $this->session->userdata('home_phone'),
+							'office_phone' => $this->session->userdata('office_phone'),
+							'publish_status' => $this->input->post('publish_status'),
+							'featured' => $this->input->post('featured')
+						);			
+
+
+						$q = $this->properties_model->save_property($save_data);
+						if ($q['res'] == true){
+							$this->unset_variables();
+
+							//$data['main_content'] = 'fe/loan_application';
+							//$data['page_title'] ='Loan Application - ';
+							//$data['cur'] = 'Resources';
+							//$data['success'] = '<strong>Loan application submitted successfully!</strong>';
+							
+							//$this->load->view('fe/includes/template',$data);
+							
+							$resp = array('status' => 'SUCCESS','message' => '<strong>Property published successfully</strong>');
+						}else{
+							//$data['main_content'] = 'fe/loan_application';
+							//$data['page_title'] ='Loan Application - ';
+							//$data['cur'] = 'Resources';
+							//$data['err'] = '<strong>'. $q['dt'] .'</strong>';
+							
+							//$this->load->view('fe/includes/template',$data);
+							
+							$resp = array('status' => 'ERR','message' => '<strong>'. $q['dt'] .'</strong>');
+						}
+						echo json_encode($resp);
+>>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 
 
 
 
 
 
+<<<<<<< HEAD
 						//$data['page_title'] = 'Add Attachments - New Property | ';
 						//$data['main_content'] = 'be/add_attachments';
 						//$this->load->view('be/includes/template',$data);
+=======
+>>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 
 					}else{
 						redirect('be/properties/add_contacts');
@@ -215,6 +347,7 @@ class Properties extends CI_Controller {
 
 
 
+<<<<<<< HEAD
 	function save(){
 		$country_name = $this->input->post('country_name');
 		$country_code = $this->input->post('country_code');
@@ -247,6 +380,8 @@ class Properties extends CI_Controller {
 		$this->load->view('be/jsloads/properties',$data);
 
 	}
+=======
+>>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 	function get_property($property_id){
 		$property = $this->properties_model->get_property($property_id);
 		echo json_encode($property);
