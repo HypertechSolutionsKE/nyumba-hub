@@ -7,11 +7,7 @@ class Properties_model extends CI_Model {
 		return $this->db->get()->result();
 	}
 
-<<<<<<< HEAD
-	function generate_property_SKU($length = 7) {
-=======
 	function generate_property_sku($length = 7) {
->>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
     	$characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     	$randomString = '';
     	for ($i = 0; $i < $length; $i++) {
@@ -20,20 +16,6 @@ class Properties_model extends CI_Model {
     	return $randomString;
 	}
 	
-<<<<<<< HEAD
-	function get_property_SKU(){
-		$property_SKU = $this->generate_property_SKU();
-		$checktrue = $this->check_SKU_exists($property_SKU);
-		while ($checktrue == true){
-			$property_SKU = $this->generate_property_SKU();
-			$checktrue = $this->check_SKU_exists($property_SKU);
-		}
-		return $loan_reference_id;
-	}
-	function check_SKU_exists($SKU){
-		$this->db->from('properties');
-		$this->db->where( array('property_reference_id'=>$reference_id));
-=======
 	function get_property_sku(){
 		$property_sku = $this->generate_property_sku();
 		$checktrue = $this->check_sku_exists($property_sku);
@@ -46,7 +28,6 @@ class Properties_model extends CI_Model {
 	function check_sku_exists($sku){
 		$this->db->from('properties');
 		$this->db->where( array('property_sku'=>$sku));
->>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 		$numrows = $this->db->get()->num_rows();
 		if ($numrows > 0){
 			return true;
@@ -55,9 +36,6 @@ class Properties_model extends CI_Model {
 		}
 	}
 
-<<<<<<< HEAD
-
-=======
 	function save_property($save_data){
 		$err = '';
 		$insert = $this->db->insert('properties', $save_data);
@@ -162,11 +140,6 @@ class Properties_model extends CI_Model {
 
 		return $arr_return;
 	}
->>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
-
-
-
-
 
 
 

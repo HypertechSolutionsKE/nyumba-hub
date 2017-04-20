@@ -26,11 +26,7 @@ class Properties extends CI_Controller {
 		}
 	}
 	function add_start(){
-<<<<<<< HEAD
-		if(false !== $this->session->userdata('nhub_loginstate')) {
-=======
 		if($this->session->userdata('nhub_loginstate')) {
->>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 			$data['listing_types'] = $this->listing_types_model->get_listing_types_list();
 			$data['currencies'] = $this->currencies_model->get_currencies_list();			
 			$data['regions'] = $this->regions_model->get_regions_list();
@@ -63,13 +59,8 @@ class Properties extends CI_Controller {
 		echo json_encode($resp);
 	}
 	function add_features(){
-<<<<<<< HEAD
-		if(false !== $this->session->userdata('nhub_loginstate')) {
-			if(false !== $this->session->userdata('property_title') && false !== $this->session->userdata('property_type_id')) {
-=======
 		if($this->session->userdata('nhub_loginstate')) {
 			if($this->session->userdata('property_title') && $this->session->userdata('property_type_id')) {
->>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 				$data['property_type'] = $this->property_types_model->get_property_type2($this->session->userdata('property_type_id'));
 				$data['property_feature_types'] = $this->property_feature_types_model->get_property_feature_types_list2();
 				$data['property_features'] = $this->property_features_model->get_property_features_list();
@@ -116,15 +107,9 @@ class Properties extends CI_Controller {
 		echo json_encode($resp);
 	}
 	function add_contacts(){
-<<<<<<< HEAD
-		if(false !== $this->session->userdata('nhub_loginstate')) {
-			if(false !== $this->session->userdata('property_title') && false !== $this->session->userdata('property_type_id')) {
-				if(false !== $this->session->userdata('description')) {
-=======
 		if($this->session->userdata('nhub_loginstate')) {
 			if($this->session->userdata('property_title') && $this->session->userdata('property_type_id')) {
 				if($this->session->userdata('description')) {
->>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 
 					$data['page_title'] = 'Contacts - New Property | ';
 					$data['main_content'] = 'be/add_contacts';
@@ -152,17 +137,10 @@ class Properties extends CI_Controller {
 		echo json_encode($resp);
 	}
 	function add_attachments(){
-<<<<<<< HEAD
-		if(false !== $this->session->userdata('nhub_loginstate')) {
-			if(false !== $this->session->userdata('property_title') && false !== $this->session->userdata('property_type_id')) {
-				if(false !== $this->session->userdata('description')) {
-					if(false !== $this->session->userdata('full_name') && false !== $this->session->userdata('email_address')) {
-=======
 		if($this->session->userdata('nhub_loginstate')) {
 			if($this->session->userdata('property_title') && $this->session->userdata('property_type_id')) {
 				if($this->session->userdata('description')) {
 					if($this->session->userdata('full_name') && $this->session->userdata('email_address')) {
->>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 						$data['page_title'] = 'Add Attachments - New Property | ';
 						$data['main_content'] = 'be/add_attachments';
 						$this->load->view('be/includes/template',$data);
@@ -181,34 +159,6 @@ class Properties extends CI_Controller {
 		}			
 	}
 
-<<<<<<< HEAD
-	function save_attachments_and_publish(){
-		if($this->session->userdata('nhub_loginstate')) {
-			if(false !== $this->session->userdata('property_title') && false !== $this->session->userdata('property_type_id')) {
-				if(false !== $this->session->userdata('description')) {
-					if(false !== $this->session->userdata('full_name') && false !== $this->session->userdata('email_address')) {
-						
-						$save_data = array(
-							'application_date' => date('Y-m-d'),
-							'loan_reference_id' => $loan_reference_id,
-							'client_name' => $this->input->post('client_name'),
-							'phone_number' => $this->input->post('phone_number'),
-							'email_address' => $this->input->post('email_address'),
-							'id_number' => $this->input->post('id_number'),
-							'employer_name' => $this->input->post('employer_name'),
-							'nature_of_business' => $this->input->post('nature_of_business'),
-							'next_of_kin_name' => $this->input->post('next_of_kin_name'),
-							'next_of_kin_phone' => $this->input->post('next_of_kin_phone'),
-							'relationship' => $this->input->post('relationship'),
-							'loan_amount' => $this->input->post('loan_amount'),
-							'repayment_period' => $this->input->post('repayment_period'),
-							'loan_purpose' => $this->input->post('loan_purpose'),
-							'introduced_by_name' => $this->input->post('introduced_by_name'),
-							'introduced_by_phone' => $this->input->post('introduced_by_phone')	
-						);				
-
-
-=======
 	function unset_variables(){
 		$this->session->unset_userdata('listing_type_id');
 		$this->session->unset_userdata('property_title');
@@ -313,19 +263,8 @@ class Properties extends CI_Controller {
 							$resp = array('status' => 'ERR','message' => '<strong>'. $q['dt'] .'</strong>');
 						}
 						echo json_encode($resp);
->>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 
 
-
-
-
-
-<<<<<<< HEAD
-						//$data['page_title'] = 'Add Attachments - New Property | ';
-						//$data['main_content'] = 'be/add_attachments';
-						//$this->load->view('be/includes/template',$data);
-=======
->>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 
 					}else{
 						redirect('be/properties/add_contacts');
@@ -347,41 +286,6 @@ class Properties extends CI_Controller {
 
 
 
-<<<<<<< HEAD
-	function save(){
-		$country_name = $this->input->post('country_name');
-		$country_code = $this->input->post('country_code');
-		$property_name = $this->input->post('property_name');
-		$property_symbol = $this->input->post('property_symbol');
-		
-		$e = $this->properties_model->property_exists($country_name,$country_code,$property_name,$property_symbol);
-
-		if($e['res'] == true){
-			$data = array(
-				'country_name' => $country_name,
-				'country_code' => $country_code,
-				'property_name' => $property_name,
-				'property_symbol' => $property_symbol			
-			);
-			$q = $this->properties_model->save($data);
-			if ($q['res'] == true){
-				$resp = array('status' => 'SUCCESS','message' => 'property added successfully.');
-			}else{
-				$resp = array('status' => 'ERR','message' => $q['dt']);
-			}
-		}else{
-			$resp = array('status' => 'ERR','message' => $e['dt']);
-		}
-			
-		echo json_encode($resp);
-	}
-	function loadjs(){
-		$data['properties'] = $this->properties_model->get_properties_list();
-		$this->load->view('be/jsloads/properties',$data);
-
-	}
-=======
->>>>>>> cb96254297f13994d0ea3950731f9198671fd21d
 	function get_property($property_id){
 		$property = $this->properties_model->get_property($property_id);
 		echo json_encode($property);
