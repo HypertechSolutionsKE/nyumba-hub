@@ -143,10 +143,6 @@ class Properties_model extends CI_Model {
 
 
 
-
-
-
-
 	function save($data){
 		$insert = $this->db->insert('properties', $data);
 		if ($insert){

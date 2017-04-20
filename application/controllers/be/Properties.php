@@ -266,10 +266,6 @@ class Properties extends CI_Controller {
 
 
 
-
-
-
-
 					}else{
 						redirect('be/properties/add_contacts');
 					}
