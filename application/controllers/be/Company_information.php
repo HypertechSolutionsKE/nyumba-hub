@@ -11,6 +11,7 @@ class Company_information extends CI_Controller {
 	function index(){
 		if($this->session->userdata('nhub_loginstate')) {
 			$data['company_information'] = $this->company_information_model->get_company_information();
+			$data['company_information_exists'] = $this->company_information_model->company_information_exists();
 			$data['page_title'] = 'Company Information | ';
 			$data['main_content'] = 'be/company_information';
 			$this->load->view('be/includes/template',$data);
@@ -43,8 +44,13 @@ class Company_information extends CI_Controller {
 			
 		echo json_encode($resp);
 	}
-
-
-
-
+	function change_company_logo(){
+		$q = $this->company_information_model->upload_company_logo();
+		if ($q['res'] == true){
+			$resp = array('status' => 'SUCCESS','message' => 'Company logo updated successfully.');
+		}else{
+			$resp = array('status' => 'ERR','message' => $q['dt']);
+		}
+		echo json_encode($resp);
+	}
 }

@@ -47,7 +47,7 @@
                                         <li class="active"><a href="<?php echo base_url();?>be/properties/add_start">Step 1: Basic Info</a></li>
                                         <li class="bg-succ"><a href="<?php echo base_url();?>be/properties/add_features">Step 2: Property Features</a></li>
                                         <li class="bg-succ"><a href="<?php echo base_url();?>be/properties/add_contacts">Step 3: Contact Details</a></li>
-                                        <li class="bg-succ"><a href="<?php echo base_url();?>be/properties/add_attachments">Step 4: Attachments</a></li>                                        
+                                        <li class="bg-succ"><a href="<?php echo base_url();?>be/properties/add_attachments">Step 4: Attachments &amp; Publish</a></li>                                        
                                     </ul>
                                     <div class="clearfix"></div>
                                     <hr>
@@ -55,6 +55,14 @@
                                     <!--<div class="block-inner text-danger">
                                         <h6 class="heading-hr">Step 1: Basic information <small class="display-block">Please fill in the property's basic information and click 'Next'</small></h6>
                                     </div>-->
+
+                                    <?php if ($this->session->flashdata('success')): ?>
+                                        <div class="alert alert-success block-inner">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                            <?php echo $this->session->flashdata('success'); ?>
+                                        </div>                                    
+
+                                    <?php endif; ?>
 
                                     <div class="alert alert-danger block-inner" style="display: none;" id="div_new_property_start_error">
                                         <button type="button" class="close" data-dismiss="alert">×</button>

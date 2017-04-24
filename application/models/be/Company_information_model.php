@@ -5,6 +5,14 @@ class Company_information_model extends CI_Model {
 		$this->db->from('company_information');
 		return $this->db->get()->result();
 	}
+	function company_information_exists(){
+		$query = $this->db->get('company_information');
+		if ($query->num_rows() > 0){
+			return true;
+		}else{
+			return false;
+		}		
+	}
 	
 	function save($data){
 		$found = false;
@@ -29,14 +37,19 @@ class Company_information_model extends CI_Model {
 			$update = $this->db->update('company_information', $data);
 			if ($update){
 				
-				$this->upload_company_logo();
+				//$this->upload_company_logo();
 
-				$arr_return = array('res' => true,'dt' => 'Company information saved successfully.');
+				$arr_return = array('res' => true,'dt' => 'Company information updated successfully.');
 			}else{
-				$arr_return = array('res' => false,'dt' => 'Could not successfully save company information. Please try again.');
+				$arr_return = array('res' => false,'dt' => 'Could not successfully update company information. Please try again.');
 			}
 		}
 		return $arr_return;
+	}
+
+	function change_company_logo(){
+
+
 	}
 
 	//UPLOAD NATIONAL ID
@@ -45,7 +58,7 @@ class Company_information_model extends CI_Model {
 			//$imagefilename = url_title(basename($_FILES['national_id']['name']),'-',TRUE);
 			
 			$upload_config['upload_path'] = './uploads/company_logos/';
-			$upload_config['allowed_types'] = 'gif|jpg|jpeg|png|pdf';
+			$upload_config['allowed_types'] = 'gif|jpg|jpeg|png';
 			//$upload_config['file_name'] = $imagefilename;
 			$upload_config['max_size']	= '0';
 			$upload_config['max_width']  = '0';

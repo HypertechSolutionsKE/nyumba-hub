@@ -44,7 +44,7 @@ class Cities extends CI_Controller {
 	}
 	function loadjs(){
 		$data['cities'] = $this->cities_model->get_cities_list();
-		$this->load->view('be/jsloads/Cities',$data);
+		$this->load->view('be/jsloads/cities',$data);
 
 	}
 	function get_city($city_id){

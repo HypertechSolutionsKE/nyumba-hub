@@ -1,4 +1,4 @@
-<?php
+	<?php
 class Properties_model extends CI_Model {
 	
 	function get_properties_list(){
@@ -38,6 +38,7 @@ class Properties_model extends CI_Model {
 
 	function save_property($save_data){
 		$err = '';
+		$err2 = '';
 		$insert = $this->db->insert('properties', $save_data);
 		$insert_id = $this->db->insert_id();
 		if ($insert){
@@ -47,19 +48,23 @@ class Properties_model extends CI_Model {
 				}
 			}
 			
-			/*//Main Image
+			//Main Image
 			$q = $this->upload_main_image($insert_id);
-			if ($q['res'] == false){ $err = $err . '<br />' . $q['dt']; }
+			if ($q['res'] == false){ $err2 = $err2 . '<br />' . $q['dt']; }
 			//Other Image 1
 			$q = $this->upload_other_images($insert_id);
-			if ($q['res'] == false){ $err = $err . '<br />' . $q['dt']; }*/
+			if ($q['res'] == false){ $err2 = $err2 . '<br />' . $q['dt']; }
 						
 		}else{
 			$err = 'Could not publish the property successfully. Please try again.';
 		}
 
 		if ($err == ''){
-			$arr_return = array('res' => true,'dt' => 'Property published successfully');
+			if ($err2 == ''){
+				$arr_return = array('res' => true,'dt' => 'Property published successfully');
+			}else{
+				$arr_return = array('res' => true,'dt' => 'Property published successfully' . $err2);
+			}
 		}else{
 			$arr_return = array('res' => false,'dt' => $err);
 		}

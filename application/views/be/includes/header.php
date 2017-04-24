@@ -56,11 +56,15 @@
 		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/application.js"></script>
 		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/form_validation.js"></script>
 		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/scripts.js"></script>
-		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/charts/widgets/filled_green.js"></script>
-        <script type="text/javascript" src="<?php echo base_url();?>assets/be/js/charts/widgets/filled_red.js"></script>  
+
+		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/plugins/oLoader/js/jquery.oLoader.min.js"></script>
+		<script type="text/javascript" src="<?php echo base_url();?>assets/be/js/plugins/oLoader/js/jquery.elevateZoom-3.0.8.min.js"></script>
+
+
 
 	    <script type="text/javascript">
 	    	var baseDir = '<?php echo base_url(); ?>';
+	    	var cur_city_id = '';
 	   	</script>
 
 	</head>
@@ -99,7 +103,7 @@
 					<i class="caret"></i>
 				</a>
 				<ul class="dropdown-menu dropdown-menu-right icons-right">
-					<li><a href="#"><i class="icon-user"></i> Profile</a></li>
+					<li><a href="<?php echo base_url();?>be/system_users/profile/<?php echo $this->session->userdata('user_id');?>"><i class="icon-user"></i> Profile</a></li>
 					<!--<li><a href="#"><i class="icon-bubble4"></i> Messages</a></li>
 					<li><a href="#"><i class="icon-cog"></i> Settings</a></li>-->
 					<li><a href="<?php echo base_url();?>be/auth/logout"><i class="icon-exit"></i> Logout</a></li>
@@ -129,7 +133,7 @@
 						<?php endif; ?>
 
 						<div class="user-info">
-							<?php echo $this->session->userdata('user_name'); ?> <span>Administrator</span>
+							<?php echo $this->session->userdata('user_name'); ?> <!--<span>Administrator</span>-->
 						</div>
 					</a>
 					<div class="popup dropdown-menu dropdown-menu-right">
@@ -147,14 +151,14 @@
 
 								<div class="thumb-options">
 									<span>
-										<a href="#" class="btn btn-icon btn-success"><i class="icon-pencil"></i></a>
+										<a href="<?php echo base_url();?>be/system_users/profile/<?php echo $this->session->userdata('user_id');?>" class="btn btn-icon btn-success"><i class="icon-profile"></i></a>
 										<!--<a href="#" class="btn btn-icon btn-success"><i class="icon-remove"></i></a>-->
 									</span>
 								</div>
 						    </div>
 					    
 					    	<div class="caption text-center">
-					    		<h6><?php echo $this->session->userdata('user_name'); ?> <small>Administrator</small></h6>
+					    		<h6><?php echo $this->session->userdata('user_name'); ?> <!--<small>Administrator</small>--></h6>
 					    	</div>
 				    	</div>
 					</div>
@@ -166,7 +170,7 @@
 				<ul class="navigation">
 					<li class="active"><a href="<?php echo base_url();?>be"><span>Dashboard</span> <i class=" icon-home"></i></a></li>
 					<li class="active">
-						<a hreactivef="#"><span>Property Management</span> <i class=" icon-cogs"></i></a>
+						<a hreactivef="#"><span>Property Management</span> <i class=" icon-office"></i></a>
 						<ul>
 							<li><a href="<?php echo base_url();?>be/properties/add_start"><span>New Property</span> <i class=" icon-plus-circle"></i></a></li>
 							<li><a href="<?php echo base_url();?>be/properties"><span>Property Listing</span> <i class=" icon-office"></i></a></li>

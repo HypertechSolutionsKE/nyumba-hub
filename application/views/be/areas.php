@@ -29,7 +29,7 @@
 
                         </div>
                         <div class="panel-body">
-                            <div id="Areas_div">
+                            <div id="areas_div">
                                 <div class="alert alert-danger block-inner" style="display: none;" id="div_area_error">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                         Error
@@ -170,7 +170,7 @@
                         </div>
 
                         <!-- Form inside modal -->
-                        <form class="validate" method="post" role="form" id="frm_edita,rea" name="frm_editarea" onsubmit="return update_area();">
+                        <form class="validate" method="post" role="form" id="frm_editarea" name="frm_editarea" onsubmit="return update_area();">
 
                             <div class="modal-body with-padding">
                                 <div class="block-inner text-danger">

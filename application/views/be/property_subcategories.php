@@ -225,6 +225,7 @@
             <!-- /form modal -->
 
 
+
             <!-- Footer -->
             <div class="footer clearfix">
                 <div class="pull-left">&copy; <?php echo date('Y');?>. NyumbaHub powered by <a href="http://hypertechsolutions.co.ke">Hypertech Solutions Limited</a></div>
