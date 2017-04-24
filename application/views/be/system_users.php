@@ -66,8 +66,9 @@
                                                     <td><?php echo $row->department_name; ?></td>
                                                     <td><?php echo $row->access_level_name; ?></td>
                                                     <td>
-                                                        <a data-toggle="modal" role="button" href="#modal_edit_systemuser" onclick="return system_user_edit_load(<?php echo $row->user_id;?>);" class="label label-success btn-icon"><i class="icon-pencil"></i></a>
-                                                        <a onClick="javascript:return confirm('Do you really wish to delete this System User?');" href="javascript:delete_system_user(<?php echo $row->user_id; ?>);" class="label label-danger btn-icon"><i class="icon-remove3"></i></a>
+                                                        <a data-toggle="modal" role="button" href="#modal_edit_systemuser" onclick="return system_user_edit_load(<?php echo $row->user_id;?>);" class="label label-success btn-icon"><i class="icon-pencil" title="Edit User"></i></a>
+                                                        <a data-toggle="modal" role="button" href="#modal_change_system_user_password" onclick="return change_system_user_password_load(<?php echo $row->user_id;?>);" class="label label-success btn-icon"><i class="icon-eye-blocked2" title="Change User Password"></i></a>
+                                                        <a onClick="javascript:return confirm('Do you really wish to delete this System User?');" href="javascript:delete_system_user(<?php echo $row->user_id; ?>);" class="label label-danger btn-icon"><i class="icon-remove3" title="Delete User"></i></a>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -217,6 +218,22 @@
                                     <h6 class="heading-hr"> <small class="display-block">Please fill in the required information and click Save</small></h6>
                                 </div>
 
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="block">
+                                            <div class="thumbnail">
+                                                <div class="thumb">                                      
+                                                    <img id="system_user_profile_picture" src="<?php echo base_url();?>assets/be/images/demo/users/avi-1.png" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-10">
+
+
+                                    </div>
+                                </div>
+
                                 <div class="alert alert-danger block-inner" style="display: none;" id="div_edit_system_user_error">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                         Error
@@ -254,11 +271,11 @@
                                 </div>
                                  <div class="form-group">
                                     <div class="row">
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             <label>Email Address*</label>
                                             <input type="text" id="edit_email_address" name="email_address" class="form-control">
-                                        </div>                                 
-                                    </div>
+                                        </div> 
+                                    </div>                                
                                 </div>
                                  <div class="form-group">
                                     <div class="row">
@@ -310,6 +327,63 @@
                 </div>
             </div>
             <!-- /form modal -->
+
+            <!-- Form modal -->
+            <div id="modal_change_system_user_password" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title"><i class="icon-pencil"></i> Change User Password</h4>
+                        </div>
+
+                        <!-- Form inside modal -->
+                        <form class="validate" method="post" role="form" id="frm_changesystemuserpassword" name="frm_changesystemuserpassword" onsubmit="return change_system_user_password();">
+
+                            <div class="modal-body with-padding">
+                                <div class="block-inner text-danger">
+                                    <h6 class="heading-hr"> <small class="display-block">Enter the user's New Password then click Update</small></h6>
+                                </div>
+
+                                <div class="alert alert-danger block-inner" style="display: none;" id="div_change_system_user_password_error">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                        Error
+                                </div>
+                                <div class="alert alert-success block-inner" style="display: none;" id="div_change_system_user_password_success">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                        Error
+                                </div>
+                                <input type="hidden" id="password_user_id" name="password_user_id" value="">
+                                        
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label>New Password *</label>
+                                            <input type="password" id="new_password" name="new_password" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label>Confirm Password *</label>
+                                            <input type="password" id="confirm_password" name="confirm_password" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="pull-left" id="change_system_user_password_loader" style="display: none;"><i class="icon-spinner3 spin block-inner"></i></div>
+                                <button type="submit" class="btn btn-success"><i class="icon-disk"></i> Update</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-close"></i> Close</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /form modal -->
+
 
 
             <!-- Footer -->

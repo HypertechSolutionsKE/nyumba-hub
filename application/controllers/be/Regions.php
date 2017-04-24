@@ -8,6 +8,7 @@ class Regions extends CI_Controller {
 		//$this->load->model('be/main_model');
 		$this->load->model('be/regions_model');
 	}
+
 	function index(){
 		if($this->session->userdata('nhub_loginstate')) {
 			$data['regions'] = $this->regions_model->get_Regions_list();
@@ -19,6 +20,7 @@ class Regions extends CI_Controller {
             redirect('be/auth');
 		}
 	}
+
 	function save(){
 		$data = array(
 			'region_name' => $this->input->post('region_name'),
@@ -39,7 +41,7 @@ class Regions extends CI_Controller {
 		echo json_encode($resp);
 	}
 	function loadjs(){
-		$data['regions'] = $this->regions_model->get_Regions_list();
+		$data['regions'] = $this->regions_model->get_regions_list();
 		$this->load->view('be/jsloads/regions',$data);
 
 	}
@@ -79,6 +81,5 @@ class Regions extends CI_Controller {
     	}
 		echo json_encode($resp);
 	}
-
 
 }

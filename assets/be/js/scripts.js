@@ -2,16 +2,7 @@ function validateEmail(email) {
 	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	return re.test(email);
 }
-function validateNumeric(num)
-{
-    //var x=document.forms["myForm"]["age"].value;
-    //var re = /^[0-9]+$/;
-    //return re.test(num);
-    /*if (x.match(regex))
-    {
-        alert("Must input numbers");
-        return false;
-    }*/
+function validateNumeric(num){
     return isNaN(num);
 }
 
@@ -77,13 +68,9 @@ function save_listing_type(){
 						$( '#frm_addlistingtype' ).each(function(){
 							this.reset();
 						});	
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_listing_types();
 
-						//}
+						load_listing_types();
+
 					}
             	},
 				error: function(){
@@ -99,8 +86,13 @@ function save_listing_type(){
 }
 //LOAD LISTING TYPES
 function load_listing_types(){
-	//$("#tableLoading").show();
-				
+	$('#div_listing_types_loader').oLoader({
+		backgroundColor:'#fff',
+		image: baseDir+'assets/be/js/plugins/oLoader/images/ownageLoader/loader9.gif',
+		fadeInTime: 500,
+		fadeOutTime: 1000,
+		fadeLevel: 0.8
+	});				
 	$.ajax({
      	url: baseDir+'be/listing_types/loadjs',
        	type: 'POST',
@@ -114,10 +106,10 @@ function load_listing_types(){
        	processData: false,
      	success: function (result) {
 			$("#listing_types_div").html(result);
-			//$("#tableLoading").hide();
+			$('#div_listing_types_loader').oLoader('hide');			
    		},
 		error: function(){
-			//$("#tableLoading").hide();
+			$('#div_listing_types_loader').oLoader('hide');
 		}
     });
 }
@@ -202,16 +194,8 @@ function update_listing_type(){
 						$div_edit_listing_type_error.fadeOut("fast");
 						$div_edit_listing_type_success.fadeIn("fast");
 						
-						/*$( '#frm_editlistingtype' ).each(function(){
-							this.reset();
-						});	*/
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_listing_types();
+						load_listing_types();
 
-						//}
 					}
             	},
 				error: function(){
@@ -256,6 +240,8 @@ function delete_listing_type(listing_type_id){
 					$div_listing_type_success.html(obj['message']);
 					$div_listing_type_error.fadeOut("fast");
 					$div_listing_type_success.fadeIn("fast");
+
+					load_listing_types();
 				}
      		}catch(err){
      			alert(err);
@@ -271,11 +257,6 @@ function delete_listing_type(listing_type_id){
 
 
 
-
-
-
-
-
 //PROPERTY TYPES
 function property_type_add_clear(){
 	//alert('Test');
@@ -287,82 +268,82 @@ function property_type_add_clear(){
 }
 
 function save_property_type(){
-		$div_add_property_type_error = $("#div_add_property_type_error");
-		$div_add_property_type_success = $("#div_add_property_type_success");
-				
-		$add_property_type_name = $("#add_property_type_name").val();
-		$add_property_type_description = $("#add_property_type_description").val();
+	$div_add_property_type_error = $("#div_add_property_type_error");
+	$div_add_property_type_success = $("#div_add_property_type_success");
+			
+	$add_property_type_name = $("#add_property_type_name").val();
+	$add_property_type_description = $("#add_property_type_description").val();
 	
-		$valmsg = "";
-		$valmsg2 = "";
+	$valmsg = "";
+	$valmsg2 = "";
 		
-		if ($add_property_type_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
-		if (!$("#add_bedrooms").is(":checked") && !$("#add_bathrooms").is(":checked") && !$("#add_total_rooms").is(":checked") && !$("#add_living_area").is(":checked") && !$("#add_floor").is(":checked") && !$("#add_total_floors").is(":checked") && !$("#add_land_size").is(":checked") && !$("#add_building_size").is(":checked")){
-			$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select at least one property type feature <br/>";
-		}
-		if ($valmsg != $valmsg2){
-			$div_add_property_type_error.html($valmsg);
-			$div_add_property_type_success.fadeOut("fast");
-			$div_add_property_type_error.fadeIn("fast");
-		}else{
-			$div_add_property_type_error.fadeOut("fast");
-			$div_add_property_type_success.fadeOut("fast");
-				
-			$("#add_property_type_loader").show();
+	if ($add_property_type_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Property Type Name <br/>";}
+	if (!$("#add_bedrooms").is(":checked") && !$("#add_bathrooms").is(":checked") && !$("#add_total_rooms").is(":checked") && !$("#add_living_area").is(":checked") && !$("#add_floor").is(":checked") && !$("#add_total_floors").is(":checked") && !$("#add_land_size").is(":checked") && !$("#add_building_size").is(":checked")){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select at least one property type feature <br/>";
+	}
+	if ($valmsg != $valmsg2){
+		$div_add_property_type_error.html($valmsg);
+		$div_add_property_type_success.fadeOut("fast");
+		$div_add_property_type_error.fadeIn("fast");
+	}else{
+		$div_add_property_type_error.fadeOut("fast");
+		$div_add_property_type_success.fadeOut("fast");
+			
+		$("#add_property_type_loader").show();
 					
-			var form = document.getElementById('frm_addpropertytype');
-			var formData = new FormData(form);
+		var form = document.getElementById('frm_addpropertytype');
+		var formData = new FormData(form);
 
-			$.ajax({
-            	url: baseDir+'be/property_types/save',
-            	type: 'POST',
-            	data: formData,
-				dataType: 'json',
-            	xhr: function() {
-               		var myXhr = $.ajaxSettings.xhr();
-               		return myXhr;
-            	},
-            	cache: false,
-            	contentType: false,
-            	processData: false,
-            	success: function (res) {
-					$("#add_property_type_loader").hide();
-					if(res.status == 'ERR'){
-						$div_add_property_type_error.html(res.message);
-						$div_add_property_type_success.fadeOut("fast");
-						$div_add_property_type_error.fadeIn("fast");
-					}else if (res.status == 'SUCCESS'){
-						$div_add_property_type_success.html(res.message);
-						$div_add_property_type_error.fadeOut("fast");
-						$div_add_property_type_success.fadeIn("fast");
-						
-						$( '#frm_addlistingtype' ).each(function(){
-							this.reset();
-						});	
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_property_types();
-
-						//}
-					}
-            	},
-				error: function(){
-					$("#add_property_type_loader").hide();
-					$div_add_property_type_error.html("Something went wrong. Please check your network and try again.");
+		$.ajax({
+           	url: baseDir+'be/property_types/save',
+           	type: 'POST',
+           	data: formData,
+			dataType: 'json',
+           	xhr: function() {
+           		var myXhr = $.ajaxSettings.xhr();
+           		return myXhr;
+           	},
+           	cache: false,
+           	contentType: false,
+           	processData: false,
+           	success: function (res) {
+				$("#add_property_type_loader").hide();
+				if(res.status == 'ERR'){
+					$div_add_property_type_error.html(res.message);
 					$div_add_property_type_success.fadeOut("fast");
 					$div_add_property_type_error.fadeIn("fast");
+				}else if (res.status == 'SUCCESS'){
+					$div_add_property_type_success.html(res.message);
+					$div_add_property_type_error.fadeOut("fast");
+					$div_add_property_type_success.fadeIn("fast");
+					
+					$( '#frm_addlistingtype' ).each(function(){
+						this.reset();
+					});	
+
+					load_property_types();
+
 				}
-        	});
-	
-		}
+            	},
+			error: function(){
+				$("#add_property_type_loader").hide();
+				$div_add_property_type_error.html("Something went wrong. Please check your network and try again.");
+				$div_add_property_type_success.fadeOut("fast");
+				$div_add_property_type_error.fadeIn("fast");
+			}
+       	});
+	}
 		return false;
 }
-//LOAD LISTING TYPES
+//LOAD PROPERTY TYPES
 function load_property_types(){
-	//$("#tableLoading").show();
-				
+	$('#div_property_types_loader').oLoader({
+		backgroundColor:'#fff',
+		image: baseDir+'assets/be/js/plugins/oLoader/images/ownageLoader/loader9.gif',
+		fadeInTime: 500,
+		fadeOutTime: 1000,
+		fadeLevel: 0.8
+	});				
 	$.ajax({
      	url: baseDir+'be/property_types/loadjs',
        	type: 'POST',
@@ -376,10 +357,10 @@ function load_property_types(){
        	processData: false,
      	success: function (result) {
 			$("#property_types_div").html(result);
-			//$("#tableLoading").hide();
+			$('#div_property_types_loader').oLoader('hide');			
    		},
 		error: function(){
-			//$("#tableLoading").hide();
+			$('#div_property_types_loader').oLoader('hide');
 		}
     });
 }
@@ -433,7 +414,7 @@ function update_property_type(){
 		$valmsg = "";
 		$valmsg2 = "";
 		
-		if ($edit_property_type_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
+		if ($edit_property_type_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Property Type Name <br/>";}
 		if (!$("#edit_bedrooms").is(":checked") && !$("#edit_bathrooms").is(":checked") && !$("#edit_total_rooms").is(":checked") && !$("#edit_living_area").is(":checked") && !$("#edit_floor").is(":checked") && !$("#edit_total_floors").is(":checked") && !$("#edit_land_size").is(":checked") && !$("#edit_building_size").is(":checked")){
 			$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select at least one property type feature <br/>";
 		}
@@ -474,16 +455,8 @@ function update_property_type(){
 						$div_edit_property_type_error.fadeOut("fast");
 						$div_edit_property_type_success.fadeIn("fast");
 						
-						/*$( '#frm_editlistingtype' ).each(function(){
-							this.reset();
-						});	*/
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_property_types();
+						load_property_types();
 
-						//}
 					}
             	},
 				error: function(){
@@ -529,6 +502,8 @@ function delete_property_type(property_type_id){
                     $div_property_type_success.html(obj['message']);
                     $div_property_type_error.fadeOut("fast");
                     $div_property_type_success.fadeIn("fast");
+
+                    load_property_types();
                 }
             }catch(err){
                 alert(err);
@@ -541,8 +516,6 @@ function delete_property_type(property_type_id){
         }
     });
 }
-
-
 
 
 
@@ -571,7 +544,7 @@ function save_property_subcategory(){
 	$valmsg2 = "";
 		
 	if ($add_property_type_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Type<br/>";}
-	if ($add_property_subcategory_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
+	if ($add_property_subcategory_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Property Subcategory Name <br/>";}
 				
 	if ($valmsg != $valmsg2){
 		$div_add_property_subcategory_error.html($valmsg);
@@ -612,12 +585,9 @@ function save_property_subcategory(){
 					$( '#frm_addpropertysubcategory' ).each(function(){
 						this.reset();
 					});	
-					//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-					//if ($r == true) {						    
-					//} else {
-					//$('#modal_add_listingtype').modal('hide');
-					//load_property_subcategories();
-					//}
+
+					load_property_subcategories();
+
 				}
            	},
 			error: function(){
@@ -630,10 +600,15 @@ function save_property_subcategory(){
 	}
 	return false;
 }
-//LOAD LISTING TYPES
+//LOAD PROPERTY SUBCATEGORIES
 function load_property_subcategories(){
-	//$("#tableLoading").show();
-				
+	$('#div_property_subcategories_loader').oLoader({
+		backgroundColor:'#fff',
+		image: baseDir+'assets/be/js/plugins/oLoader/images/ownageLoader/loader9.gif',
+		fadeInTime: 500,
+		fadeOutTime: 1000,
+		fadeLevel: 0.8
+	});				
 	$.ajax({
      	url: baseDir+'be/property_subcategories/loadjs',
        	type: 'POST',
@@ -647,10 +622,10 @@ function load_property_subcategories(){
        	processData: false,
      	success: function (result) {
 			$("#property_subcategories_div").html(result);
-			//$("#tableLoading").hide();
+			$('#div_property_subcategories_loader').oLoader('hide');			
    		},
 		error: function(){
-			//$("#tableLoading").hide();
+			$('#div_property_subcategories_loader').oLoader('hide');
 		}
     });
 }
@@ -701,7 +676,7 @@ function update_property_subcategory(){
 		$valmsg2 = "";
 		
 		if ($edit_property_type_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Type<br/>";}
-		if ($edit_property_subcategory_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
+		if ($edit_property_subcategory_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Property Subcategory Name <br/>";}
 		
 		if ($valmsg != $valmsg2){
 			$div_edit_property_subcategory_error.html($valmsg);
@@ -739,16 +714,8 @@ function update_property_subcategory(){
 						$div_edit_property_subcategory_error.fadeOut("fast");
 						$div_edit_property_subcategory_success.fadeIn("fast");
 						
-						/*$( '#frm_editlistingtype' ).each(function(){
-							this.reset();
-						});	*/
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_property_subcategories();
+						load_property_subcategories();
 
-						//}
 					}
             	},
 				error: function(){
@@ -793,6 +760,8 @@ function delete_property_subcategory(property_subcategory_id){
 					$div_property_subcategory_success.html(obj['message']);
 					$div_property_subcategory_error.fadeOut("fast");
 					$div_property_subcategory_success.fadeIn("fast");
+
+					load_property_subcategories();
 				}
      		}catch(err){
      			alert(err);
@@ -809,11 +778,7 @@ function delete_property_subcategory(property_subcategory_id){
 
 
 
-
-
-
-
-//LISTING TYPES
+//REGIONS
 function region_add_clear(){
 	//alert('Test');
 	$( '#frm_addregion' ).each(function(){
@@ -824,38 +789,38 @@ function region_add_clear(){
 }
 
 function save_region(){
-		$div_add_region_error = $("#div_add_region_error");
-		$div_add_region_success = $("#div_add_region_success");
+	$div_add_region_error = $("#div_add_region_error");
+	$div_add_region_success = $("#div_add_region_success");
 				
-		$add_region_name = $("#add_region_name").val();
-		$add_region_description = $("#add_region_description").val();
+	$add_region_name = $("#add_region_name").val();
+	$add_region_description = $("#add_region_description").val();
 	
-		$valmsg = "";
-		$valmsg2 = "";
+	$valmsg = "";
+	$valmsg2 = "";
 		
-		if ($add_region_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
+	if ($add_region_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Region Name <br/>";}
 		
-		if ($valmsg != $valmsg2){
-			$div_add_region_error.html($valmsg);
-			$div_add_region_success.fadeOut("fast");
-			$div_add_region_error.fadeIn("fast");
-		}else{
-			$div_add_region_error.fadeOut("fast");
-			$div_add_region_success.fadeOut("fast");
+	if ($valmsg != $valmsg2){
+		$div_add_region_error.html($valmsg);
+		$div_add_region_success.fadeOut("fast");
+		$div_add_region_error.fadeIn("fast");
+	}else{
+		$div_add_region_error.fadeOut("fast");
+		$div_add_region_success.fadeOut("fast");
 				
-			$("#add_region_loader").show();
+		$("#add_region_loader").show();
 					
-			var form = document.getElementById('frm_addregion');
-			var formData = new FormData(form);
+		var form = document.getElementById('frm_addregion');
+		var formData = new FormData(form);
 
-			$.ajax({
-            	url: baseDir+'be/regions/save',
-            	type: 'POST',
-            	data: formData,
-				dataType: 'json',
-            	xhr: function() {
-               		var myXhr = $.ajaxSettings.xhr();
-               		return myXhr;
+		$.ajax({
+           	url: baseDir+'be/regions/save',
+           	type: 'POST',
+           	data: formData,
+			dataType: 'json',
+           	xhr: function() {
+          		var myXhr = $.ajaxSettings.xhr();
+        		return myXhr;
             	},
             	cache: false,
             	contentType: false,
@@ -874,13 +839,9 @@ function save_region(){
 						$( '#frm_addregion' ).each(function(){
 							this.reset();
 						});	
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_region').modal('hide');
-						//load_regions();
 
-						//}
+						load_regions();
+
 					}
             	},
 				error: function(){
@@ -896,8 +857,13 @@ function save_region(){
 }
 //LOAD REGIONS
 function load_regions(){
-	//$("#tableLoading").show();
-				
+	$('#div_regions_loader').oLoader({
+		backgroundColor:'#fff',
+		image: baseDir+'assets/be/js/plugins/oLoader/images/ownageLoader/loader9.gif',
+		fadeInTime: 500,
+		fadeOutTime: 1000,
+		fadeLevel: 0.8
+	});				
 	$.ajax({
      	url: baseDir+'be/regions/loadjs',
        	type: 'POST',
@@ -911,10 +877,10 @@ function load_regions(){
        	processData: false,
      	success: function (result) {
 			$("#regions_div").html(result);
-			//$("#tableLoading").hide();
+			$('#div_regions_loader').oLoader('hide');			
    		},
 		error: function(){
-			//$("#tableLoading").hide();
+			$('#div_regions_loader').oLoader('hide');
 		}
     });
 }
@@ -961,7 +927,7 @@ function update_region(){
 		$valmsg = "";
 		$valmsg2 = "";
 		
-		if ($edit_region_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
+		if ($edit_region_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Region Name <br/>";}
 		
 		if ($valmsg != $valmsg2){
 			$div_edit_region_error.html($valmsg);
@@ -998,17 +964,9 @@ function update_region(){
 						$div_edit_region_success.html(res.message);
 						$div_edit_region_error.fadeOut("fast");
 						$div_edit_region_success.fadeIn("fast");
-						
-						/*$( '#frm_editregion' ).each(function(){
-							this.reset();
-						});	*/
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_region').modal('hide');
-						//load_regions();
 
-						//}
+						load_regions();
+
 					}
             	},
 				error: function(){
@@ -1053,6 +1011,8 @@ function delete_region(region_id){
 					$div_region_success.html(obj['message']);
 					$div_region_error.fadeOut("fast");
 					$div_region_success.fadeIn("fast");
+
+					load_regions();
 				}
      		}catch(err){
      			alert(err);
@@ -1065,10 +1025,6 @@ function delete_region(region_id){
 		}
     });
 }
-
-
-
-
 
 
 
@@ -1094,8 +1050,8 @@ function save_city(){
 	$valmsg = "";
 	$valmsg2 = "";
 		
-	if ($add_region_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Type<br/>";}
-	if ($add_city_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
+	if ($add_region_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Region<br/>";}
+	if ($add_city_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter City Name <br/>";}
 				
 	if ($valmsg != $valmsg2){
 		$div_add_city_error.html($valmsg);
@@ -1136,12 +1092,9 @@ function save_city(){
 					$( '#frm_addpropertysubcategory' ).each(function(){
 						this.reset();
 					});	
-					//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-					//if ($r == true) {						    
-					//} else {
-					//$('#modal_add_listingtype').modal('hide');
-					//load_cities();
-					//}
+
+					load_cities();
+
 				}
            	},
 			error: function(){
@@ -1154,10 +1107,16 @@ function save_city(){
 	}
 	return false;
 }
-//LOAD LISTING TYPES
+
+//LOAD CITIES
 function load_cities(){
-	//$("#tableLoading").show();
-				
+	$('#div_cities_loader').oLoader({
+		backgroundColor:'#fff',
+		image: baseDir+'assets/be/js/plugins/oLoader/images/ownageLoader/loader9.gif',
+		fadeInTime: 500,
+		fadeOutTime: 1000,
+		fadeLevel: 0.8
+	});				
 	$.ajax({
      	url: baseDir+'be/cities/loadjs',
        	type: 'POST',
@@ -1171,10 +1130,10 @@ function load_cities(){
        	processData: false,
      	success: function (result) {
 			$("#cities_div").html(result);
-			//$("#tableLoading").hide();
+			$('#div_cities_loader').oLoader('hide');			
    		},
 		error: function(){
-			//$("#tableLoading").hide();
+			$('#div_cities_loader').oLoader('hide');
 		}
     });
 }
@@ -1224,8 +1183,8 @@ function update_city(){
 		$valmsg = "";
 		$valmsg2 = "";
 		
-		if ($edit_region_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Type<br/>";}
-		if ($edit_city_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
+		if ($edit_region_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Region<br/>";}
+		if ($edit_city_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter City Name <br/>";}
 		
 		if ($valmsg != $valmsg2){
 			$div_edit_city_error.html($valmsg);
@@ -1263,16 +1222,7 @@ function update_city(){
 						$div_edit_city_error.fadeOut("fast");
 						$div_edit_city_success.fadeIn("fast");
 						
-						/*$( '#frm_editlistingtype' ).each(function(){
-							this.reset();
-						});	*/
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_property_subcategories();
-
-						//}
+						load_cities();
 					}
             	},
 				error: function(){
@@ -1317,6 +1267,9 @@ function delete_city(city_id){
 					$div_city_success.html(obj['message']);
 					$div_city_error.fadeOut("fast");
 					$div_city_success.fadeIn("fast");
+
+					load_cities();
+
 				}
      		}catch(err){
      			alert(err);
@@ -1339,6 +1292,8 @@ function delete_city(city_id){
 
 //AREAS
 $(document).ready(function(){
+	//$('#div_listing_types_loader').oLoader('hide');
+
 	$("#add_area_region_id").on('change', function() {
     	//alert( this.value );
     	$("#add_area_city_id")
@@ -1428,6 +1383,9 @@ $(document).ready(function(){
          					$("#edit_area_city_id").append($("<option>").attr('value',obj[i]['city_id']).text(obj[i]['city_name']));
   						};	
 
+						$("#edit_area_city_id").val(cur_city_id).trigger('change');
+
+
 		     		}catch(err){
 		     			alert(err);
 		     		}
@@ -1438,7 +1396,6 @@ $(document).ready(function(){
     	}
     })
 }); 
-
 
 function area_add_clear(){
 	//alert('Test');
@@ -1506,12 +1463,9 @@ function save_area(){
 						$("#add_area_region_id").val('').trigger('change');
 						$("#add_area_city_id").val('').trigger('change');
 					});	
-					//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-					//if ($r == true) {						    
-					//} else {
-					//$('#modal_add_listingtype').modal('hide');
-					//load_areas();
-					//}
+
+					load_areas();
+
 				}
            	},
 			error: function(){
@@ -1524,10 +1478,15 @@ function save_area(){
 	}
 	return false;
 }
-//LOAD LISTING TYPES
+//LOAD AREAS
 function load_areas(){
-	//$("#tableLoading").show();
-				
+	$('#div_areas_loader').oLoader({
+		backgroundColor:'#fff',
+		image: baseDir+'assets/be/js/plugins/oLoader/images/ownageLoader/loader9.gif',
+		fadeInTime: 500,
+		fadeOutTime: 1000,
+		fadeLevel: 0.8
+	});				
 	$.ajax({
      	url: baseDir+'be/areas/loadjs',
        	type: 'POST',
@@ -1541,10 +1500,10 @@ function load_areas(){
        	processData: false,
      	success: function (result) {
 			$("#areas_div").html(result);
-			//$("#tableLoading").hide();
+			$('#div_areas_loader').oLoader('hide');			
    		},
 		error: function(){
-			//$("#tableLoading").hide();
+			$('#div_areas_loader').oLoader('hide');
 		}
     });
 }
@@ -1568,9 +1527,8 @@ function area_edit_load(area_id){
 	     		var obj = $.parseJSON(obj1);
 
 	     		$("#edit_area_region_id").val(obj['region_id']).trigger('change'); 
-	     		//alert(obj['city_id']);
-				$("#edit_area_city_id").val(obj['city_id']).trigger('change'); 
-	     		//alert('am here!');
+	     		cur_city_id = obj['city_id'];
+	     		//$("#edit_area_city_id").val(obj['city_id']).trigger('change'); 
 	     		$("#edit_area_id").val(obj['area_id']);
 	     		$("#edit_area_name").val(obj['area_name']);
 	     		$("#edit_area_description").val(obj['area_description']);
@@ -1638,16 +1596,8 @@ function update_area(){
 						$div_edit_area_error.fadeOut("fast");
 						$div_edit_area_success.fadeIn("fast");
 						
-						/*$( '#frm_editlistingtype' ).each(function(){
-							this.reset();
-						});	*/
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_property_subcategories();
+						load_areas();
 
-						//}
 					}
             	},
 				error: function(){
@@ -1692,6 +1642,8 @@ function delete_area(area_id){
 					$div_area_success.html(obj['message']);
 					$div_area_error.fadeOut("fast");
 					$div_area_success.fadeIn("fast");
+
+					load_areas();
 				}
      		}catch(err){
      			alert(err);
@@ -1704,9 +1656,6 @@ function delete_area(area_id){
 		}
     });
 }
-
-
-
 
 
 
@@ -1770,12 +1719,9 @@ function save_property_feature_type(){
 						$( '#frm_addpropertyfeaturetype' ).each(function(){
 							this.reset();
 						});	
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_property_feature_types();
-						//}
+
+						load_property_feature_types();
+
 					}
             	},
 				error: function(){
@@ -1789,10 +1735,15 @@ function save_property_feature_type(){
 		}
 		return false;
 }
-//LOAD LISTING TYPES
+//LOAD PROPERTY FEATURE TYPES
 function load_property_feature_types(){
-	//$("#tableLoading").show();
-				
+	$('#div_property_feature_types_loader').oLoader({
+		backgroundColor:'#fff',
+		image: baseDir+'assets/be/js/plugins/oLoader/images/ownageLoader/loader9.gif',
+		fadeInTime: 500,
+		fadeOutTime: 1000,
+		fadeLevel: 0.8
+	});				
 	$.ajax({
      	url: baseDir+'be/property_feature_types/loadjs',
        	type: 'POST',
@@ -1806,10 +1757,10 @@ function load_property_feature_types(){
        	processData: false,
      	success: function (result) {
 			$("#property_feature_types_div").html(result);
-			//$("#tableLoading").hide();
+			$('#div_property_feature_types_loader').oLoader('hide');			
    		},
 		error: function(){
-			//$("#tableLoading").hide();
+			$('#div_property_feature_types_loader').oLoader('hide');
 		}
     });
 }
@@ -1856,7 +1807,7 @@ function update_property_feature_type(){
 		$valmsg = "";
 		$valmsg2 = "";
 		
-		if ($edit_property_feature_type_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Listing Type Name <br/>";}
+		if ($edit_property_feature_type_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Property Feature Type Name <br/>";}
 		
 		if ($valmsg != $valmsg2){
 			$div_edit_property_feature_type_error.html($valmsg);
@@ -1894,16 +1845,8 @@ function update_property_feature_type(){
 						$div_edit_property_feature_type_error.fadeOut("fast");
 						$div_edit_property_feature_type_success.fadeIn("fast");
 						
-						/*$( '#frm_editlistingtype' ).each(function(){
-							this.reset();
-						});	*/
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_property_feature_types();
+						load_property_feature_types();
 
-						//}
 					}
             	},
 				error: function(){
@@ -1949,6 +1892,8 @@ function delete_property_feature_type(property_feature_type_id){
                     $div_property_feature_type_success.html(obj['message']);
                     $div_property_feature_type_error.fadeOut("fast");
                     $div_property_feature_type_success.fadeIn("fast");
+
+                    load_property_feature_types();
                 }
             }catch(err){
                 alert(err);
@@ -2033,12 +1978,9 @@ function save_property_feature(){
 						this.reset();
 						$("#add_property_feature_type_id").val('').trigger('change');
 					});	
-					//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-					//if ($r == true) {						    
-					//} else {
-					//$('#modal_add_listingtype').modal('hide');
-					//load_property_features();
-					//}
+
+					load_property_features();
+
 				}
            	},
 			error: function(){
@@ -2052,10 +1994,15 @@ function save_property_feature(){
 	return false;
 }
 
-//LOAD LISTING TYPES
+//LOAD PROPERTY FEATURES
 function load_property_features(){
-	//$("#tableLoading").show();
-				
+	$('#div_property_feature_types_loader').oLoader({
+		backgroundColor:'#fff',
+		image: baseDir+'assets/be/js/plugins/oLoader/images/ownageLoader/loader9.gif',
+		fadeInTime: 500,
+		fadeOutTime: 1000,
+		fadeLevel: 0.8
+	});				
 	$.ajax({
      	url: baseDir+'be/property_features/loadjs',
        	type: 'POST',
@@ -2069,10 +2016,10 @@ function load_property_features(){
        	processData: false,
      	success: function (result) {
 			$("#property_features_div").html(result);
-			//$("#tableLoading").hide();
+			$('#div_property_features_loader').oLoader('hide');			
    		},
 		error: function(){
-			//$("#tableLoading").hide();
+			$('#div_property_features_loader').oLoader('hide');
 		}
     });
 }
@@ -2161,16 +2108,8 @@ function update_property_feature(){
 						$div_edit_property_feature_error.fadeOut("fast");
 						$div_edit_property_feature_success.fadeIn("fast");
 						
-						/*$( '#frm_editlistingtype' ).each(function(){
-							this.reset();
-						});	*/
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_property_features();
+						load_property_features();
 
-						//}
 					}
             	},
 				error: function(){
@@ -2215,6 +2154,8 @@ function delete_property_feature(property_feature_id){
 					$div_property_feature_success.html(obj['message']);
 					$div_property_feature_error.fadeOut("fast");
 					$div_property_feature_success.fadeIn("fast");
+
+					load_property_features();
 				}
      		}catch(err){
      			alert(err);
@@ -2231,14 +2172,7 @@ function delete_property_feature(property_feature_id){
 
 
 
-
-
-
-
-
-
-
-//PROPERTY TYPES
+//CURRENCIES
 function currency_add_clear(){
 	//alert('Test');
 	$( '#frm_addcurrency' ).each(function(){
@@ -2301,16 +2235,12 @@ function save_currency(){
 						$div_add_currency_error.fadeOut("fast");
 						$div_add_currency_success.fadeIn("fast");
 						
-						$( '#frm_addlistingtype' ).each(function(){
+						$( '#frm_addcurrency' ).each(function(){
 							this.reset();
 						});	
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_currencies();
 
-						//}
+						load_currencies();
+
 					}
             	},
 				error: function(){
@@ -2324,10 +2254,15 @@ function save_currency(){
 		}
 		return false;
 }
-//LOAD LISTING TYPES
+//CURRENCIES
 function load_currencies(){
-	//$("#tableLoading").show();
-				
+	$('#div_currencies_loader').oLoader({
+		backgroundColor:'#fff',
+		image: baseDir+'assets/be/js/plugins/oLoader/images/ownageLoader/loader9.gif',
+		fadeInTime: 500,
+		fadeOutTime: 1000,
+		fadeLevel: 0.8
+	});				
 	$.ajax({
      	url: baseDir+'be/currencies/loadjs',
        	type: 'POST',
@@ -2341,10 +2276,10 @@ function load_currencies(){
        	processData: false,
      	success: function (result) {
 			$("#currencies_div").html(result);
-			//$("#tableLoading").hide();
+			$('#div_currencies_loader').oLoader('hide');			
    		},
 		error: function(){
-			//$("#tableLoading").hide();
+			$('#div_currencies_loader').oLoader('hide');
 		}
     });
 }
@@ -2436,16 +2371,8 @@ function update_currency(){
 						$div_edit_currency_error.fadeOut("fast");
 						$div_edit_currency_success.fadeIn("fast");
 						
-						/*$( '#frm_editlistingtype' ).each(function(){
-							this.reset();
-						});	*/
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_currencies();
+						load_currencies();
 
-						//}
 					}
             	},
 				error: function(){
@@ -2491,6 +2418,8 @@ function delete_currency(currency_id){
                     $div_currency_success.html(obj['message']);
                     $div_currency_error.fadeOut("fast");
                     $div_currency_success.fadeIn("fast");
+
+                    load_currencies();
                 }
             }catch(err){
                 alert(err);
@@ -2503,11 +2432,6 @@ function delete_currency(currency_id){
         }
     });
 }
-
-
-
-
-
 
 
 
@@ -2573,13 +2497,9 @@ function save_access_level(){
 						$( '#frm_addaccesslevel' ).each(function(){
 							this.reset();
 						});	
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_access_levels();
 
-						//}
+						load_access_levels();
+
 					}
             	},
 				error: function(){
@@ -2593,10 +2513,15 @@ function save_access_level(){
 		}
 		return false;
 }
-//LOAD LISTING TYPES
+//LOAD ACCESS LEVELS
 function load_access_levels(){
-	//$("#tableLoading").show();
-				
+	$('#div_access_levels_loader').oLoader({
+		backgroundColor:'#fff',
+		image: baseDir+'assets/be/js/plugins/oLoader/images/ownageLoader/loader9.gif',
+		fadeInTime: 500,
+		fadeOutTime: 1000,
+		fadeLevel: 0.8
+	});				
 	$.ajax({
      	url: baseDir+'be/access_levels/loadjs',
        	type: 'POST',
@@ -2610,10 +2535,10 @@ function load_access_levels(){
        	processData: false,
      	success: function (result) {
 			$("#access_levels_div").html(result);
-			//$("#tableLoading").hide();
+			$('#div_access_levels_loader').oLoader('hide');			
    		},
 		error: function(){
-			//$("#tableLoading").hide();
+			$('#div_access_levels_loader').oLoader('hide');
 		}
     });
 }
@@ -2698,16 +2623,8 @@ function update_access_level(){
 						$div_edit_access_level_error.fadeOut("fast");
 						$div_edit_access_level_success.fadeIn("fast");
 						
-						/*$( '#frm_editlistingtype' ).each(function(){
-							this.reset();
-						});	*/
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_access_levels();
+						load_access_levels();
 
-						//}
 					}
             	},
 				error: function(){
@@ -2753,6 +2670,8 @@ function delete_access_level(access_level_id){
                     $div_access_level_success.html(obj['message']);
                     $div_access_level_error.fadeOut("fast");
                     $div_access_level_success.fadeIn("fast");
+
+                    load_access_levels();
                 }
             }catch(err){
                 alert(err);
@@ -2834,12 +2753,9 @@ function save_department(){
 					$( '#frm_adddepartment' ).each(function(){
 						this.reset();
 					});	
-					//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-					//if ($r == true) {						    
-					//} else {
-					//$('#modal_add_listingtype').modal('hide');
-					//load_departments();
-						//}
+
+					load_departments();
+
 				}
            	},
 			error: function(){
@@ -2853,10 +2769,15 @@ function save_department(){
 	}
 	return false;
 }
-//LOAD LISTING TYPES
+//LOAD DEPARTMENTS
 function load_departments(){
-	//$("#tableLoading").show();
-				
+	$('#div_departments_loader').oLoader({
+		backgroundColor:'#fff',
+		image: baseDir+'assets/be/js/plugins/oLoader/images/ownageLoader/loader9.gif',
+		fadeInTime: 500,
+		fadeOutTime: 1000,
+		fadeLevel: 0.8
+	});				
 	$.ajax({
      	url: baseDir+'be/departments/loadjs',
        	type: 'POST',
@@ -2870,10 +2791,10 @@ function load_departments(){
        	processData: false,
      	success: function (result) {
 			$("#departments_div").html(result);
-			//$("#tableLoading").hide();
+			$('#div_departments_loader').oLoader('hide');			
    		},
 		error: function(){
-			//$("#tableLoading").hide();
+			$('#div_departments_loader').oLoader('hide');
 		}
     });
 }
@@ -2958,16 +2879,8 @@ function update_department(){
 						$div_edit_department_error.fadeOut("fast");
 						$div_edit_department_success.fadeIn("fast");
 						
-						/*$( '#frm_editlistingtype' ).each(function(){
-							this.reset();
-						});	*/
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_departments();
+						load_departments();
 
-						//}
 					}
             	},
 				error: function(){
@@ -3013,6 +2926,8 @@ function delete_department(department_id){
                     $div_department_success.html(obj['message']);
                     $div_department_error.fadeOut("fast");
                     $div_department_success.fadeIn("fast");
+
+                    load_departments();
                 }
             }catch(err){
                 alert(err);
@@ -3025,11 +2940,6 @@ function delete_department(department_id){
         }
     });
 }
-
-
-
-
-
 
 
 
@@ -3097,6 +3007,81 @@ function save_company_information(){
 		}
 		return false;
 	
+}
+function change_company_logo(){
+	$div_change_company_logo_error = $("#div_change_company_logo_error");
+	$div_change_company_logo_success = $("#div_change_company_logo_success");
+				
+	$company_logo = $("#company_logo").val();
+	
+	
+	$valmsg = "";
+	$valmsg2 = "";
+		
+		if ($company_logo == ""){
+			$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please click Browse to select a company_logo <br/>";
+		}else{
+			$allowed_extensions = new Array("png","jpg","jpeg","gif");
+    		$file_extension = $company_logo.split('.').pop();
+			
+			$found = false;
+			for(var i = 0; i <= $allowed_extensions.length; i++){
+        		if($allowed_extensions[i]==$file_extension){
+					$found = true;
+					break;
+				}
+			}
+			
+			if ($found == false){
+				$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> The file you chose has an incorrect format. Only files with the following extensions are allowed: .png, .jpg, .jpeg, .gif <br/>";
+			}
+		}
+		
+		if ($valmsg != $valmsg2){
+			$div_change_company_logo_error.html($valmsg);
+			$div_change_company_logo_success.fadeOut("fast");
+			$div_change_company_logo_error.fadeIn("fast");
+		}else{
+			$div_change_company_logo_error.fadeOut("fast");
+			$div_change_company_logo_success.fadeOut("fast");
+				
+			$("#change_company_logo_loader").show();
+					
+			var form = document.getElementById('frm_changecompanylogo');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/company_information/change_company_logo',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#change_company_logo_loader").hide();
+					if(res.status == 'ERR'){
+						$div_change_company_logo_error.html(res.message);
+						$div_change_company_logo_success.fadeOut("fast");
+						$div_change_company_logo_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						window.location.reload(false);					
+					}
+            	},
+				error: function(){
+					$("#change_company_logo_loader").hide();
+					$div_change_company_logo_error.html("Something went wrong. Please check your network and try again.");
+					$div_change_company_logo_success.fadeOut("fast");
+					$div_change_company_logo_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
 }
 
 
@@ -3188,12 +3173,9 @@ function save_system_user(){
 						$("#add_department_id").val('').trigger('change');
 						$("#add_access_level_id").val('').trigger('change');						
 					});	
-					//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-					//if ($r == true) {						    
-					//} else {
-					//$('#modal_add_listingtype').modal('hide');
-					//load_system_users();
-					//}
+
+					load_system_users();
+
 				}
            	},
 			error: function(){
@@ -3207,10 +3189,15 @@ function save_system_user(){
 	}
 		return false;
 }
-//LOAD LISTING TYPES
+//LOAD SYSTEM USERS
 function load_system_users(){
-	//$("#tableLoading").show();
-				
+	$('#div_system_users_loader').oLoader({
+		backgroundColor:'#fff',
+		image: baseDir+'assets/be/js/plugins/oLoader/images/ownageLoader/loader9.gif',
+		fadeInTime: 500,
+		fadeOutTime: 1000,
+		fadeLevel: 0.8
+	});				
 	$.ajax({
      	url: baseDir+'be/system_users/loadjs',
        	type: 'POST',
@@ -3224,10 +3211,10 @@ function load_system_users(){
        	processData: false,
      	success: function (result) {
 			$("#system_users_div").html(result);
-			//$("#tableLoading").hide();
+			$('#div_system_users_loader').oLoader('hide');			
    		},
 		error: function(){
-			//$("#tableLoading").hide();
+			$('#div_system_users_loader').oLoader('hide');
 		}
     });
 }
@@ -3257,7 +3244,14 @@ function system_user_edit_load(system_user_id){
 	     		$("#edit_email_address").val(obj['email_address']);
 	     		$("#edit_gender").val(obj['gender']).change(); 
 	     		$("#edit_department_id").val(obj['department_id']).change(); 
-	     		$("#edit_access_level_id").val(obj['access_level_id']).change(); 	     		
+	     		$("#edit_access_level_id").val(obj['access_level_id']).change(); 
+
+	     		if (obj['profile_picture'] == ''){
+	     			$("#system_user_profile_picture").attr('src', baseDir + 'assets/be/images/demo/users/avi-1.png');
+	     		}else{
+	     			$picture_path = baseDir + 'uploads/profile_pictures/' + obj['profile_picture'];
+	     			check_profile_picture_exists($picture_path);
+	     		}	     		
      		}catch(err){
      			alert(err);
      		}
@@ -3268,6 +3262,18 @@ function system_user_edit_load(system_user_id){
    	$div_edit_system_user_error.fadeOut("fast");
 	$div_edit_system_user_success.fadeOut("fast");
 
+}
+function check_profile_picture_exists($picture_path){
+	$.ajax({
+		url: $picture_path,
+		type: 'HEAD',
+		error: function(){
+			$("#system_user_profile_picture").attr('src', baseDir + 'assets/be/images/demo/users/avi-1.png');
+		},
+		success: function(){
+			$("#system_user_profile_picture").attr('src', $picture_path);
+		}
+	});
 }
 function update_system_user(){
 	$div_edit_system_user_error = $("#div_edit_system_user_error");
@@ -3327,16 +3333,8 @@ function update_system_user(){
 						$div_edit_system_user_error.fadeOut("fast");
 						$div_edit_system_user_success.fadeIn("fast");
 						
-						/*$( '#frm_editlistingtype' ).each(function(){
-							this.reset();
-						});	*/
-						//$r = confirm("Listing Type added successfully. Would you like to add another listing type?");
-						//if ($r == true) {						    
-						//} else {
-						//$('#modal_add_listingtype').modal('hide');
-						//load_system_users();
+						load_system_users();
 
-						//}
 					}
             	},
 				error: function(){
@@ -3350,6 +3348,85 @@ function update_system_user(){
 		}
 		return false;
 }
+
+function change_system_user_password_load($user_id){
+	$( '#password_user_id' ).val($user_id);
+	$( '#new_password' ).val('');
+	$( '#confirm_password' ).val('');	
+	$div_change_system_user_password_success.fadeOut("fast");
+	$div_change_system_user_password_error.fadeOut("fast");	
+}
+
+function change_system_user_password(){
+	$div_change_system_user_password_error = $("#div_change_system_user_password_error");
+	$div_change_system_user_password_success = $("#div_change_system_user_password_success");
+				
+	//$old_password = $("#old_password").val();
+	$new_password = $("#new_password").val();
+	$confirm_password = $("#confirm_password").val();
+	
+	
+	$valmsg = "";
+	$valmsg2 = "";
+		
+	//if ($old_password == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Old Password <br/>";}
+	if ($new_password == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter New Password <br/>";}
+	if ($confirm_password == ""){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation'></i> Please enter Confirm Password<br/>";
+	}else if($new_password != $confirm_password){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation'></i> Please retype the correct Password <br/>";
+	}
+		
+		if ($valmsg != $valmsg2){
+			$div_change_system_user_password_error.html($valmsg);
+			$div_change_system_user_password_success.fadeOut("fast");
+			$div_change_system_user_password_error.fadeIn("fast");
+		}else{
+			$div_change_system_user_password_error.fadeOut("fast");
+			$div_change_system_user_password_success.fadeOut("fast");
+				
+			$("#change_system_user_password_loader").show();
+					
+			var form = document.getElementById('frm_changesystemuserpassword');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/system_users/change_system_user_password',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#change_system_user_password_loader").hide();
+					if(res.status == 'ERR'){
+						$div_change_system_user_password_error.html(res.message);
+						$div_change_system_user_password_success.fadeOut("fast");
+						$div_change_system_user_password_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_change_system_user_password_success.html(res.message);
+						$div_change_system_user_password_error.fadeOut("fast");
+						$div_change_system_user_password_success.fadeIn("fast");						
+					}
+            	},
+				error: function(){
+					$("#change_system_user_password_loader").hide();
+					$div_change_system_user_password_error.html("Something went wrong. Please check your network and try again.");
+					$div_change_system_user_password_success.fadeOut("fast");
+					$div_change_system_user_password_error.fadeIn("fast");
+
+				}
+        	});
+	
+		}
+		return false;
+}
+
 function delete_system_user(system_user_id){
     //alert('Am clicked!');
     $div_system_user_error = $("#div_system_user_error");
@@ -3382,6 +3459,9 @@ function delete_system_user(system_user_id){
                     $div_system_user_success.html(obj['message']);
                     $div_system_user_error.fadeOut("fast");
                     $div_system_user_success.fadeIn("fast");
+
+					load_system_users();
+                    
                 }
             }catch(err){
                 alert(err);
@@ -3871,3 +3951,232 @@ function save_new_property_attachments(){
 	return false;
 
 }
+
+
+//USER PROFILE
+function update_user_profile(){
+	$div_edit_system_user_error = $("#div_edit_system_user_error");
+	$div_edit_system_user_success = $("#div_edit_system_user_success");
+				
+	$edit_first_name = $("#edit_first_name").val();
+	$edit_last_name = $("#edit_last_name").val();
+	$edit_email_address = $("#edit_email_address").val();
+	$edit_access_level_id = $("#edit_access_level_id").val();
+	
+	
+	$valmsg = "";
+	$valmsg2 = "";
+		
+	if ($edit_first_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter First Name <br/>";}
+	if ($edit_last_name == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Last Name <br/>";}
+	if ($edit_email_address == ""){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation'></i> Please enter Email Address<br/>";
+	}else if(!validateEmail($edit_email_address)){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation'></i> Please enter the correct Email format <br/>";
+	}
+	if ($edit_access_level_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Access Level <br/>";}
+		
+		if ($valmsg != $valmsg2){
+			$div_edit_system_user_error.html($valmsg);
+			$div_edit_system_user_success.fadeOut("fast");
+			$div_edit_system_user_error.fadeIn("fast");
+		}else{
+			$div_edit_system_user_error.fadeOut("fast");
+			$div_edit_system_user_success.fadeOut("fast");
+				
+			$("#edit_system_user_loader").show();
+					
+			var form = document.getElementById('frm_editsystemuser');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/system_users/update_profile',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#edit_system_user_loader").hide();
+					if(res.status == 'ERR'){
+						$div_edit_system_user_error.html(res.message);
+						$div_edit_system_user_success.fadeOut("fast");
+						$div_edit_system_user_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_edit_system_user_success.html(res.message);
+						$div_edit_system_user_error.fadeOut("fast");
+						$div_edit_system_user_success.fadeIn("fast");						
+					}
+            	},
+				error: function(){
+					$("#edit_system_user_loader").hide();
+					$div_edit_system_user_error.html("Something went wrong. Please check your network and try again.");
+					$div_edit_system_user_success.fadeOut("fast");
+					$div_edit_system_user_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+
+function change_user_password_load(){
+	$( '#old_password' ).val('');
+	$( '#new_password' ).val('');
+	$( '#confirm_password' ).val('');	
+	$div_change_user_password_success.fadeOut("fast");
+	$div_change_user_password_error.fadeOut("fast");	
+}
+
+function change_user_password(){
+	$div_change_user_password_error = $("#div_change_user_password_error");
+	$div_change_user_password_success = $("#div_change_user_password_success");
+				
+	$old_password = $("#old_password").val();
+	$new_password = $("#new_password").val();
+	$confirm_password = $("#confirm_password").val();
+	
+	
+	$valmsg = "";
+	$valmsg2 = "";
+		
+	if ($old_password == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Old Password <br/>";}
+	if ($new_password == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter New Password <br/>";}
+	if ($confirm_password == ""){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation'></i> Please enter Confirm Password<br/>";
+	}else if($new_password != $confirm_password){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation'></i> Please retype the correct Password <br/>";
+	}
+		
+		if ($valmsg != $valmsg2){
+			$div_change_user_password_error.html($valmsg);
+			$div_change_user_password_success.fadeOut("fast");
+			$div_change_user_password_error.fadeIn("fast");
+		}else{
+			$div_change_user_password_error.fadeOut("fast");
+			$div_change_user_password_success.fadeOut("fast");
+				
+			$("#change_user_password_loader").show();
+					
+			var form = document.getElementById('frm_changeuserpassword');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/system_users/change_password',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#change_user_password_loader").hide();
+					if(res.status == 'ERR'){
+						$div_change_user_password_error.html(res.message);
+						$div_change_user_password_success.fadeOut("fast");
+						$div_change_user_password_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						$div_change_user_password_success.html(res.message);
+						$div_change_user_password_error.fadeOut("fast");
+						$div_change_user_password_success.fadeIn("fast");						
+					}
+            	},
+				error: function(){
+					$("#change_user_password_loader").hide();
+					$div_change_user_password_error.html("Something went wrong. Please check your network and try again.");
+					$div_change_user_password_success.fadeOut("fast");
+					$div_change_user_password_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+
+function change_profile_picture(){
+	$div_change_profile_picture_error = $("#div_change_profile_picture_error");
+	$div_change_profile_picture_success = $("#div_change_profile_picture_success");
+				
+	$profile_picture = $("#profile_picture").val();
+	$user_id = $("#profile_picture_user_id").val();	
+	
+	
+	$valmsg = "";
+	$valmsg2 = "";
+		
+		if ($profile_picture == ""){
+			$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please click Browse to select a profile picture <br/>";
+		}else{
+			$allowed_extensions = new Array("png","jpg","jpeg","gif");
+    		$file_extension = $profile_picture.split('.').pop();
+			
+			$found = false;
+			for(var i = 0; i <= $allowed_extensions.length; i++){
+        		if($allowed_extensions[i]==$file_extension){
+					$found = true;
+					break;
+				}
+			}
+			
+			if ($found == false){
+				$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> The file you chose has an incorrect format. Only files with the following extensions are allowed: .png, .jpg, .jpeg, .gif <br/>";
+			}
+
+		}
+		
+		if ($valmsg != $valmsg2){
+			$div_change_profile_picture_error.html($valmsg);
+			$div_change_profile_picture_success.fadeOut("fast");
+			$div_change_profile_picture_error.fadeIn("fast");
+		}else{
+			$div_change_profile_picture_error.fadeOut("fast");
+			$div_change_profile_picture_success.fadeOut("fast");
+				
+			$("#change_profile_picture_loader").show();
+					
+			var form = document.getElementById('frm_changeprofilepicture');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/system_users/change_profile_picture',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#edit_system_user_loader").hide();
+					if(res.status == 'ERR'){
+						$div_change_profile_picture_error.html(res.message);
+						$div_change_profile_picture_success.fadeOut("fast");
+						$div_change_profile_picture_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						window.location = $user_id;					
+					}
+            	},
+				error: function(){
+					$("#change_profile_picture_loader").hide();
+					$div_change_profile_picture_error.html("Something went wrong. Please check your network and try again.");
+					$div_change_profile_picture_success.fadeOut("fast");
+					$div_change_profile_picture_error.fadeIn("fast");
+				}
+        	});
+	
+		}
+		return false;
+}
+

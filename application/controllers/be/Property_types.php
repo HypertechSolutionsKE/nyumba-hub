@@ -77,7 +77,6 @@ class Property_types extends CI_Controller {
 	function loadjs(){
 		$data['property_types'] = $this->property_types_model->get_property_types_list();
 		$this->load->view('be/jsloads/property_types',$data);
-
 	}
 	function get_property_type($property_type_id){
 		$property_type = $this->property_types_model->get_property_type($property_type_id);

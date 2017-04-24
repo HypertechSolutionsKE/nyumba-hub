@@ -17,8 +17,9 @@ class Properties extends CI_Controller {
 	}
 	function index(){
 		if($this->session->userdata('nhub_loginstate')) {
+			$data['properties'] = $this->properties_model->get_properties_list();
 			$data['page_title'] = 'Properties Listing | ';
-			$data['main_content'] = 'be/properties';
+			$data['main_content'] = 'be/properties_list';
 			$this->load->view('be/includes/template',$data);
         } 
 		else {
@@ -200,7 +201,7 @@ class Properties extends CI_Controller {
 					if($this->session->userdata('full_name') && $this->session->userdata('email_address')) {
 
 						$property_sku = $this->properties_model->get_property_sku();
-						$property_reference_id = url_title($this->session->userdata('property_title'),'-',TRUE);
+						$property_reference_id = url_title($this->session->userdata('property_title'),'-',TRUE) . '-' . strtolower($property_sku);
 		
 						$save_data = array(
 							'property_reference_id' => $property_reference_id,
@@ -250,8 +251,10 @@ class Properties extends CI_Controller {
 							//$data['success'] = '<strong>Loan application submitted successfully!</strong>';
 							
 							//$this->load->view('fe/includes/template',$data);
+							$this->session->set_flashdata('success',$q['dt']);
+
 							
-							$resp = array('status' => 'SUCCESS','message' => '<strong>Property published successfully</strong>');
+							$resp = array('status' => 'SUCCESS','message' => $q['dt']);
 						}else{
 							//$data['main_content'] = 'fe/loan_application';
 							//$data['page_title'] ='Loan Application - ';

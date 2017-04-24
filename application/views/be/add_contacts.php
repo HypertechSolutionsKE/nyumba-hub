@@ -31,7 +31,7 @@
                                         <li class="bg-succ"><a href="<?php echo base_url();?>be/properties/add_start">Step 1: Basic Info</a></li>
                                         <li class="bg-succ"><a href="<?php echo base_url();?>be/properties/add_features">Step 2: Property Features</a></li>
                                         <li class="active"><a href="<?php echo base_url();?>be/properties/add_contacts">Step 3: Contact Details</a></li>
-                                        <li class="bg-succ"><a href="<?php echo base_url();?>be/properties/add_attachments">Step 4: Attachments</a></li>                                        
+                                        <li class="bg-succ"><a href="<?php echo base_url();?>be/properties/add_attachments">Step 4: Attachments &amp; Publish</a></li>                                        
                                     </ul>
                                     <div class="clearfix"></div>
                                     <hr>

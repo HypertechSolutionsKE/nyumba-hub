@@ -10,14 +10,6 @@
             </div>
             <!-- /page header -->
 
-
-            <!--<div class="breadcrumb-line">
-                <ul class="breadcrumb">
-                    <li><a href="<?php echo base_url();?>be">Dashboard</a></li>
-                    <li class="active">Listing Types</li>
-                </ul>
-            </div>-->
-
             <div class="row">
                 <div class="col-md-8">
                     <div class="panel panel-danger">
@@ -34,6 +26,7 @@
 
                         <div class="panel-body">
                             <div id="listing_types_div">
+                                <div id="div_listing_types_loader" style="min-height:2px"></div>
                                 <div class="alert alert-danger block-inner" style="display: none;" id="div_listing_type_error">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                         Error
