@@ -3,7 +3,51 @@ class Properties_model extends CI_Model {
 	
 	function get_properties_list(){
 		$this->db->from('properties');
-		$this->db->where( array('is_deleted'=>0));
+		$this->db->join('listing_types', 'listing_types.listing_type_id=properties.listing_type_id', 'left outer');
+		$this->db->join('property_types', 'property_types.property_type_id=properties.property_type_id', 'left outer');
+		$this->db->join('property_subcategories', 'property_subcategories.property_subcategory_id=properties.property_subcategory_id', 'left outer');
+		$this->db->join('regions', 'regions.region_id=properties.region_id', 'left outer');
+		$this->db->join('cities', 'cities.city_id=properties.city_id', 'left outer');
+		$this->db->join('areas', 'areas.area_id=properties.area_id', 'left outer');
+		$this->db->where( array('properties.is_deleted'=>0));
+		return $this->db->get()->result();
+	}
+
+	function get_properties_filtered_list(){
+		$listing_type_id = $this->input->post('pl_listing_type_id');
+		$property_type_id = $this->input->post('pl_property_type_id');
+		$property_subcategory_id = $this->input->post('pl_property_subcategory_id');
+		$region_id = $this->input->post('pl_region_id');
+		$city_id = $this->input->post('pl_city_id');
+		$area_id = $this->input->post('pl_area_id');
+		$date_from = $this->input->post('pl_date_from');
+		$date_to = $this->input->post('pl_date_to');
+		$featured = $this->input->post('pl_featured');
+		$publish_status = $this->input->post('pl_publish_status');
+
+		$this->db->from('properties');
+		$this->db->join('listing_types', 'listing_types.listing_type_id=properties.listing_type_id', 'left outer');
+		$this->db->join('property_types', 'property_types.property_type_id=properties.property_type_id', 'left outer');
+		$this->db->join('property_subcategories', 'property_subcategories.property_subcategory_id=properties.property_subcategory_id', 'left outer');
+		$this->db->join('regions', 'regions.region_id=properties.region_id', 'left outer');
+		$this->db->join('cities', 'cities.city_id=properties.city_id', 'left outer');
+		$this->db->join('areas', 'areas.area_id=properties.area_id', 'left outer');
+
+		if ($listing_type_id != ''){$this->db->where( array('properties.listing_type_id'=>$listing_type_id));}
+		if ($property_type_id != ''){$this->db->where( array('properties.property_type_id'=>$property_type_id));}
+		if ($property_subcategory_id != ''){$this->db->where( array('properties.property_subcategory_id'=>$property_subcategory_id));}
+		if ($region_id != ''){$this->db->where( array('properties.region_id'=>$region_id));}
+		if ($city_id != ''){$this->db->where( array('properties.city_id'=>$city_id));}
+		if ($area_id != ''){$this->db->where( array('properties.area_id'=>$area_id));}
+		if ($date_from != '' && $date_to != ''){
+			$this->db->where('properties.created_on >= ',date('Y-m-d', strtotime($date_from)));
+			$this->db->where('properties.created_on <= ',date('Y-m-d', strtotime($date_to)));
+		}
+		if ($featured != 'All' && $featured != ''){$this->db->where( array('properties.featured'=>$featured));}
+		if ($publish_status != 'All' && $publish_status != ''){$this->db->where( array('properties.publish_status'=>$publish_status));}
+
+
+		$this->db->where( array('properties.is_deleted'=>0));
 		return $this->db->get()->result();
 	}
 
@@ -182,17 +226,17 @@ class Properties_model extends CI_Model {
 
 	function get_property($property_id){
 		$this->db->from('properties');
-		$this->db->where( array('property_id'=>$property_id));
+		$this->db->where(array('property_id'=>$property_id));
 		return $this->db->get()->result_array();
 	}
-	/*function property_update_exists($property_id,$property_name){
-		$q = $this->db->query("SELECT * FROM properties WHERE property_id != ".$property_id." AND property_name = '$property_name' AND is_deleted = 0");
-		if ($q->num_rows() > 0){
-			return TRUE;
-		}else{
-			return FALSE;
-		}
-	}	*/
+
+
+	function get_property2($property_id){
+		$this->db->from('properties');
+		$this->db->where(array('property_id'=>$property_id));
+		return $this->db->get()->result();
+	}
+
 	function property_update_exists($property_id,$country_name,$country_code,$property_name,$property_symbol){
 		$err = "";
 		$query = $this->db->where(array('property_id !='=>$property_id,'country_name'=>$country_name,'is_deleted'=>0))->get('properties');
@@ -226,16 +270,62 @@ class Properties_model extends CI_Model {
 		return $arr_return;
 	}
 	function delete($property_id){
-		$data = array(
-			'is_deleted'=> 1
-		);			
+		$data = array('is_deleted'=> 1);			
 		$this->db->where( array('property_id'=>$property_id));
 		$delupdate = $this->db->update('properties', $data);
 		
 		if ($delupdate){
-			$arr_return = array('res' => true,'dt'=>'property deleted successfully');
+			$arr_return = array('res' => true,'dt'=>'Property deleted successfully');
 		}else{
 			$arr_return = array('res' => false,'dt' => 'Error deleting property');
+		}
+		return $arr_return;
+	}
+	function set_online($property_id){
+		$data = array('publish_status'=> 'Online');			
+		$this->db->where(array('property_id'=>$property_id));
+		$res = $this->db->update('properties', $data);
+		
+		if ($res){
+			$arr_return = array('res' => true,'dt'=>'Property publish status changed successfully');
+		}else{
+			$arr_return = array('res' => false,'dt' => 'Error changing property publish status');
+		}
+		return $arr_return;
+	}
+	function set_offline($property_id){
+		$data = array('publish_status'=> 'Offline');			
+		$this->db->where(array('property_id'=>$property_id));
+		$res = $this->db->update('properties', $data);
+		
+		if ($res){
+			$arr_return = array('res' => true,'dt'=>'Property publish status changed successfully');
+		}else{
+			$arr_return = array('res' => false,'dt' => 'Error changing property publish status');
+		}
+		return $arr_return;
+	}
+	function set_featured($property_id){
+		$data = array('featured'=> 'Yes');			
+		$this->db->where(array('property_id'=>$property_id));
+		$res = $this->db->update('properties', $data);
+		
+		if ($res){
+			$arr_return = array('res' => true,'dt'=>'Property featured status changed successfully');
+		}else{
+			$arr_return = array('res' => false,'dt' => 'Error changing property featured status');
+		}
+		return $arr_return;
+	}
+	function unset_featured($property_id){
+		$data = array('featured'=> 'No');			
+		$this->db->where( array('property_id'=>$property_id));
+		$res = $this->db->update('properties', $data);
+		
+		if ($res){
+			$arr_return = array('res' => true,'dt'=>'Property featured status changed successfully');
+		}else{
+			$arr_return = array('res' => false,'dt' => 'Error changing property featured status');
 		}
 		return $arr_return;
 	}

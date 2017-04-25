@@ -10,14 +10,6 @@
             </div>
             <!-- /page header -->
 
-
-            <!--<div class="breadcrumb-line">
-                <ul class="breadcrumb">
-                    <li><a href="<?php echo base_url();?>be">Dashboard</a></li>
-                    <li class="active">System Users</li>
-                </ul>
-            </div>-->
-
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-danger">
@@ -29,50 +21,173 @@
 
                         </div>
                         <div class="panel-body">
-                            <div id="system_users_div">
-                                <div class="alert alert-danger block-inner" style="display: none;" id="div_system_user_error">
+                            <div id="">
+                                <div class="alert alert-danger block-inner" style="display: none;" id="div_property_error">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                         Error
                                 </div>
                                 
-                                <div class="alert alert-success block-inner" style="display: none;" id="div_system_user_success">
+                                <div class="alert alert-success block-inner" style="display: none;" id="div_property_success">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                         Success
                                 </div>
 
-                                <script type="text/javascript">
-                                    //load_system_users();
-                                </script>
-                                <div class="datatable-tools">
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Property Title</th>
-                                                <th>Property SKU</th>
-                                                <th>Listing Type</th>
-                                                <th>Property Type</th>
-                                                <th>Property Subcategory</th>
-                                                <th>Price</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($properties as $row): ?>
+                                <form class="validate" method="post" role="form" id="frm_propertiesfilter" name="frm_propertiesfilter" onsubmit="return filter_properties();" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                             <div class="form-group">
+                                                <label>Listing Type:</label>
+                                                <select data-placeholder="Listing Type" class="clear-results" tabindex="2" id="pl_listing_type_id" name="pl_listing_type_id">
+                                                    <option value=""></option>
+                                                    <?php foreach($listing_types as $row): ?>
+                                                        <option value="<?php echo $row->listing_type_id; ?>" <?php if(false !== $this->session->userdata('listing_type_id')){if($this->session->userdata('listing_type_id') == $row->listing_type_id){echo 'selected';}}  ?>><?php echo $row->listing_type_name; ?></option>
+                                                    <?php endforeach; ?>    
+                                                </select> 
+                                            </div>                                    
+                                        </div>
+                                        <div class="col-md-2">
+                                             <div class="form-group">
+                                                <label>Property Type:</label>
+                                                <select data-placeholder="Property Type" class="clear-results" tabindex="2" id="pl_property_type_id" name="pl_property_type_id">
+                                                    <option value=""></option>
+                                                    <?php foreach($property_types as $row): ?>
+                                                        <option value="<?php echo $row->property_type_id; ?>" <?php if(false !== $this->session->userdata('property_type_id')){if($this->session->userdata('property_type_id') == $row->property_type_id){echo 'selected';}}  ?>><?php echo $row->property_type_name; ?></option>
+                                                    <?php endforeach; ?>                       
+                                                </select> 
+                                            </div>                                    
+                                        </div>
+                                        <div class="col-md-2">
+                                             <div class="form-group">
+                                                <label>Property Subcategory:</label>
+                                                <select data-placeholder="Property Subcategory" class="clear-results" tabindex="2" id="pl_property_subcategory_id" name="pl_property_subcategory_id">
+                                                    <option value=""></option>
+                                                </select> 
+                                            </div>                                    
+                                        </div>
+                                        <div class="col-md-2">
+                                             <div class="form-group">
+                                                <label>Region:</label>
+                                                <select data-placeholder="Region" class="clear-results" tabindex="2" id="pl_region_id" name="pl_region_id">
+                                                    <option value=""></option>
+                                                    <?php foreach($regions as $row): ?>
+                                                        <option value="<?php echo $row->region_id; ?>" <?php if(false !== $this->session->userdata('region_id')){if($this->session->userdata('region_id') == $row->region_id){echo 'selected';}}  ?>><?php echo $row->region_name; ?></option>
+                                                    <?php endforeach; ?>                   
+                                                </select> 
+                                            </div>                                    
+                                        </div>   
+                                        <div class="col-md-2">
+                                             <div class="form-group">
+                                                <label>City:</label>
+                                                <select data-placeholder="City" class="clear-results" tabindex="2" id="pl_city_id" name="pl_city_id">
+                                                    <option value=""></option>
+                                                </select> 
+                                            </div>                                    
+                                        </div>   
+                                        <div class="col-md-2">
+                                             <div class="form-group">
+                                                <label>Area:</label>
+                                                <select data-placeholder="Area" class="clear-results" tabindex="2" id="pl_area_id" name="pl_area_id">
+                                                    <option value=""></option>
+                                                </select> 
+                                            </div>                                    
+                                        </div>   
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                             <div class="form-group">
+                                                <label>From (yyyy-mm-dd):</label>
+                                                <input type="text" class="datepicker form-control" name="pl_date_from" id="pl_date_from">
+                                            </div>                                    
+                                        </div>
+                                        <div class="col-md-2">
+                                             <div class="form-group">
+                                                <label>To (yyyy-mm-dd):</label>
+                                                <input type="text" class="datepicker form-control" name="pl_date_to" id="pl_date_to">
+                                                </select> 
+                                            </div>                                    
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>Featured:</label>
+                                                <div class="block-inner">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="pl_featured" id="pl_featured1" class="styled" value="All" checked="checked">
+                                                                All
+                                                    </label>                               
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="pl_featured" id="pl_featured2" class="styled" value="Yes">
+                                                                Yes
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="pl_featured" id="pl_featured3" class="styled" value="No">
+                                                            No
+                                                    </label>
+                                                </div> 
+                                            </div>                                    
+                                        </div>
+                                        <div class="col-sm-3">
+                                             <div class="form-group">
+                                                <label>Publish Status:</label>
+                                                <div class="block-inner">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="pl_publish_status" id="pl_publish_status1" checked="checked" class="styled" value="All">
+                                                            All
+                                                    </label>                                     
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="pl_publish_status" id="pl_publish_status2" class="styled" value="Online">
+                                                            Online
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="pl_publish_status" id="pl_publish_status3" class="styled" value="Offline">
+                                                            Offline
+                                                    </label>
+                                                </div> 
+                                            </div>                                    
+                                        </div>     
+
+                                    </div>
+                                </form>
+
+                                <!--<hr>-->
+                                <div id="properties_div" style="min-height:200px">
+                                    <!--<div class="datatable-tools">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
                                                 <tr>
-                                                    <td><?php echo $row->property_title; ?></td>
-                                                    <td><?php echo $row->property_sku; ?></td>
-                                                    <td><?php echo $row->listing_type_id; ?></td>
-                                                    <td><?php echo $row->property_type_id; ?></td>
-                                                    <td><?php echo $row->property_subcategory_id; ?></td>
-                                                    <td><?php echo $row->price; ?></td>
-                                                    <td>
-                                                        <a role="button" href="" class="label label-success btn-icon"><i class="icon-pencil"></i></a>
-                                                        <a onClick="javascript:return confirm('Do you really wish to delete this Property Listing?');" href="javascript:delete_system_user(<?php echo $row->property_id; ?>);" class="label label-danger btn-icon"><i class="icon-remove3"></i></a>
-                                                    </td>
+                                                    <th>Property Title</th>
+                                                    <th>Property SKU</th>
+                                                    <th>Listing Type</th>
+                                                    <th>Property Type</th>
+                                                    <th>Property Subcategory</th>
+                                                    <th>Region</th>
+                                                    <th>City</th>
+                                                    <th>Area</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
                                                 </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($properties as $row): ?>
+                                                    <tr>
+                                                        <td><?php echo $row->property_title; ?></td>
+                                                        <td><?php echo $row->property_sku; ?></td>
+                                                        <td><?php echo $row->listing_type_name; ?></td>
+                                                        <td><?php echo $row->property_type_name; ?></td>
+                                                        <td><?php echo $row->property_subcategory_name; ?></td>
+                                                        <td><?php echo $row->region_name; ?></td>
+                                                        <td><?php echo $row->city_name; ?></td>
+                                                        <td><?php echo $row->area_name; ?></td>            
+                                                        <td><?php echo $row->price; ?></td>
+                                                        <td>
+                                                            <a role="button" href="" class="label label-success btn-icon"><i class="icon-pencil"></i></a>
+                                                            <a onClick="javascript:return confirm('Do you really wish to delete this Property Listing?');" href="javascript:delete_system_user(<?php echo $row->property_id; ?>);" class="label label-danger btn-icon"><i class="icon-remove3"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>-->
                                 </div>
                                 
 
