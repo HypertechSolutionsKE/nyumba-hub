@@ -3479,10 +3479,166 @@ function delete_system_user(system_user_id){
 
 //ADD PROPERTY
 $(document).ready(function(){
-	$("#property_type_id").on('change', function() {
-    	//alert( this.value );
-    	//$("#edit_department_id").val(obj['department_id']).change(); 
 
+
+	filter_properties();
+
+	$("#pl_listing_type_id, #pl_property_subcategory_id, #pl_city_id, #pl_area_id, #pl_date_from, #pl_date_to, #pl_featured1, #pl_featured2, #pl_featured3, #pl_publish_status1, #pl_publish_status2, #pl_publish_status3").on('change', function() {
+		filter_properties();
+	});
+
+	$("#pl_property_type_id").on('change', function() {
+    	$("#pl_property_subcategory_id")
+    		.find('option')
+    		.remove()
+    		.end()
+    		.append('<option value=""></option>')
+    		.val('').change()
+		;
+    	if (this.value != ''){
+			$.ajax({
+		     	url: baseDir+'be/property_subcategories/get_property_subcategories_by_property_type/'+this.value,
+		       	type: 'POST',
+		       	data: '',
+		       	xhr: function() {
+		       		var myXhr = $.ajaxSettings.xhr();
+		       		return myXhr;
+		       	},
+		       	cache: false,
+		       	contentType: false,
+		       	processData: false,
+		     	success: function (res) {
+		     		try{
+		     			var obj1 = res;
+						// preserve newlines, etc - use valid JSON
+						obj1 = obj1.replace(/\\n/g, "\\n")  
+						               .replace(/\\'/g, "\\'")
+						               .replace(/\\"/g, '\\"')
+						               .replace(/\\&/g, "\\&")
+						               .replace(/\\r/g, "\\r")
+						               .replace(/\\t/g, "\\t")
+						               .replace(/\\b/g, "\\b")
+						               .replace(/\\f/g, "\\f");
+						// remove non-printable and other non-valid JSON chars
+						obj1 = obj1.replace(/[\u0000-\u0019]+/g,""); 
+			     		var obj = JSON.parse(obj1);
+			     		for (i=0; i< obj.length; i++){ 
+         					$("#pl_property_subcategory_id").append($("<option>").attr('value',obj[i]['property_subcategory_id']).text(obj[i]['property_subcategory_name']));
+  						};
+						
+		     		}catch(err){
+		     			alert(err);
+		     		}
+		   		},
+				error: function(){
+				}
+		    });
+    	}
+    	filter_properties();
+    });
+    $("#pl_region_id").on('change', function() {
+    	$("#pl_city_id")
+    		.find('option')
+    		.remove()
+    		.end()
+    		.append('<option value=""></option>')
+    		.val('').change()
+		;
+    	if (this.value != ''){
+			$.ajax({
+		     	url: baseDir+'be/cities/get_cities_by_region/'+this.value,
+		       	type: 'POST',
+		       	data: '',
+		       	xhr: function() {
+		       		var myXhr = $.ajaxSettings.xhr();
+		       		return myXhr;
+		       	},
+		       	cache: false,
+		       	contentType: false,
+		       	processData: false,
+		     	success: function (res) {
+		     		try{
+		     			var obj1 = res;
+						// preserve newlines, etc - use valid JSON
+						obj1 = obj1.replace(/\\n/g, "\\n")  
+						               .replace(/\\'/g, "\\'")
+						               .replace(/\\"/g, '\\"')
+						               .replace(/\\&/g, "\\&")
+						               .replace(/\\r/g, "\\r")
+						               .replace(/\\t/g, "\\t")
+						               .replace(/\\b/g, "\\b")
+						               .replace(/\\f/g, "\\f");
+						// remove non-printable and other non-valid JSON chars
+						obj1 = obj1.replace(/[\u0000-\u0019]+/g,""); 
+			     		var obj = JSON.parse(obj1);
+			     		for (i=0; i< obj.length; i++){ 
+         					$("#pl_city_id").append($("<option>").attr('value',obj[i]['city_id']).text(obj[i]['city_name']));
+  						};	
+
+		     		}catch(err){
+		     			alert(err);
+		     		}
+		   		},
+				error: function(){
+				}
+		    });
+    	}
+    	filter_properties();
+    });
+	$("#pl_city_id").on('change', function() {
+    	$("#pl_area_id")
+    		.find('option')
+    		.remove()
+    		.end()
+    		.append('<option value=""></option>')
+    		.val('').change()
+		;
+    	if (this.value != ''){
+			$.ajax({
+		     	url: baseDir+'be/areas/get_areas_by_city/'+this.value,
+		       	type: 'POST',
+		       	data: '',
+		       	xhr: function() {
+		       		var myXhr = $.ajaxSettings.xhr();
+		       		return myXhr;
+		       	},
+		       	cache: false,
+		       	contentType: false,
+		       	processData: false,
+		     	success: function (res) {
+		     		try{
+		     			var obj1 = res;
+						// preserve newlines, etc - use valid JSON
+						obj1 = obj1.replace(/\\n/g, "\\n")  
+						               .replace(/\\'/g, "\\'")
+						               .replace(/\\"/g, '\\"')
+						               .replace(/\\&/g, "\\&")
+						               .replace(/\\r/g, "\\r")
+						               .replace(/\\t/g, "\\t")
+						               .replace(/\\b/g, "\\b")
+						               .replace(/\\f/g, "\\f");
+						// remove non-printable and other non-valid JSON chars
+						obj1 = obj1.replace(/[\u0000-\u0019]+/g,""); 
+			     		var obj = JSON.parse(obj1);
+			     		for (i=0; i< obj.length; i++){ 
+         					$("#pl_area_id").append($("<option>").attr('value',obj[i]['area_id']).text(obj[i]['area_name']));
+  						};	
+
+		     		}catch(err){
+		     			alert(err);
+		     		}
+		   		},
+				error: function(){
+				}
+		    });
+    	}
+    	filter_properties();
+    });
+
+
+	//#pl_listing_type_id, #pl_property_type_id, #pl_property_subcategory_id, #pl_region_id, #pl_city_id, #pl_area_id,
+
+	$("#property_type_id").on('change', function() {
     	$("#property_subcategory_id")
     		.find('option')
     		.remove()
@@ -3731,7 +3887,101 @@ function save_new_property_start(){
 	
 	}
 	return false;
+}
+function update_property_start(){
+	$div_new_property_start_error = $("#div_new_property_start_error");
+	$div_new_property_start_success = $("#div_new_property_start_success");
+				
+	$listing_type_id = $("#listing_type_id").val();
+	$property_title = $("#property_title").val();
+	$property_type_id = $("#property_type_id").val();
+	$property_subcategory_id = $("#property_subcategory_id").val();
+	$region_id = $("#region_id").val();
+	$city_id = $("#city_id").val();
+	$area_id = $("#area_id").val();
+	$physical_address = $("#physical_address").val();
+	$longitude = $("#longitude").val();
+	$latitude = $("#latitude").val();
+	$price = $("#price").val();
+	$currency_id = $("#currency_id").val();	
+	
+	$valmsg = "";
+	$valmsg2 = "";
+		
+	if ($listing_type_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Listing Type <br/>";}
+	if ($property_title == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Property Title <br/>";}
+	if ($property_type_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Type <br/>";}
+	if ($property_subcategory_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Subcategory <br/>";}
+	if ($region_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Region <br/>";}
+	if ($city_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select City/Town <br/>";}
+	if ($area_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Area/Locality <br/>";}
+	if ($physical_address == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Address <br/>";}
+	if ($longitude != ""){
+		if (validateNumeric($longitude)){
+			$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Only numeric values are allowed for Longitude <br/>";
+		}
+	}
+	if ($latitude != ""){
+		if (validateNumeric($latitude)){
+			$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Only numeric values are allowed for Latitude <br/>";
+		}
+	}
+	if ($price == ""){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Price <br/>";
+	}else if (validateNumeric($price)){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Only numeric values are allowed for Price <br/>";
+	}
+	if ($currency_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Currency <br/>";}
 
+		
+	if ($valmsg != $valmsg2){
+		$div_new_property_start_error.html($valmsg);
+		$div_new_property_start_success.fadeOut("fast");
+		$div_new_property_start_error.fadeIn("fast");
+		$('html, body').animate({ scrollTop: $('#div_new_property_start_error').offset().top-90 }, 'slow');
+	}else{
+		$div_new_property_start_error.fadeOut("fast");
+		$div_new_property_start_success.fadeOut("fast");
+				
+		$("#new_property_start_loader").show();
+					
+		var form = document.getElementById('frm_newpropertystart');
+		var formData = new FormData(form);
+
+		$.ajax({
+           	url: baseDir+'be/properties/update_start',
+           	type: 'POST',
+           	data: formData,
+			dataType: 'json',
+           	xhr: function() {
+           		var myXhr = $.ajaxSettings.xhr();
+           		return myXhr;
+           	},
+           	cache: false,
+           	contentType: false,
+           	processData: false,
+           	success: function (res) {
+				$("#new_property_start_loader").hide();
+				if(res.status == 'ERR'){
+					$div_new_property_start_error.html(res.message);
+					$div_new_property_start_success.fadeOut("fast");
+					$div_new_property_start_error.fadeIn("fast");
+					$('html, body').animate({ scrollTop: $('#div_new_property_start_error').offset().top-90 }, 'slow');
+				}else if (res.status == 'SUCCESS'){
+					window.location = "add_features";					
+				}
+           	},
+			error: function(){
+				$("#new_property_start_loader").hide();
+				$div_new_property_start_error.html("Something went wrong. Please check your network and try again.");
+				$div_new_property_start_success.fadeOut("fast");
+				$div_new_property_start_error.fadeIn("fast");
+				$('html, body').animate({ scrollTop: $('#div_new_property_start_error').offset().top-90 }, 'slow');
+			}
+       	});
+	
+	}
+	return false;
 }
 
 function save_new_property_features(){
@@ -3949,9 +4199,265 @@ function save_new_property_attachments(){
 	
 	}
 	return false;
-
 }
+function filter_properties(){
+	$("#properties_div").oLoader({
+		backgroundColor:'#fff',
+		image: baseDir+'assets/be/js/plugins/oLoader/images/ownageLoader/loader9.gif',
+		fadeInTime: 500,
+		fadeOutTime: 1000,
+		fadeLevel: 0.8
+	});				
 
+	var form = document.getElementById('frm_propertiesfilter');
+	var formData = new FormData(form);
+
+	$.ajax({
+     	url: baseDir+'be/properties/loadjs_filtered',
+       	type: 'POST',
+       	data: formData,
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (result) {
+			$("#properties_div").html(result);
+			$("#properties_div").oLoader('hide');			
+   		},
+		error: function(){
+			$("#properties_div").oLoader('hide');
+		}
+    });
+	$('#properties_div').oLoader('hide');
+}
+function delete_property(property_id){
+	$div_property_error = $("#div_property_error");
+	$div_property_success = $("#div_property_success");
+
+	$div_property_error.fadeOut("fast");
+	$div_property_success.fadeOut("fast");
+
+	$.ajax({
+     	url: baseDir+'be/properties/delete/'+property_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+	     		var obj = $.parseJSON(obj1);
+
+				if(obj['status'] == 'ERR'){
+					$div_property_error.html(obj['message']);
+					$div_property_success.fadeOut("fast");
+					$div_property_error.fadeIn("fast");
+				}else if (obj['status'] == 'SUCCESS'){
+					$div_property_success.html(obj['message']);
+					$div_property_error.fadeOut("fast");
+					$div_property_success.fadeIn("fast");
+
+					filter_properties();
+				}
+     		}catch(err){
+     			alert(err);
+     		}    		
+   		},
+		error: function(){
+			$div_property_error.html("Something went wrong. Please check your network and try again.");
+			$div_property_success.fadeOut("fast");
+			$div_property_error.fadeIn("fast");
+		}
+    });
+}
+function set_online(property_id){
+	$div_property_error = $("#div_property_error");
+	$div_property_success = $("#div_property_success");
+
+	$div_property_error.fadeOut("fast");
+	$div_property_success.fadeOut("fast");
+
+	$.ajax({
+     	url: baseDir+'be/properties/set_online/'+property_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+	     		var obj = $.parseJSON(obj1);
+
+				if(obj['status'] == 'ERR'){
+					$div_property_error.html(obj['message']);
+					$div_property_success.fadeOut("fast");
+					$div_property_error.fadeIn("fast");
+				}else if (obj['status'] == 'SUCCESS'){
+					$div_property_success.html(obj['message']);
+					$div_property_error.fadeOut("fast");
+					$div_property_success.fadeIn("fast");
+
+					filter_properties();
+				}
+     		}catch(err){
+     			alert(err);
+     		}    		
+   		},
+		error: function(){
+			$div_property_error.html("Something went wrong. Please check your network and try again.");
+			$div_property_success.fadeOut("fast");
+			$div_property_error.fadeIn("fast");
+		}
+    });
+}
+function set_offline(property_id){
+	$div_property_error = $("#div_property_error");
+	$div_property_success = $("#div_property_success");
+
+	$div_property_error.fadeOut("fast");
+	$div_property_success.fadeOut("fast");
+
+	$.ajax({
+     	url: baseDir+'be/properties/set_offline/'+property_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+	     		var obj = $.parseJSON(obj1);
+
+				if(obj['status'] == 'ERR'){
+					$div_property_error.html(obj['message']);
+					$div_property_success.fadeOut("fast");
+					$div_property_error.fadeIn("fast");
+				}else if (obj['status'] == 'SUCCESS'){
+					$div_property_success.html(obj['message']);
+					$div_property_error.fadeOut("fast");
+					$div_property_success.fadeIn("fast");
+
+					filter_properties();
+				}
+     		}catch(err){
+     			alert(err);
+     		}    		
+   		},
+		error: function(){
+			$div_property_error.html("Something went wrong. Please check your network and try again.");
+			$div_property_success.fadeOut("fast");
+			$div_property_error.fadeIn("fast");
+		}
+    });
+}
+function set_featured(property_id){
+	$div_property_error = $("#div_property_error");
+	$div_property_success = $("#div_property_success");
+
+	$div_property_error.fadeOut("fast");
+	$div_property_success.fadeOut("fast");
+
+	$.ajax({
+     	url: baseDir+'be/properties/set_featured/'+property_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+	     		var obj = $.parseJSON(obj1);
+
+				if(obj['status'] == 'ERR'){
+					$div_property_error.html(obj['message']);
+					$div_property_success.fadeOut("fast");
+					$div_property_error.fadeIn("fast");
+				}else if (obj['status'] == 'SUCCESS'){
+					$div_property_success.html(obj['message']);
+					$div_property_error.fadeOut("fast");
+					$div_property_success.fadeIn("fast");
+
+					filter_properties();
+				}
+     		}catch(err){
+     			alert(err);
+     		}    		
+   		},
+		error: function(){
+			$div_property_error.html("Something went wrong. Please check your network and try again.");
+			$div_property_success.fadeOut("fast");
+			$div_property_error.fadeIn("fast");
+		}
+    });
+}
+function unset_featured(property_id){
+	$div_property_error = $("#div_property_error");
+	$div_property_success = $("#div_property_success");
+
+	$div_property_error.fadeOut("fast");
+	$div_property_success.fadeOut("fast");
+
+	$.ajax({
+     	url: baseDir+'be/properties/unset_featured/'+property_id,
+       	type: 'POST',
+       	data: '',
+       	xhr: function() {
+       		var myXhr = $.ajaxSettings.xhr();
+       		return myXhr;
+       	},
+       	cache: false,
+       	contentType: false,
+       	processData: false,
+     	success: function (res) {
+     		try{
+     			var obj1 = res;
+	     		var obj = $.parseJSON(obj1);
+
+				if(obj['status'] == 'ERR'){
+					$div_property_error.html(obj['message']);
+					$div_property_success.fadeOut("fast");
+					$div_property_error.fadeIn("fast");
+				}else if (obj['status'] == 'SUCCESS'){
+					$div_property_success.html(obj['message']);
+					$div_property_error.fadeOut("fast");
+					$div_property_success.fadeIn("fast");
+
+					filter_properties();
+				}
+     		}catch(err){
+     			alert(err);
+     		}    		
+   		},
+		error: function(){
+			$div_property_error.html("Something went wrong. Please check your network and try again.");
+			$div_property_success.fadeOut("fast");
+			$div_property_error.fadeIn("fast");
+		}
+    });
+}
 
 //USER PROFILE
 function update_user_profile(){

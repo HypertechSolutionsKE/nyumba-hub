@@ -11,12 +11,15 @@ class Properties extends CI_Controller {
 		$this->load->model('be/currencies_model');
 		$this->load->model('be/listing_types_model');
 		$this->load->model('be/property_feature_types_model');
-		$this->load->model('be/property_features_model');		
-
-
+		$this->load->model('be/property_features_model');
 	}
 	function index(){
 		if($this->session->userdata('nhub_loginstate')) {
+			$data['listing_types'] = $this->listing_types_model->get_listing_types_list();
+			$data['currencies'] = $this->currencies_model->get_currencies_list();			
+			$data['regions'] = $this->regions_model->get_regions_list();
+			$data['property_types'] = $this->property_types_model->get_property_types_list();
+
 			$data['properties'] = $this->properties_model->get_properties_list();
 			$data['page_title'] = 'Properties Listing | ';
 			$data['main_content'] = 'be/properties_list';
@@ -26,6 +29,15 @@ class Properties extends CI_Controller {
             redirect('be/auth');
 		}
 	}
+	function loadjs(){
+		$data['properties'] = $this->properties_model->get_properties_list();
+		$this->load->view('be/jsloads/properties_list',$data);
+	}
+	function loadjs_filtered(){
+		$data['properties'] = $this->properties_model->get_properties_filtered_list();
+		$this->load->view('be/jsloads/properties_list',$data);		
+	}
+	//ADD PROPERTY LISTING
 	function add_start(){
 		if($this->session->userdata('nhub_loginstate')) {
 			$data['listing_types'] = $this->listing_types_model->get_listing_types_list();
@@ -244,25 +256,10 @@ class Properties extends CI_Controller {
 						$q = $this->properties_model->save_property($save_data);
 						if ($q['res'] == true){
 							$this->unset_variables();
-
-							//$data['main_content'] = 'fe/loan_application';
-							//$data['page_title'] ='Loan Application - ';
-							//$data['cur'] = 'Resources';
-							//$data['success'] = '<strong>Loan application submitted successfully!</strong>';
-							
-							//$this->load->view('fe/includes/template',$data);
 							$this->session->set_flashdata('success',$q['dt']);
 
-							
 							$resp = array('status' => 'SUCCESS','message' => $q['dt']);
 						}else{
-							//$data['main_content'] = 'fe/loan_application';
-							//$data['page_title'] ='Loan Application - ';
-							//$data['cur'] = 'Resources';
-							//$data['err'] = '<strong>'. $q['dt'] .'</strong>';
-							
-							//$this->load->view('fe/includes/template',$data);
-							
 							$resp = array('status' => 'ERR','message' => '<strong>'. $q['dt'] .'</strong>');
 						}
 						echo json_encode($resp);
@@ -280,12 +277,25 @@ class Properties extends CI_Controller {
 			}
 		}else {
             redirect('be/auth');
-		}			
-
+		}
 
 	}
 
-
+	//EDIT PROPERTY LISSTING
+	function edit_start($property_id){
+		if($this->session->userdata('nhub_loginstate')) {
+			$data['property'] = $this->properties_model->get_property2($property_id);
+			$data['listing_types'] = $this->listing_types_model->get_listing_types_list();
+			$data['currencies'] = $this->currencies_model->get_currencies_list();			
+			$data['regions'] = $this->regions_model->get_regions_list();
+			$data['property_types'] = $this->property_types_model->get_property_types_list();
+			$data['page_title'] = 'Edit Property - Start | ';
+			$data['main_content'] = 'be/add_start';
+			$this->load->view('be/includes/template',$data);
+        }else{
+            redirect('be/auth');
+		}
+	}
 
 
 
@@ -325,7 +335,7 @@ class Properties extends CI_Controller {
 		if($this->session->userdata('nhub_loginstate')){
 			$q = $this->properties_model->delete($property_id);
 			if($q['res'] == TRUE){
-				$resp = array('status' => 'SUCCESS','message' => 'property deleted successfully');			
+				$resp = array('status' => 'SUCCESS','message' => 'Property deleted successfully');			
 			}else{					
 				$resp = array('status' => 'ERR','message' => $q['dt']);			
 			}
@@ -334,5 +344,58 @@ class Properties extends CI_Controller {
     	}
 		echo json_encode($resp);
 	}
+	function set_online($property_id){
+		if($this->session->userdata('nhub_loginstate')){
+			$q = $this->properties_model->set_online($property_id);
+			if($q['res'] == TRUE){
+				$resp = array('status' => 'SUCCESS','message' => $q['dt']);			
+			}else{					
+				$resp = array('status' => 'ERR','message' => $q['dt']);			
+			}
+		}else{
+			$resp = array('status' => 'ERR','message' => 'Your session seems to have expired. Please login again to continue');			
+    	}
+		echo json_encode($resp);
+	}
+	function set_offline($property_id){
+		if($this->session->userdata('nhub_loginstate')){
+			$q = $this->properties_model->set_offline($property_id);
+			if($q['res'] == TRUE){
+				$resp = array('status' => 'SUCCESS','message' => $q['dt']);			
+			}else{					
+				$resp = array('status' => 'ERR','message' => $q['dt']);			
+			}
+		}else{
+			$resp = array('status' => 'ERR','message' => 'Your session seems to have expired. Please login again to continue');			
+    	}
+		echo json_encode($resp);
+	}
+	function set_featured($property_id){
+		if($this->session->userdata('nhub_loginstate')){
+			$q = $this->properties_model->set_featured($property_id);
+			if($q['res'] == TRUE){
+				$resp = array('status' => 'SUCCESS','message' => $q['dt']);			
+			}else{					
+				$resp = array('status' => 'ERR','message' => $q['dt']);			
+			}
+		}else{
+			$resp = array('status' => 'ERR','message' => 'Your session seems to have expired. Please login again to continue');			
+    	}
+		echo json_encode($resp);
+	}
+	function unset_featured($property_id){
+		if($this->session->userdata('nhub_loginstate')){
+			$q = $this->properties_model->unset_featured($property_id);
+			if($q['res'] == TRUE){
+				$resp = array('status' => 'SUCCESS','message' => $q['dt']);			
+			}else{					
+				$resp = array('status' => 'ERR','message' => $q['dt']);			
+			}
+		}else{
+			$resp = array('status' => 'ERR','message' => 'Your session seems to have expired. Please login again to continue');			
+    	}
+		echo json_encode($resp);
+	}
+
 
 }
