@@ -185,79 +185,177 @@ class Properties_model extends CI_Model {
 			}else{
 				$arr_return = array('res' => true,'dt' => 'Image $i uploaded successfully');
 			}    		
-		} 
-
-		return $arr_return;
-	}
-
-
-
-	function save($data){
-		$insert = $this->db->insert('properties', $data);
-		if ($insert){
-			$arr_return = array('res' => true,'dt' => 'property added successfully.');
-		}else{
-			$arr_return = array('res' => false,'dt' => 'Could not add property successfully. Please try again.');
 		}
 		return $arr_return;
 	}
-	//ADD EXISTS
-	function property_exists($country_name,$country_code,$property_name,$property_symbol){
-		$err = "";
-		$query = $this->db->where(array('country_name'=>$country_name,'is_deleted'=>0))->get('properties');
-		if ($query->num_rows() > 0){$err = $err . "The country name you entered already exists for another property.<br />";}
+	function upload_main_image2($property_id){
+		if(basename($_FILES['property_main_image']['name'])!=''){
+			
+			$upload_config['upload_path'] = './uploads/property_images/';
+			$upload_config['allowed_types'] = 'gif|jpg|jpeg|png';
+			//$upload_config['file_name'] = $imagefilename;
+			$upload_config['max_size']	= '0';
+			$upload_config['max_width']  = '0';
+			$upload_config['max_height']  = '0';
+			
+			$this->load->library('upload');
+			$this->upload->initialize($upload_config);
+			
+			$q = $this->upload->do_upload('property_main_image');
 		
-		$query = $this->db->where(array('country_code'=>$country_code,'is_deleted'=>0))->get('properties');
-		if ($query->num_rows() > 0){$err = $err . "The country code you entered already exists for another property.<br />";}
-		
-		$query = $this->db->where(array('property_name'=>$property_name,'is_deleted'=>0))->get('properties');
-		if ($query->num_rows() > 0){$err = $err . "The property name you entered already exists for another property.<br />";}
-		
-		$query = $this->db->where(array('property_symbol'=>$property_symbol,'is_deleted'=>0))->get('properties');
-		if ($query->num_rows() > 0){$err = $err . "The property symbol you entered already exists for another property.<br />";}
-		
-		if ($err == ""){
-			$arr_return = array('res' => true,'dt' => '');
+			if($q){				
+				$det = $this->upload->data();					
+				$this->db->where(array('property_id'=>$property_id));
+				$this->db->update('properties', array('main_image' => $det['file_name']));
+				$arr_return = array('res' => true,'dt' => 'Main image uploaded successfully');
+			}else{
+				$arr_return = array('res' => false,'dt' => $this->upload->display_errors());
+			}
 		}else{
-			$arr_return = array('res' => false,'dt' => $err);
+			$arr_return = array('res' => true,'dt' => 'Main image uploaded successfully');
 		}
 		return $arr_return;
 	}
+	function upload_other_image2($property_id,$imageid){
+		//for ($i = 1; $i <= 5; $i++) {
+		if(basename($_FILES['property_other_image_'.$imageid]['name'])!=''){
+				
+			$upload_config['upload_path'] = './uploads/property_images/';
+			$upload_config['allowed_types'] = 'gif|jpg|jpeg|png';
+			//$upload_config['file_name'] = $imagefilename;
+			$upload_config['max_size']	= '0';
+			$upload_config['max_width']  = '0';
+			$upload_config['max_height']  = '0';
+				
+			$this->load->library('upload');
+			$this->upload->initialize($upload_config);
+				
+			$q = $this->upload->do_upload('property_other_image_'.$imageid);
+			
+			if($q){				
+				$det = $this->upload->data();					
+				$this->db->where(array('property_id'=>$property_id));
+				$this->db->update('properties', array('other_image_'.$imageid => $det['file_name']));
+				$arr_return = array('res' => true,'dt' => 'Image $imageid uploaded successfully');
+			}else{
+				$arr_return = array('res' => false,'dt' => 'Image $imageid :' . $this->upload->display_errors());
+			}
+		}else{
+			$arr_return = array('res' => true,'dt' => 'Image $imageid uploaded successfully');
+		}    		
+		//}
+		return $arr_return;
+	}
+
+
 
 	function get_property($property_id){
 		$this->db->from('properties');
 		$this->db->where(array('property_id'=>$property_id));
 		return $this->db->get()->result_array();
 	}
-
-
 	function get_property2($property_id){
 		$this->db->from('properties');
 		$this->db->where(array('property_id'=>$property_id));
 		return $this->db->get()->result();
 	}
-
-	function property_update_exists($property_id,$country_name,$country_code,$property_name,$property_symbol){
-		$err = "";
-		$query = $this->db->where(array('property_id !='=>$property_id,'country_name'=>$country_name,'is_deleted'=>0))->get('properties');
-		if ($query->num_rows() > 0){$err = $err . "The country name you entered already exists for another property.<br />";}
-		
-		$query = $this->db->where(array('property_id !='=>$property_id,'country_code'=>$country_code,'is_deleted'=>0))->get('properties');
-		if ($query->num_rows() > 0){$err = $err . "The country code you entered already exists for another property.<br />";}
-		
-		$query = $this->db->where(array('property_id !='=>$property_id,'property_name'=>$property_name,'is_deleted'=>0))->get('properties');
-		if ($query->num_rows() > 0){$err = $err . "The property name you entered already exists for another property.<br />";}
-		
-		$query = $this->db->where(array('property_id !='=>$property_id,'property_symbol'=>$property_symbol,'is_deleted'=>0))->get('properties');
-		if ($query->num_rows() > 0){$err = $err . "The property symbol you entered already exists for another property.<br />";}
-		
-		if ($err == ""){
-			$arr_return = array('res' => true,'dt' => '');
-		}else{
-			$arr_return = array('res' => false,'dt' => $err);
+	function get_property_type_id($property_id){
+		$this->db->from('properties');
+		$this->db->where(array('property_id'=>$property_id));
+		$result = $this->db->get()->result();
+		foreach ($result as $row) {
+			$property_type_id = $row->property_type_id;
 		}
-		return $arr_return;
+		return $property_type_id;
 	}
+	function get_property_listing_features($property_id){
+		$this->db->from('property_listing_features');
+		$this->db->where(array('property_id'=>$property_id));
+		return $this->db->get()->result();
+	}
+
+	function update_start($data,$property_id){
+		$this->db->where(array('property_id' => $property_id));
+		$update = $this->db->update('properties', $data);
+		if ($update){
+			$arr_return = array('res' => true,'dt' => 'Property updated successfully.');
+		}else{
+			$arr_return = array('res' => false,'dt' => 'Could not update property successfully. Please try again.');
+		}
+		return $arr_return;		
+	}
+	function update_features($data,$property_id,$property_feature_id){
+		$this->db->where(array('property_id' => $property_id));
+		$update = $this->db->update('properties', $data);
+		if ($update){
+			if ($property_feature_id != ''){
+				$this->update_property_features($property_id,$property_feature_id);
+			}
+			$arr_return = array('res' => true,'dt' => 'Property updated successfully.');
+		}else{
+			$arr_return = array('res' => false,'dt' => 'Could not update property successfully. Please try again.');
+		}
+		return $arr_return;		
+
+	}
+	function update_property_features($property_id,$property_feature_id){
+		$property_listing_features = $this->get_property_listing_features($property_id);
+
+		foreach ($property_listing_features as $row){
+			$found = false;
+			foreach ($property_feature_id as $temp_id){
+				if ($row->property_feature_id == $temp_id){
+					$found = true;
+					break;
+				}
+			}
+			if ($found == false){
+			   $this->db->where('property_id', $property_id);
+			   $this->db->where('property_feature_id', $row->property_feature_id);			   
+			   $this->db->delete('property_listing_features'); 				
+			}
+		}
+
+		$property_listing_features = $this->get_property_listing_features($property_id);
+	
+		foreach ($property_feature_id as $temp_id){
+			$found = false;
+			foreach ($property_listing_features as $row){
+				if ($row->property_feature_id == $temp_id){
+					$found = true;
+					break;
+				}
+			}
+			if ($found == false){
+				$new_data = array(
+					'property_id' => $property_id,
+					'property_feature_id' => $temp_id
+				);
+				$this->db->insert('property_listing_features', $new_data);
+			}
+		}				
+	}
+	function update_contacts($data,$property_id){
+		$this->db->where(array('property_id' => $property_id));
+		$update = $this->db->update('properties', $data);
+		if ($update){
+			$arr_return = array('res' => true,'dt' => 'Property updated successfully.');
+		}else{
+			$arr_return = array('res' => false,'dt' => 'Could not update property successfully. Please try again.');
+		}
+		return $arr_return;		
+	}
+	function update_attachments($data,$property_id){
+		$this->db->where(array('property_id' => $property_id));
+		$update = $this->db->update('properties', $data);
+		if ($update){
+			$arr_return = array('res' => true,'dt' => 'Property updated successfully.');
+		}else{
+			$arr_return = array('res' => false,'dt' => 'Could not update property successfully. Please try again.');
+		}
+		return $arr_return;		
+	}
+
 
 	function update($data,$property_id){
 		$this->db->where(array('property_id'=>$property_id));
