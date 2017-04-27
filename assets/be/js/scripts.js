@@ -3780,7 +3780,7 @@ $(document).ready(function(){
          					$("#area_id").append($("<option>").attr('value',obj[i]['area_id']).text(obj[i]['area_name']));
   						};	
 
-						$("#area_id").val($cit_id).trigger('change');
+						$("#area_id").val($are_id).trigger('change');
 
 		     		}catch(err){
 		     			alert(err);
@@ -3892,6 +3892,7 @@ function update_property_start(){
 	$div_new_property_start_error = $("#div_new_property_start_error");
 	$div_new_property_start_success = $("#div_new_property_start_success");
 				
+	$property_id = $("#property_id").val();		
 	$listing_type_id = $("#listing_type_id").val();
 	$property_title = $("#property_title").val();
 	$property_type_id = $("#property_type_id").val();
@@ -3908,32 +3909,33 @@ function update_property_start(){
 	$valmsg = "";
 	$valmsg2 = "";
 		
-	if ($listing_type_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Listing Type <br/>";}
-	if ($property_title == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Property Title <br/>";}
-	if ($property_type_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Type <br/>";}
-	if ($property_subcategory_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Subcategory <br/>";}
-	if ($region_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Region <br/>";}
-	if ($city_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select City/Town <br/>";}
-	if ($area_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Area/Locality <br/>";}
-	if ($physical_address == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Address <br/>";}
-	if ($longitude != ""){
+	if ($listing_type_id == "" || $listing_type_id == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Listing Type <br/>";}
+	if ($property_title == "" || $property_title == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Property Title <br/>";}
+	if ($property_type_id == "" || $property_type_id == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Type <br/>";}
+	if ($property_subcategory_id == "" || $property_subcategory_id == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Property Subcategory <br/>";}
+	if ($region_id == "" || $region_id == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Region <br/>";}
+	if ($city_id == "" || $city_id == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select City/Town <br/>";}
+	if ($area_id == "" || $area_id == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Area/Locality <br/>";}
+	if ($physical_address == "" || $physical_address == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Address <br/>";}
+	if ($longitude != "" && $longitude != null){
 		if (validateNumeric($longitude)){
 			$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Only numeric values are allowed for Longitude <br/>";
 		}
 	}
-	if ($latitude != ""){
+	if ($latitude != "" && $latitude != null){
 		if (validateNumeric($latitude)){
 			$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Only numeric values are allowed for Latitude <br/>";
 		}
 	}
-	if ($price == ""){
+	if ($price == "" || $price == null){
 		$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Price <br/>";
 	}else if (validateNumeric($price)){
 		$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Only numeric values are allowed for Price <br/>";
 	}
-	if ($currency_id == ""){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Currency <br/>";}
+	if ($currency_id == "" || $currency_id == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Currency <br/>";}
 
-		
+	//alert($property_subcategory_id);
+
 	if ($valmsg != $valmsg2){
 		$div_new_property_start_error.html($valmsg);
 		$div_new_property_start_success.fadeOut("fast");
@@ -3968,7 +3970,7 @@ function update_property_start(){
 					$div_new_property_start_error.fadeIn("fast");
 					$('html, body').animate({ scrollTop: $('#div_new_property_start_error').offset().top-90 }, 'slow');
 				}else if (res.status == 'SUCCESS'){
-					window.location = "add_features";					
+					window.location = baseDir+'be/properties/edit_features/'+$property_id;					
 				}
            	},
 			error: function(){
@@ -4064,6 +4066,88 @@ function save_new_property_features(){
 	return false;
 
 }
+function update_property_features(){
+	$valmsg = "";
+	$valmsg2 = "";
+
+	$div_new_property_features_error = $("#div_new_property_features_error");
+	$div_new_property_features_success = $("#div_new_property_features_success");
+
+	$property_id = $("#property_id").val();	
+
+	if ($('#bedrooms').length){
+		$bedrooms = $("#bedrooms").val();
+		if ($bedrooms == "" || $bedrooms == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter the number of Bedrooms that your property has <br/>";}
+	}
+	if ($('#bathrooms').length){
+		$bathrooms = $("#bathrooms").val();
+		if ($bathrooms == "" || $bathrooms == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter the number of Bathrooms that your property has <br/>";}
+	}
+	if ($('#living_area').length){
+		$living_area = $("#living_area").val();
+		if ($living_area == "" || $living_area == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please indicate how large your property's Living area is <br/>";}
+	}
+	if ($('#building_size').length){
+		$building_size = $("#building_size").val();
+		if ($building_size == "" || $building_size == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please indicate how large your property's Building size is <br/>";}
+	}
+	if ($('#land_size').length){
+		$land_size = $("#land_size").val();
+		if ($land_size == "" || $land_size == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please indicate how large your property's Land size area is <br/>";}
+	}
+	$description = $("#description").val();
+	if ($description == "" || $description == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter your property's description <br/>";}
+
+	if ($valmsg != $valmsg2){
+		$div_new_property_features_error.html($valmsg);
+		$div_new_property_features_success.fadeOut("fast");
+		$div_new_property_features_error.fadeIn("fast");
+		$('html, body').animate({ scrollTop: $('#div_new_property_features_error').offset().top-90 }, 'slow');
+	}else{
+		$div_new_property_features_error.fadeOut("fast");
+		$div_new_property_features_success.fadeOut("fast");
+				
+		$("#new_property_features_loader").show();
+					
+		var form = document.getElementById('frm_newpropertyfeatures');
+		var formData = new FormData(form);
+
+		$.ajax({
+           	url: baseDir+'be/properties/update_features',
+           	type: 'POST',
+           	data: formData,
+			dataType: 'json',
+           	xhr: function() {
+           		var myXhr = $.ajaxSettings.xhr();
+           		return myXhr;
+           	},
+           	cache: false,
+           	contentType: false,
+           	processData: false,
+           	success: function (res) {
+				$("#new_property_features_loader").hide();
+				if(res.status == 'ERR'){
+					$div_new_property_features_error.html(res.message);
+					$div_new_property_features_success.fadeOut("fast");
+					$div_new_property_features_error.fadeIn("fast");
+					$('html, body').animate({ scrollTop: $('#div_new_property_features_error').offset().top-90 }, 'slow');
+				}else if (res.status == 'SUCCESS'){
+					window.location = baseDir+'be/properties/edit_contacts/'+$property_id;
+				}
+           	},
+			error: function(){
+				$("#new_property_features_loader").hide();
+				$div_new_property_features_error.html("Something went wrong. Please check your network and try again.");
+				$div_new_property_features_success.fadeOut("fast");
+				$div_new_property_features_error.fadeIn("fast");
+				$('html, body').animate({ scrollTop: $('#div_new_property_features_error').offset().top-90 }, 'slow');
+			}
+       	});
+	
+	}
+	return false;
+
+}
 
 function save_new_property_contacts(){
 	$div_new_property_contacts_error = $("#div_new_property_contacts_error");
@@ -4120,6 +4204,78 @@ function save_new_property_contacts(){
 					$('html, body').animate({ scrollTop: $('#div_new_property_contacts_error').offset().top-90 }, 'slow');
 				}else if (res.status == 'SUCCESS'){
 					window.location = "add_attachments";					
+				}
+           	},
+			error: function(){
+				$("#new_property_contacts_loader").hide();
+				$div_new_property_contacts_error.html("Something went wrong. Please check your network and try again.");
+				$div_new_property_contacts_success.fadeOut("fast");
+				$div_new_property_contacts_error.fadeIn("fast");
+				$('html, body').animate({ scrollTop: $('#div_new_property_contacts_error').offset().top-90 }, 'slow');
+			}
+       	});
+	
+	}
+	return false;
+
+}
+function update_property_contacts(){
+	$div_new_property_contacts_error = $("#div_new_property_contacts_error");
+	$div_new_property_contacts_success = $("#div_new_property_contacts_success");
+
+	$property_id = $("#property_id").val();	
+				
+	$full_name = $("#full_name").val();
+	$email_address = $("#email_address").val();
+	$mobile_phone = $("#mobile_phone").val();
+	
+	$valmsg = "";
+	$valmsg2 = "";
+		
+	if ($full_name == "" || $full_name == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Full Name <br/>";}
+	if ($email_address == "" || $email_address == null){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Email Address <br/>";
+	}else if(!validateEmail($email_address)){
+		$valmsg = $valmsg + "<i class='fa fa-exclamation'></i> Please enter the correct Email format <br/>";
+	}
+	if ($mobile_phone == "" || $mobile_phone == null){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please enter Mobile Phone <br/>";}
+	
+		
+	if ($valmsg != $valmsg2){
+		$div_new_property_contacts_error.html($valmsg);
+		$div_new_property_contacts_success.fadeOut("fast");
+		$div_new_property_contacts_error.fadeIn("fast");
+		$('html, body').animate({ scrollTop: $('#div_new_property_contacts_error').offset().top-90 }, 'slow');
+	}else{
+		$div_new_property_contacts_error.fadeOut("fast");
+		$div_new_property_contacts_success.fadeOut("fast");
+				
+		$("#new_property_contacts_loader").show();
+					
+		var form = document.getElementById('frm_newpropertycontacts');
+		var formData = new FormData(form);
+
+		$.ajax({
+           	url: baseDir+'be/properties/update_contacts',
+           	type: 'POST',
+           	data: formData,
+			dataType: 'json',
+           	xhr: function() {
+           		var myXhr = $.ajaxSettings.xhr();
+           		return myXhr;
+           	},
+           	cache: false,
+           	contentType: false,
+           	processData: false,
+           	success: function (res) {
+				$("#new_property_contacts_loader").hide();
+				if(res.status == 'ERR'){
+					$div_new_property_contacts_error.html(res.message);
+					$div_new_property_contacts_success.fadeOut("fast");
+					$div_new_property_contacts_error.fadeIn("fast");
+					$('html, body').animate({ scrollTop: $('#div_new_property_contacts_error').offset().top-90 }, 'slow');
+				}else if (res.status == 'SUCCESS'){
+					window.location = baseDir+'be/properties/edit_attachments/'+$property_id;					
 				}
            	},
 			error: function(){
@@ -4200,6 +4356,219 @@ function save_new_property_attachments(){
 	}
 	return false;
 }
+
+function upload_property_main_image(){
+	$div_property_main_image_error = $("#div_property_main_image_error");
+	$div_property_main_image_success = $("#div_property_main_image_success");
+				
+	$main_image = $("#property_main_image").val();
+	$property_id = $("#property_main_image_id").val();	
+		
+	$valmsg = "";
+	$valmsg2 = "";
+		
+		if ($main_image == ""){
+			$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please click Browse to select an image <br/>";
+		}else{
+			$allowed_extensions = new Array("png","jpg","jpeg","gif");
+    		$file_extension = $main_image.split('.').pop();
+			
+			$found = false;
+			for(var i = 0; i <= $allowed_extensions.length; i++){
+        		if($allowed_extensions[i]==$file_extension){
+					$found = true;
+					break;
+				}
+			}
+			
+			if ($found == false){
+				$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> The file you chose has an incorrect format. Only files with the following extensions are allowed: .png, .jpg, .jpeg, .gif <br/>";
+			}
+		}
+		
+		if ($valmsg != $valmsg2){
+			$div_property_main_image_error.html($valmsg);
+			$div_property_main_image_success.fadeOut("fast");
+			$div_property_main_image_error.fadeIn("fast");
+		}else{
+			$div_property_main_image_error.fadeOut("fast");
+			$div_property_main_image_success.fadeOut("fast");
+				
+			$("#property_main_image_loader").show();
+					
+			var form = document.getElementById('frm_propertymainimage');
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/properties/upload_main_image',
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#property_main_image_loader").hide();
+					if(res.status == 'ERR'){
+						$div_property_main_image_error.html(res.message);
+						$div_property_main_image_success.fadeOut("fast");
+						$div_property_main_image_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						location.reload();					
+					}
+            	},
+				error: function(){
+					$("#property_main_image_loader").hide();
+					$div_property_main_image_error.html("Something went wrong. Please check your network and try again.");
+					$div_property_main_image_success.fadeOut("fast");
+					$div_property_main_image_error.fadeIn("fast");
+				}
+        	});	
+		}
+		return false;	
+}
+function upload_property_other_image($imageid){
+	$div_property_other_image_error = $("#div_property_other_image_"+$imageid+"_error");
+	$div_property_other_image_success = $("#div_property_other_image_"+$imageid+"_success");
+				
+	$other_image = $("#property_other_image_"+$imageid).val();
+	$property_id = $("#property_other_image_"+$imageid+"_id").val();	
+		
+	$valmsg = "";
+	$valmsg2 = "";
+		
+		if ($other_image == ""){
+			$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please click Browse to select an image <br/>";
+		}else{
+			$allowed_extensions = new Array("png","jpg","jpeg","gif");
+    		$file_extension = $other_image.split('.').pop();
+			
+			$found = false;
+			for(var i = 0; i <= $allowed_extensions.length; i++){
+        		if($allowed_extensions[i]==$file_extension){
+					$found = true;
+					break;
+				}
+			}
+			
+			if ($found == false){
+				$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> The file you chose has an incorrect format. Only files with the following extensions are allowed: .png, .jpg, .jpeg, .gif <br/>";
+			}
+		}
+		
+		if ($valmsg != $valmsg2){
+			$div_property_other_image_error.html($valmsg);
+			$div_property_other_image_success.fadeOut("fast");
+			$div_property_other_image_error.fadeIn("fast");
+		}else{
+			$div_property_other_image_error.fadeOut("fast");
+			$div_property_other_image_success.fadeOut("fast");
+				
+			$("#property_other_image_"+$imageid+"_loader").show();
+					
+			var form = document.getElementById("frm_propertyotherimage"+$imageid);
+			var formData = new FormData(form);
+
+			$.ajax({
+            	url: baseDir+'be/properties/upload_other_image/'+$imageid,
+            	type: 'POST',
+            	data: formData,
+				dataType: 'json',
+            	xhr: function() {
+               		var myXhr = $.ajaxSettings.xhr();
+               		return myXhr;
+            	},
+            	cache: false,
+            	contentType: false,
+            	processData: false,
+            	success: function (res) {
+					$("#property_other_image_"+$imageid+"_loader").hide();
+					if(res.status == 'ERR'){
+						$div_property_other_image_error.html(res.message);
+						$div_property_other_image_success.fadeOut("fast");
+						$div_property_other_image_error.fadeIn("fast");
+					}else if (res.status == 'SUCCESS'){
+						location.reload();					
+					}
+            	},
+				error: function(){
+					$("#property_other_image_"+$imageid+"_loader").hide();
+					$div_property_other_image_error.html("Something went wrong. Please check your network and try again.");
+					$div_property_other_image_success.fadeOut("fast");
+					$div_property_other_image_error.fadeIn("fast");
+				}
+        	});	
+		}
+		return false;	
+}
+
+function update_property_attachments(){
+	$div_new_property_attachments_error = $("#div_new_property_attachments_error");
+	$div_new_property_attachments_success = $("#div_new_property_attachments_success");
+				
+	$property_id = $("#property_id").val();	
+
+	$valmsg = "";
+	$valmsg2 = "";
+		
+	if (!$('input[name=publish_status]:checked').val()){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Publish Status <br/>";}
+	if (!$('input[name=featured]:checked').val()){$valmsg = $valmsg + "<i class='fa fa-exclamation-circle'></i> Please select Featured <br/>";}
+	
+	if ($valmsg != $valmsg2){
+		$div_new_property_attachments_error.html($valmsg);
+		$div_new_property_attachments_success.fadeOut("fast");
+		$div_new_property_attachments_error.fadeIn("fast");
+		$('html, body').animate({ scrollTop: $('#div_new_property_attachments_error').offset().top-90 }, 'slow');
+	}else{
+		$div_new_property_attachments_error.fadeOut("fast");
+		$div_new_property_attachments_success.fadeOut("fast");
+				
+		$("#new_property_attachments_loader").show();
+					
+		var form = document.getElementById('frm_newpropertyattachments');
+		var formData = new FormData(form);
+
+		$.ajax({
+           	url: baseDir+'be/properties/update_attachments',
+           	type: 'POST',
+           	data: formData,
+			dataType: 'json',
+           	xhr: function() {
+           		var myXhr = $.ajaxSettings.xhr();
+           		return myXhr;
+           	},
+           	cache: false,
+           	contentType: false,
+           	processData: false,
+           	success: function (res) {
+				$("#new_property_attachments_loader").hide();
+				if(res.status == 'ERR'){
+					$div_new_property_attachments_error.html(res.message);
+					$div_new_property_attachments_success.fadeOut("fast");
+					$div_new_property_attachments_error.fadeIn("fast");
+					$('html, body').animate({ scrollTop: $('#div_new_property_attachments_error').offset().top-90 }, 'slow');
+				}else if (res.status == 'SUCCESS'){
+					window.location = baseDir+'be/properties/edit_start/'+$property_id;					
+				}
+           	},
+			error: function(){
+				$("#new_property_attachments_loader").hide();
+				$div_new_property_attachments_error.html("Something went wrong. Please check your network and try again.");
+				$div_new_property_attachments_success.fadeOut("fast");
+				$div_new_property_attachments_error.fadeIn("fast");
+				$('html, body').animate({ scrollTop: $('#div_new_property_attachments_error').offset().top-90 }, 'slow');
+			}
+       	});
+	
+	}
+	return false;
+}
+
+
 function filter_properties(){
 	$("#properties_div").oLoader({
 		backgroundColor:'#fff',

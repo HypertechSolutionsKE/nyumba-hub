@@ -267,6 +267,7 @@
                                             <button type="button" class="close" data-dismiss="alert">×</button>
                                             Error
                                         </div>
+                                        <input type="hidden" name="property_id" id="property_id" value="<?php echo $row2->property_id; ?>">
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-7">
@@ -299,7 +300,7 @@
                                                     <select data-placeholder="Select Property Type..." class="clear-results" tabindex="2" id="property_type_id" name="property_type_id">
                                                         <option value=""></option> 
                                                         <?php foreach($property_types as $row): ?>
-                                                            <option value="<?php echo $row->property_type_id; ?>" <?php if($row->property_type_id == $row->property_type_id){echo 'selected';}  ?>><?php echo $row->property_type_name; ?></option>
+                                                            <option value="<?php echo $row->property_type_id; ?>" <?php if($row2->property_type_id == $row->property_type_id){echo 'selected';}  ?>><?php echo $row->property_type_name; ?></option>
                                                         <?php endforeach; ?>                       
                                                     </select> 
                                                 </div>

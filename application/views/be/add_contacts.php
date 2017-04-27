@@ -18,8 +18,9 @@
                 </ul>
             </div>-->
 
-            <div class="row">
-                <div class="col-md-9">
+            <?php if (!isset($property)): ?>
+                <div class="row">
+                    <div class="col-md-9">
                         <form class="validate" method="post" role="form" id="frm_newpropertycontacts" name="frm_newpropertycontacts" onsubmit="return save_new_property_contacts();" enctype="multipart/form-data">
 
                             <div class="panel panel-danger">
@@ -105,9 +106,99 @@
 
                              </div>                           
                         </form>
+                    </div>
                 </div>
-            </div>
+            <?php else: ?>
+                <?php foreach ($property as $row2): ?>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <form class="validate" method="post" role="form" id="frm_newpropertycontacts" name="frm_newpropertycontacts" onsubmit="return update_property_contacts();" enctype="multipart/form-data">
 
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title" style="margin-top: 5px"><i class="icon-office"></i> Edit Property</h6>
+                                    </div>
+                                    <div class="panel-body">
+                                        <ul class="nav nav-pills nav-justified">
+                                            <li class="bg-succ"><a href="<?php echo base_url();?>be/properties/edit_start/<?php echo $row2->property_id; ?>">Step 1: Basic Info</a></li>
+                                            <li class="bg-succ"><a href="<?php echo base_url();?>be/properties/edit_features/<?php echo $row2->property_id; ?>">Step 2: Property Features</a></li>
+                                            <li class="active"><a href="<?php echo base_url();?>be/properties/edit_contacts/<?php echo $row2->property_id; ?>">Step 3: Contact Details</a></li>
+                                            <li class="bg-succ"><a href="<?php echo base_url();?>be/properties/edit_attachments/<?php echo $row2->property_id; ?>">Step 4: Attachments &amp; Publish</a></li>                                        
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                        <hr>
+
+                                        <div class="alert alert-danger fade in block-inner" style="display: none;" id="div_new_property_contacts_error">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                            Error
+                                        </div>
+                                        
+                                        <div class="alert alert-success block-inner" style="display: none;" id="div_new_property_contacts_success">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                            Error
+                                        </div>
+
+                                        <input type="hidden" name="property_id" id="property_id" value="<?php echo $row2->property_id; ?>">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <label>Full Name *&nbsp;&nbsp;<a data-placement="top" class="tip" title="Contact person full name"><i class="icon-question2"></i></a></label>
+                                                    <input type="text" id="full_name" name="full_name" class="form-control" value="<?php echo $row2->full_name;  ?>">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <label>Email Address *&nbsp;&nbsp;<a data-placement="top" class="tip" title="Contact person email address"><i class="icon-question2"></i></a></label>
+                                                    <input type="text" id="email_address" name="email_address" class="form-control" value="<?php echo $row2->email_address; ?>">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <label>Mobile Phone *&nbsp;&nbsp;<a data-placement="top" class="tip" title="Contact person mobile phone number"><i class="icon-question2"></i></a></label>
+                                                    <input type="text" id="mobile_phone" name="mobile_phone" class="form-control" value="<?php echo $row2->mobile_phone; ?>">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                       <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <label>Office Phone&nbsp;&nbsp;<a data-placement="top" class="tip" title="Contact person office phone number"><i class="icon-question2"></i></a></label>
+                                                    <input type="text" id="office_phone" name="office_phone" class="form-control" value="<?php echo $row2->office_phone; ?>">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                       <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <label>Home Phone&nbsp;&nbsp;<a data-placement="top" class="tip" title="Contact person home phone number"><i class="icon-question2"></i></a></label>
+                                                    <input type="text" id="home_phone" name="home_phone" class="form-control" value="<?php echo $row2->home_phone; ?>">
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="pull-left" id="new_property_contacts_loader" style="display: none;"><i class="icon-spinner3 spin block-inner"></i></div>
+                                            <button type="submit" class="btn btn-success"><i class="icon-arrow-right11"></i> Save &amp; Continue with Next Step</button>
+
+                                    </div>
+
+                                 </div>                           
+                            </form>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
 
 
             <!-- Footer -->
